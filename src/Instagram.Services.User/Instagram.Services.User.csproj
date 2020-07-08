@@ -3,17 +3,17 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
   </PropertyGroup>
-  
   <ItemGroup>
     <ProjectReference Include="..\Instagram.Common\Instagram.Common.csproj"/>
   </ItemGroup>
-  
   <ItemGroup>
     <PackageReference Include="RawRabbit" Version="2.0.0-beta8"/>
     <PackageReference Include="RawRabbit.DependencyInjection.ServiceCollection" Version="2.0.0-beta8"/>
     <PackageReference Include="RawRabbit.Operations.Publish" Version="2.0.0-beta8"/>
     <PackageReference Include="RawRabbit.Operations.Subscribe" Version="2.0.0-beta8"/>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.5"/>
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.0"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.5"/>
   </ItemGroup>
-
 </Project>
