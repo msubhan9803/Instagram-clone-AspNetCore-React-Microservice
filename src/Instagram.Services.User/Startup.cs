@@ -29,7 +29,6 @@ namespace Instagram.Services.User
         public void ConfigureServices(IServiceCollection services)
         {
             services.InstallServicesInAssmebly(Configuration);
-            services.AddMvc(opt => opt.EnableEndpointRouting = false);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
