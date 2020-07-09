@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using Instagram.Common.DTOs.User;
 using Instagram.Services.User.Services;
@@ -17,14 +18,19 @@ namespace Instagram.Services.User.Controllers.V1
 
         // Post: api/v1/users/login
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] AuthenticateUser command)
-            => Json(await _userService.LoginAsync(command.Email, command.Password));
+        public async Task<IActionResult> Login([FromBody] AuthenticateUser user)
+            => Json(await _userService.LoginAsync(user.Email, user.Password));
 
         // Post: api/v1/users/
         [HttpPost("")]
-        public async Task<IActionResult> Register([FromBody]RegisterUser command)
+        public async Task<IActionResult> Register([FromBody]RegisterUser user)
         {
-            await _userService.RegisterAsync(command.UserName, command.Email, command.Password);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new {error = ModelState.Values.SelectMany(x => x.Errors.Select(y => y.ErrorMessage)) });
+            }
+
+            await _userService.RegisterAsync(user.UserName, user.Email, user.Password);
             
             return Accepted();
         }

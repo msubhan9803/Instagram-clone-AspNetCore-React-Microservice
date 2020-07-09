@@ -17,7 +17,7 @@ namespace Instagram.Services.User.Installers
             services.AddRabbitMq(configuration);
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IEncrypter, Encrypter>();
+            services.AddSingleton<IEncrypter, Encrypter>();
         }
     }
 }
