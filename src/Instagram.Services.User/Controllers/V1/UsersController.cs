@@ -1,6 +1,8 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Instagram.Common.DTOs.User;
+using Instagram.Common.Exceptions;
 using Instagram.Services.User.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,7 +21,33 @@ namespace Instagram.Services.User.Controllers.V1
         // Post: api/v1/users/login
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] AuthenticateUser user)
-            => Json(await _userService.LoginAsync(user.Email, user.Password));
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new {
+                    Error = ModelState.Values.SelectMany(x => x.Errors.Select(y => y.ErrorMessage))
+                });
+            }
+
+            try
+            {
+                return Json(await _userService.LoginAsync(user.Email, user.Password));
+            }
+            catch (InstagramException ex)
+            {
+                // _logger.LogError(ex, ex.Message);
+                return BadRequest(new {
+                    Error = ex.Message
+                });
+            }
+            catch (Exception ex)
+            {
+                // _logger.LogError(ex, ex.Message);
+                return BadRequest(new {
+                    Error = ex.Message
+                }); 
+            }
+        }
 
         // Post: api/v1/users/
         [HttpPost("")]
@@ -27,12 +55,30 @@ namespace Instagram.Services.User.Controllers.V1
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(new {error = ModelState.Values.SelectMany(x => x.Errors.Select(y => y.ErrorMessage)) });
+                return BadRequest(new {
+                    Error = ModelState.Values.SelectMany(x => x.Errors.Select(y => y.ErrorMessage))
+                });
             }
 
-            await _userService.RegisterAsync(user.UserName, user.Email, user.Password);
-            
-            return Accepted();
+            try
+            {
+                await _userService.RegisterAsync(user.UserName, user.Email, user.Password);
+                return Accepted();
+            }
+            catch (InstagramException ex)
+            {
+                // _logger.LogError(ex, ex.Message);
+                return BadRequest(new {
+                    Error = ex.Message
+                });
+            }
+            catch (Exception ex)
+            {
+                // _logger.LogError(ex, ex.Message);
+                return BadRequest(new {
+                    Error = ex.Message
+                }); 
+            }
         }
     }
 }
