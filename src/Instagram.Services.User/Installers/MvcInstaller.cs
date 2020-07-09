@@ -7,7 +7,7 @@ namespace Instagram.Services.User.Installers
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddMvc(opt => opt.EnableEndpointRouting = false);
+            // services.AddMvc(opt => opt.EnableEndpointRouting = false);
             services.AddControllers();
             services.AddLogging();
         }

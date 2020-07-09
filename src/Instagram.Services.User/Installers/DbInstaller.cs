@@ -10,9 +10,7 @@ namespace Instagram.Services.User.Installers
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<AppDbContext>(options =>
-                options.UseMySql(
-                    configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<AppDbContext>();
         }
     }
 }
