@@ -22,13 +22,6 @@ namespace Instagram.Services.User.Controllers.V1
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] AuthenticateUser user)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(new {
-                    Error = ModelState.Values.SelectMany(x => x.Errors.Select(y => y.ErrorMessage))
-                });
-            }
-
             try
             {
                 return Json(await _userService.LoginAsync(user.Email, user.Password));
@@ -53,13 +46,6 @@ namespace Instagram.Services.User.Controllers.V1
         [HttpPost("")]
         public async Task<IActionResult> Register([FromBody]RegisterUser user)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(new {
-                    Error = ModelState.Values.SelectMany(x => x.Errors.Select(y => y.ErrorMessage))
-                });
-            }
-
             try
             {
                 await _userService.RegisterAsync(user.UserName, user.Email, user.Password);

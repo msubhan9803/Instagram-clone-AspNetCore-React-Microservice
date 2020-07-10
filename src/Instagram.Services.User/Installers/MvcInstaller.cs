@@ -1,4 +1,5 @@
 using FluentValidation.AspNetCore;
+using Instagram.Services.User.Filters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -8,9 +9,12 @@ namespace Instagram.Services.User.Installers
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddMvc(opt => { opt.EnableEndpointRouting = false; })
-            .AddFluentValidation(mvcConfiguration => mvcConfiguration.RegisterValidatorsFromAssemblyContaining<Startup>());
             services.AddControllers();
+            services.AddMvc(opt => { 
+                opt.EnableEndpointRouting = false;
+                opt.Filters.Add<ValidatorFilter>();
+            })
+            .AddFluentValidation(mvcConfiguration => mvcConfiguration.RegisterValidatorsFromAssemblyContaining<Startup>());
             services.AddLogging();
         }
     }
