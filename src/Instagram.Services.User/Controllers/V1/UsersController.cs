@@ -8,7 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Instagram.Services.User.Controllers.V1
 {
-    [Route("api/v1/[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class UsersController : Controller
     {
         private readonly IUserService _userService;

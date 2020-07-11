@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Tweetbook.Options;
 
 namespace Instagram.Services.User
 {
@@ -40,6 +41,14 @@ namespace Instagram.Services.User
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            var swaggerOptions = new SwaggerOptions();
+            Configuration.GetSection(nameof(SwaggerOptions)).Bind(swaggerOptions);
+
+            app.UseApiVersioning();
+
+            app.UseSwagger(options => options.RouteTemplate = swaggerOptions.JsonRoute );
+            app.UseSwaggerUI(opt => opt.SwaggerEndpoint(swaggerOptions.UIEndpoint, swaggerOptions.Description));
 
             app.UseMvc();
         }
