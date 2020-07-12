@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
+using AutoMapper;
 using FluentValidation.AspNetCore;
 using Instagram.Services.User.Filters;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,11 +16,16 @@ namespace Instagram.Services.User.Installers
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {
             services.AddControllers();
+            services.AddApiVersioning(o => {  
+                o.ReportApiVersions = true;
+                o.AssumeDefaultVersionWhenUnspecified = false;
+            });
             services.AddMvc(opt => { 
                 opt.EnableEndpointRouting = false;
                 opt.Filters.Add<ValidatorFilter>();
             })
-            .AddFluentValidation(mvcConfiguration => mvcConfiguration.RegisterValidatorsFromAssemblyContaining<Startup>());
+            .AddFluentValidation(mvcConfiguration => mvcConfiguration.RegisterValidatorsFromAssemblyContaining<Startup>())
+            .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddLogging();
             services.AddSwaggerGen(x => {
                 x.SwaggerDoc("v1", new OpenApiInfo{Title = "Instagram.Services.User API", Version = "v1"});
@@ -38,11 +46,8 @@ namespace Instagram.Services.User.Installers
                     }}, new List<string>()} 
                 });
             });
-            services.AddApiVersioning(o => {
-                o.ApiVersionReader = new MediaTypeApiVersionReader();
-                o.AssumeDefaultVersionWhenUnspecified = true;
-                o.ApiVersionSelector = new CurrentImplementationApiVersionSelector(o);
-            });
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
     }
 }

@@ -1,15 +1,20 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Instagram.Common.DTOs.User;
 using Instagram.Common.Exceptions;
 using Instagram.Services.User.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Instagram.Services.User.Controllers.V1
 {
     [ApiVersion("1.0")]
+    [ApiExplorerSettings(GroupName = "v1")]
     [Route("api/v{version:apiVersion}/[controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class UsersController : Controller
     {
         private readonly IUserService _userService;
@@ -19,53 +24,25 @@ namespace Instagram.Services.User.Controllers.V1
             _userService = userService;
         }
 
-        // Post: api/v1/users/login
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] AuthenticateUser user)
+        // GET: api/v1/users/
+        [HttpGet()]
+        public async Task<ActionResult<IEnumerable<UserReadDto>>> GetAllUsers()
         {
-            try
-            {
-                return Json(await _userService.LoginAsync(user.Email, user.Password));
-            }
-            catch (InstagramException ex)
-            {
-                // _logger.LogError(ex, ex.Message);
-                return BadRequest(new {
-                    Error = ex.Message
-                });
-            }
-            catch (Exception ex)
-            {
-                // _logger.LogError(ex, ex.Message);
-                return BadRequest(new {
-                    Error = ex.Message
-                }); 
-            }
+            var users = await _userService.GetAllUsersAsync();
+
+            return Ok(users);
         }
 
         // Post: api/v1/users/
-        [HttpPost("")]
-        public async Task<IActionResult> Register([FromBody]RegisterUser user)
+        [HttpGet("{userName}")]
+        public async Task<ActionResult> GetUserByUsername(string userName)
         {
-            try
-            {
-                await _userService.RegisterAsync(user.UserName, user.Email, user.Password);
-                return Accepted();
+            var users = await _userService.GetUserByUsernameAsync(userName);
+            if (users != null) {
+                return Ok(users);
             }
-            catch (InstagramException ex)
-            {
-                // _logger.LogError(ex, ex.Message);
-                return BadRequest(new {
-                    Error = ex.Message
-                });
-            }
-            catch (Exception ex)
-            {
-                // _logger.LogError(ex, ex.Message);
-                return BadRequest(new {
-                    Error = ex.Message
-                }); 
-            }
+
+            return NotFound();
         }
     }
 }

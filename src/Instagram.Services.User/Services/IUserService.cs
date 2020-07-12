@@ -1,11 +1,13 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Instagram.Common.Auth;
+using Instagram.Common.DTOs.User;
+using model = Instagram.Services.User.Domain.Models;
 
 namespace Instagram.Services.User.Services
 {
     public interface IUserService
     {
-        Task RegisterAsync(string email, string password, string name);
-        Task<JsonWebToken> LoginAsync(string email, string password);  
+        Task<IEnumerable<UserReadDto>> GetAllUsersAsync();
+        Task<UserReadDto> GetUserByUsernameAsync(string userName);
     }
 }

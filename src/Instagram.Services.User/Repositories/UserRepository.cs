@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Instagram.Services.User.Data;
 using Instagram.Services.User.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
+using model = Instagram.Services.User.Domain.Models;
 
 namespace Instagram.Services.User.Repositories
 {
@@ -16,20 +18,14 @@ namespace Instagram.Services.User.Repositories
             _context = context;
         }
 
-        public async Task AddAsync(Domain.Models.User user)
+        public async Task<IEnumerable<model.User>> GetAllUsersAsync()
         {
-            await _context.Users.AddAsync(user);
-            await _context.SaveChangesAsync();
+            return await _context.Users.ToListAsync();
         }
 
-        public async Task<Domain.Models.User> GetAsync(Guid id)
+        public async Task<model.User> GetUserByUsernameAsync(string userName)
         {
-            return await _context.Users.FindAsync(id);
-        }
-
-        public async Task<Domain.Models.User> GetAsync(string email)
-        {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            return await _context.Users.FirstOrDefaultAsync(p => p.UserName == userName);
         }
     }
 }

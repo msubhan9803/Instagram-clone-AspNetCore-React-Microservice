@@ -15,6 +15,8 @@ namespace Instagram.Services.User.Installers
         {
             services.AddJwt(configuration);
             services.AddRabbitMq(configuration);
+            services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddSingleton<IEncrypter, Encrypter>();

@@ -4,7 +4,7 @@ using Instagram.Common.DTOs.User;
 
 namespace Instagram.Common.Validators
 {
-    public class RegisterUserValidator : AbstractValidator<RegisterUser>
+    public class RegisterUserValidator : AbstractValidator<UserRegisterDto>
     {        
         public RegisterUserValidator()
         {

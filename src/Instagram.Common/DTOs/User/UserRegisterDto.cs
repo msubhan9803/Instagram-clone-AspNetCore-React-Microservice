@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Instagram.Common.DTOs.User
 {
-    public class RegisterUser
+    public class UserRegisterDto
     {
         public string UserName { get; set; }
         public string Email { get; set; }
