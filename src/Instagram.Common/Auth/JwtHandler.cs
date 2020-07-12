@@ -28,9 +28,13 @@ namespace Instagram.Common.Auth
             _jwtHeader = new JwtHeader(_signingCredentials);
             _tokenValidationParameters = new TokenValidationParameters
             {
+                ValidateIssuer = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
                 ValidateAudience = false,
                 ValidIssuer = _options.Issuer,
-                IssuerSigningKey = _issuerSigningKey
+                IssuerSigningKey = _issuerSigningKey,
+                ClockSkew = TimeSpan.Zero
             }; 
         }
 
