@@ -33,16 +33,25 @@ namespace Instagram.Services.User.Controllers.V1
             return Ok(users);
         }
 
-        // Post: api/v1/users/
+        // GET: api/v1/users/{usereName}
         [HttpGet("{userName}")]
         public async Task<ActionResult> GetUserByUsername(string userName)
         {
-            var users = await _userService.GetUserByUsernameAsync(userName);
-            if (users != null) {
-                return Ok(users);
-            }
+            try
+            {
+                var users = await _userService.GetUserByUsernameAsync(userName);
+                if (users != null) {
+                    return Ok(users);
+                }
 
-            return NotFound();
+                return NotFound();
+            }
+            catch (InstagramException ex)
+            {
+                return BadRequest(new {
+                    Error = ex.Message
+                }); 
+            }
         }
     }
 }

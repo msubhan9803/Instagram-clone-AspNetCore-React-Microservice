@@ -6,7 +6,21 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
   </PropertyGroup>
 
-
+  <ItemGroup>
+    <PackageReference Include="RawRabbit" Version="2.0.0-beta8"/>
+    <PackageReference Include="RawRabbit.DependencyInjection.ServiceCollection" Version="2.0.0-beta8"/>
+    <PackageReference Include="RawRabbit.Operations.Publish" Version="2.0.0-beta8"/>
+    <PackageReference Include="RawRabbit.Operations.Subscribe" Version="2.0.0-beta8"/>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.5"/>
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.0"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.5"/>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="8.5.0"/>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.3.1"/>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.1.1"/>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+  </ItemGroup>
 </Project>

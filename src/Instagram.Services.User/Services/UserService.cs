@@ -30,6 +30,12 @@ namespace Instagram.Services.User.Services
 
         public async Task<UserReadDto> GetUserByUsernameAsync(string userName)
         {
+            if (userName == null)
+            {
+                throw new InstagramException("username_is_null",
+                    $"Username is required, can't be null.");
+            }
+
             var users = await _userRepository.GetUserByUsernameAsync(userName);
 
             return _mapper.Map<UserReadDto>(users);

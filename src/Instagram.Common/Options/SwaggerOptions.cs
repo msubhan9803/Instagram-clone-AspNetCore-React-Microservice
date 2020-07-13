@@ -1,4 +1,4 @@
-namespace Tweetbook.Options
+namespace Instagram.Common.Options
 {
     public class SwaggerOptions
     {

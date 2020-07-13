@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation.AspNetCore;
 using Instagram.Common.Auth;
+using Instagram.Common.Options;
 using Instagram.Common.RabbitMq;
 using Instagram.Services.User.Filters;
 using Instagram.Services.User.Installers;
@@ -15,7 +16,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Tweetbook.Options;
 
 namespace Instagram.Services.User
 {
