@@ -25,5 +25,6 @@ namespace Instagram.Services.User.Data
         }
 
         public DbSet<Domain.Models.User> Users { get; set; }
+        public DbSet<Domain.Models.UserBio> UserBios { get; set; }
     }
 }
