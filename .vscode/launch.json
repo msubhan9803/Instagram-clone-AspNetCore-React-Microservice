@@ -10,9 +10,11 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Instagram.Services.User/bin/Debug/netcoreapp3.1/Instagram.Services.User.dll",
+            // "program": "${workspaceFolder}/src/Instagram.Services.User/bin/Debug/netcoreapp3.1/Instagram.Services.User.dll",
+            "program": "${workspaceFolder}/src/Instagram.Services.Post/bin/Debug/netcoreapp3.1/Instagram.Services.Post.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/src/Instagram.Services.User",
+            // "cwd": "${workspaceFolder}/src/Instagram.Services.User",
+            "cwd": "${workspaceFolder}/src/Instagram.Services.Post",
             "stopAtEntry": false,
             // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
             "serverReadyAction": {
@@ -20,7 +22,8 @@
                 "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
             },
             "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_URLS":"http://localhost:5002"
             },
             "sourceFileMap": {
                 "/Views": "${workspaceFolder}/Views"

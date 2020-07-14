@@ -4,10 +4,10 @@ namespace Instagram.Common.DTOs.Post
 {
     public class UserPostCreateDto
     {
-        public Guid UserId { get; protected set; }
-        public string Type { get; protected set; }
-        public string Title { get; protected set; }
-        public string Description { get; protected set; }
-        public string Url { get; protected set; }
+        public Guid UserId;
+        public string Type { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string Url { get; set; }
     }
 }

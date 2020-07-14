@@ -1,16 +1,21 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Instagram.Common.DTOs.Post;
 using Instagram.Common.Exceptions;
 using Instagram.Services.Post.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Instagram.Services.Post.Controllers
 {
     [ApiVersion("1.0")]
+    [Produces("application/json")]
     [ApiExplorerSettings(GroupName = "v1")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -55,8 +60,9 @@ namespace Instagram.Services.Post.Controllers
 
         //POST api/v1/userPosts
         [HttpPost]
-        public async Task<ActionResult<UserPostCreateDto>> CreateUserPostAsync(UserPostCreateDto post)
+        public async Task<ActionResult<UserPostCreateDto>> CreateUserPostAsync([FromBody]UserPostCreateDto post)
         {
+            post.UserId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
             var userPostReadDto = await _userPostService.CreatePostAsync(post);
 
             return CreatedAtRoute(nameof(GetUserPostByIdAsync), new {Id = userPostReadDto.Id}, userPostReadDto);      

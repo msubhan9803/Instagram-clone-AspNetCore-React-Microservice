@@ -7,9 +7,6 @@ namespace Instagram.Services.Post.Validators
     {
         public CreateUserPostValidator()
         {
-            RuleFor(x => x.UserId)
-                .NotEmpty().WithMessage("UserId is required.");
-                
             RuleFor(x => x.Type)
                 .NotEmpty().WithMessage("Type is required.");
 

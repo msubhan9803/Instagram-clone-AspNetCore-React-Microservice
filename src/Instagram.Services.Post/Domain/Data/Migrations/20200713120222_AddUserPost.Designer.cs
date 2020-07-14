@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Instagram.Services.Post.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200712192148_AddUserPost")]
+    [Migration("20200713120222_AddUserPost")]
     partial class AddUserPost
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,7 +45,7 @@ namespace Instagram.Services.Post.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserPost");
+                    b.ToTable("UserPosts");
                 });
 #pragma warning restore 612, 618
         }

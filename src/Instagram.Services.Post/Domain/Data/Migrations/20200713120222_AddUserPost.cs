@@ -8,7 +8,7 @@ namespace Instagram.Services.Post.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "UserPost",
+                name: "UserPosts",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -21,14 +21,14 @@ namespace Instagram.Services.Post.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserPost", x => x.Id);
+                    table.PrimaryKey("PK_UserPosts", x => x.Id);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "UserPost");
+                name: "UserPosts");
         }
     }
 }

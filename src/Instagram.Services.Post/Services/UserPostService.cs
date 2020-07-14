@@ -6,6 +6,7 @@ using Instagram.Common.DTOs.Post;
 using Instagram.Common.Exceptions;
 using Instagram.Services.Post.Domain.Models;
 using Instagram.Services.Post.Domain.Repositories;
+using Newtonsoft.Json;
 
 namespace Instagram.Services.Post.Services
 {
@@ -51,12 +52,13 @@ namespace Instagram.Services.Post.Services
         public async Task<UserPost> UpdatePostAsync(Guid id, UserPostUpdateDto post)
         {
             var userPostModel = await _userPostRepository.GetPostByIdAsync(id);
+
             if(userPostModel == null)
             {
                 return userPostModel;
             }
 
-            _mapper.Map(userPostModel, post);
+            _mapper.Map(post, userPostModel);
             await _userPostRepository.UpdatePostAsync(userPostModel);
 
             return userPostModel;
@@ -65,6 +67,7 @@ namespace Instagram.Services.Post.Services
         public async Task<UserPost> DeletePostAsync(Guid id)
         {
             var userPostModel = await _userPostRepository.GetPostByIdAsync(id);
+            
             if(userPostModel == null)
             {
                 return userPostModel;

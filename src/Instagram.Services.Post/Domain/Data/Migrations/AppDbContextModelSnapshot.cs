@@ -43,7 +43,7 @@ namespace Instagram.Services.Post.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Posts");
+                    b.ToTable("UserPosts");
                 });
 #pragma warning restore 612, 618
         }

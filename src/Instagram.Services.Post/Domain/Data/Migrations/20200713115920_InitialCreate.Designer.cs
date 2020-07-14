@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Instagram.Services.Post.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200712192117_InitialCreate")]
+    [Migration("20200713115920_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

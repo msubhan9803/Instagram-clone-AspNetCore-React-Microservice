@@ -41,6 +41,7 @@ namespace Instagram.Services.Post
             app.UseSwaggerUI(opt => opt.SwaggerEndpoint(swaggerOptions.UIEndpoint, swaggerOptions.Description));
 
             app.UseMvc();
+            
         }
     }
 }

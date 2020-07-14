@@ -1,7 +1,9 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Instagram.Services.Post.Domain.Models
 {
+    [Table("UserPosts")]
     public class UserPost
     {
         public Guid Id { get; protected set; }

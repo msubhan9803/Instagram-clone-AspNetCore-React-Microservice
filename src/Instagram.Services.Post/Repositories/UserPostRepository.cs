@@ -43,6 +43,7 @@ namespace Instagram.Services.Post.Repositories
         {
             var userPost = _context.Posts.Find(id);
             _context.Posts.Remove(userPost);
+            _context.SaveChanges();
         }
     }
 }

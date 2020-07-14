@@ -11,6 +11,7 @@ namespace Instagram.Services.User.Profiles
             //Source -> Target
             CreateMap<UserPost, UserPostReadDto>();
             CreateMap<UserPostCreateDto, UserPost>();
+            CreateMap<UserPost, UserPostUpdateDto>();
             CreateMap<UserPostUpdateDto, UserPost>();
         }
 
