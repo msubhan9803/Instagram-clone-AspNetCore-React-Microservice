@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Instagram.Services.Post.Controllers
+namespace Instagram.Services.Post.Controllers.V1
 {
     [ApiVersion("1.0")]
     [Produces("application/json")]
