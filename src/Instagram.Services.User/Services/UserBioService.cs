@@ -30,22 +30,23 @@ namespace Instagram.Services.Bio.Services
                     $"User Id is required, can't be null.");
             }
 
-            var userBio = await _userBioRepository.GetUserBioAsync(userId);
+            var userBio = await _userBioRepository.GetUserBioByUserIdAsync(userId);
             
             return _mapper.Map<UserBioReadDto>(userBio);
         }
 
-        public async Task<UserBioReadDto> CreateUserBioAsync(UserBioCreateDto bio)
+        public async Task<(Guid, UserBioReadDto)> CreateUserBioAsync(Guid userId, UserBioCreateDto bio)
         {
             var userBioModel = _mapper.Map<UserBio>(bio);
+            userBioModel.UserId = userId;
             await _userBioRepository.CreateUserBioAsync(userBioModel);
             
-            return _mapper.Map<UserBioReadDto>(userBioModel);
+            return (userBioModel.Id, _mapper.Map<UserBioReadDto>(userBioModel));
         }
 
         public async Task<UserBio> UpdateUserBioAsync(Guid id, UserBioUpdateDto bio)
         {
-            var userBioModel = await _userBioRepository.GetUserBioAsync(id);
+            var userBioModel = await _userBioRepository.GetUserBioByIdAsync(id);
 
             if(userBioModel == null)
             {
@@ -53,7 +54,7 @@ namespace Instagram.Services.Bio.Services
             }
 
             _mapper.Map(bio, userBioModel);
-            await _userBioRepository.UpdateUserBioAsync(userBioModel);
+            await _userBioRepository.UpdateUserBioAsync();
 
             return userBioModel;
         }

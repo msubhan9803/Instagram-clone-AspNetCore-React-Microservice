@@ -6,16 +6,16 @@ namespace Instagram.Services.Post.Domain.Models
     [Table("UserPosts")]
     public class UserPost
     {
-        public Guid Id { get; protected set; }
-        public Guid UserId { get; protected set; }
-        public string Type { get; protected set; }
-        public string Title { get; protected set; }
-        public string Description { get; protected set; }
-        public string Url { get; protected set; }
-        public DateTime CreatedAt { get; protected set; }
-        // public DateTime UpdatedAt { get; protected set; }
+        public Guid Id { get; set; }
+        public Guid UserId { get; set; }
+        public string Type { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string Url { get; set; }
+        public DateTime CreatedAt { get; set; }
+        // public DateTime UpdatedAt { get; set; }
 
-        protected UserPost()
+        UserPost()
         {
             
         }

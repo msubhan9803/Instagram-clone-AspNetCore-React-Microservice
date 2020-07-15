@@ -41,9 +41,10 @@ namespace Instagram.Services.Post.Services
             return _mapper.Map<UserPostReadDto>(userPost);
         }
 
-        public async Task<UserPostReadDto> CreatePostAsync(UserPostCreateDto post)
+        public async Task<UserPostReadDto> CreatePostAsync(Guid userId, UserPostCreateDto post)
         {
             var userPostModel = _mapper.Map<UserPost>(post);
+            userPostModel.UserId = userId;
             await _userPostRepository.CreatePostAsync(userPostModel);
             
             return _mapper.Map<UserPostReadDto>(userPostModel);

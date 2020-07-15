@@ -4,9 +4,9 @@ namespace Instagram.Common.DTOs.User
 {
     public class UserBioUpdateDto
     {
-        public Guid UserId { get; protected set; }
-        public string Text { get; protected set; }
-        public string Gender { get; protected set; }
-        public string WebsiteUrl { get; protected set; }
+        public Guid UserId { get; set; }
+        public string Text { get; set; }
+        public string Gender { get; set; }
+        public string WebsiteUrl { get; set; }
     }
 }

@@ -7,8 +7,9 @@ namespace Instagram.Services.User.Domain.Repositories
 {
     public interface IUserBioRepository
     {
-        Task<UserBio> GetUserBioAsync(Guid userId);
+        Task<UserBio> GetUserBioByIdAsync(Guid id);
+        Task<UserBio> GetUserBioByUserIdAsync(Guid userId);
         Task CreateUserBioAsync(UserBio Bio);
-        Task UpdateUserBioAsync(UserBio Bio);
+        Task UpdateUserBioAsync();
     }
 }

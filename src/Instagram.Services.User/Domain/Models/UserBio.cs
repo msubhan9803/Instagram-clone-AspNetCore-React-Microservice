@@ -5,14 +5,14 @@ namespace Instagram.Services.User.Domain.Models
 {
     public class UserBio
     {
-        public Guid Id { get; protected set; }
-        public Guid UserId { get; protected set; }
-        public string Text { get; protected set; }
-        public string Gender { get; protected set; }
-        public string WebsiteUrl { get; protected set; }
-        public DateTime CreatedAt { get; protected set; }
+        public Guid Id { get; set; }
+        public Guid UserId { get; set; }
+        public string Text { get; set; }
+        public string Gender { get; set; }
+        public string WebsiteUrl { get; set; }
+        public DateTime CreatedAt { get; set; }
 
-        protected UserBio()
+        UserBio()
         {
             
         }

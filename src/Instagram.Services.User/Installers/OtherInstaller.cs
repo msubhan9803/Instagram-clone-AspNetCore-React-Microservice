@@ -1,5 +1,6 @@
 using Instagram.Common.Auth;
 using Instagram.Common.RabbitMq;
+using Instagram.Services.Bio.Services;
 using Instagram.Services.User.Domain.Repositories;
 using Instagram.Services.User.Domain.Services;
 using Instagram.Services.User.Repositories;
@@ -19,6 +20,8 @@ namespace Instagram.Services.User.Installers
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserBioRepository, UserBioRepository>();
+            services.AddScoped<IUserBioService, UserBioService>();
             services.AddSingleton<IEncrypter, Encrypter>();
         }
     }

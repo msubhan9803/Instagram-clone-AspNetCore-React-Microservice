@@ -18,9 +18,14 @@ namespace Instagram.Services.User.Repositories
             _context = context;
         }
 
-        public async Task<UserBio> GetUserBioAsync(Guid userId)
+        public async Task<UserBio> GetUserBioByIdAsync(Guid id)
         {
-            return await _context.UserBios.FindAsync(userId);
+            return await _context.UserBios.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<UserBio> GetUserBioByUserIdAsync(Guid userId)
+        {
+            return await _context.UserBios.FirstOrDefaultAsync(x => x.UserId == userId);
         }
 
         public async Task CreateUserBioAsync(UserBio Bio)
@@ -29,7 +34,7 @@ namespace Instagram.Services.User.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateUserBioAsync(UserBio Bio)
+        public async Task UpdateUserBioAsync()
         {
             await _context.SaveChangesAsync();
         }

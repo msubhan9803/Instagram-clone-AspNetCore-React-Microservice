@@ -53,17 +53,17 @@ namespace Instagram.Services.User.Controllers.V1
         [HttpPost]
         public async Task<ActionResult<UserBioCreateDto>> CreateUserBioAsync([FromBody]UserBioCreateDto bio)
         {
-            bio.UserId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            var userBioReadDto = await _userBioService.CreateBioAsync(bio);
+            var userId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var response = await _userBioService.CreateUserBioAsync(userId, bio);
 
-            return CreatedAtRoute(nameof(GetUserBioByUserIdAsync), new {Id = userBioReadDto.Id}, userBioReadDto);      
+            return CreatedAtRoute(nameof(GetUserBioByUserIdAsync), new {userId = response.Item1}, response.Item2);      
         }
 
         //PUT api/v1/userBios/{id}
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateUserBioAsync(Guid id, [FromBody]UserBioUpdateDto post)
         {
-            var UserBioModel = await _userBioService.UpdateBioAsync(id, post);
+            var UserBioModel = await _userBioService.UpdateUserBioAsync(id, post);
             if (UserBioModel != null)
             {
                 return NoContent();

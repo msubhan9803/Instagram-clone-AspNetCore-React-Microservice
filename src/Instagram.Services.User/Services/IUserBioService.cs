@@ -9,7 +9,7 @@ namespace Instagram.Services.User.Services
     public interface IUserBioService
     {
         Task<UserBioReadDto> GetBioByUserIdAsync(Guid userId);
-        Task<UserBioReadDto> CreateBioAsync(UserBioCreateDto bio);
-        Task<UserBio> UpdateBioAsync(Guid id, UserBioUpdateDto bio); 
+        Task<(Guid, UserBioReadDto)> CreateUserBioAsync(Guid userId, UserBioCreateDto bio);
+        Task<UserBio> UpdateUserBioAsync(Guid id, UserBioUpdateDto bio); 
     }
 }

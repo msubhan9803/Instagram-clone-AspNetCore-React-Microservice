@@ -62,8 +62,8 @@ namespace Instagram.Services.Post.Controllers.V1
         [HttpPost]
         public async Task<ActionResult<UserPostCreateDto>> CreateUserPostAsync([FromBody]UserPostCreateDto post)
         {
-            post.UserId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            var userPostReadDto = await _userPostService.CreatePostAsync(post);
+            var userId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var userPostReadDto = await _userPostService.CreatePostAsync(userId, post);
 
             return CreatedAtRoute(nameof(GetUserPostByIdAsync), new {Id = userPostReadDto.Id}, userPostReadDto);      
         }
