@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Instagram.Common.Exceptions;
 using Instagram.Services.Post.Data;
@@ -26,6 +27,11 @@ namespace Instagram.Services.Post.Repositories
         public async Task<UserPost> GetPostByIdAsync(Guid id)
         {
             return await _context.Posts.FindAsync(id);
+        }
+
+        public async Task<IEnumerable<UserPost>> GetPostByUserIdAsync(Guid userId)
+        {
+            return await _context.Posts.Where(x => x.UserId == userId).ToListAsync();
         }
 
         public async Task CreatePostAsync(UserPost post)

@@ -41,6 +41,19 @@ namespace Instagram.Services.Post.Services
             return _mapper.Map<UserPostReadDto>(userPost);
         }
 
+        public async Task<IEnumerable<UserPostReadDto>> GetPostByUserIdAsync(Guid userId)
+        {
+            if (userId == null)
+            {
+                throw new InstagramException("id_is_null",
+                    $"User Id is required, can't be null.");
+            }
+
+            var userPost = await _userPostRepository.GetPostByUserIdAsync(userId);
+            
+            return _mapper.Map<IEnumerable<UserPostReadDto>>(userPost);
+        }
+
         public async Task<UserPostReadDto> CreatePostAsync(Guid userId, UserPostCreateDto post)
         {
             var userPostModel = _mapper.Map<UserPost>(post);

@@ -10,6 +10,7 @@ namespace Instagram.Services.Post.Services
     {
         Task<IEnumerable<UserPostReadDto>> GetAllPostsAsync();
         Task<UserPostReadDto> GetPostByIdAsync(Guid id);
+        Task<IEnumerable<UserPostReadDto>> GetPostByUserIdAsync(Guid userId);
         Task<UserPostReadDto> CreatePostAsync(Guid userId, UserPostCreateDto post);
         Task<UserPost> UpdatePostAsync(Guid id, UserPostUpdateDto post);
         Task<UserPost> DeletePostAsync(Guid id);   

@@ -58,6 +58,27 @@ namespace Instagram.Services.Post.Controllers.V1
             }
         }
 
+        // GET: api/v1/userposts/user/{userId}
+        [HttpGet("user/{userId}", Name = "GetUserPostByUserIdAsync")]
+        public async Task<ActionResult<IEnumerable<UserPostReadDto>>> GetUserPostByUserIdAsync(Guid userId)
+        {
+            try
+            {
+                var userPost = await _userPostService.GetPostByUserIdAsync(userId);
+                if (userPost != null) {
+                    return Ok(userPost);
+                }
+
+                return NotFound();
+            }
+            catch (InstagramException ex)
+            {
+                return BadRequest(new {
+                    Error = ex.Message
+                }); 
+            }
+        }
+
         //POST api/v1/userPosts
         [HttpPost]
         public async Task<ActionResult<UserPostCreateDto>> CreateUserPostAsync([FromBody]UserPostCreateDto post)
