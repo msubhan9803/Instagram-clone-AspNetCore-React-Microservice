@@ -35,6 +35,7 @@ namespace Instagram.Services.User.Controllers.V1
             try
             {
                 var userBio = await _userBioService.GetBioByUserIdAsync(userId);
+                
                 if (userBio != null) {
                     return Ok(userBio);
                 }

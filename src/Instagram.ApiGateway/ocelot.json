@@ -1,0 +1,68 @@
+{
+    "Routes": [
+        {
+            "DownstreamPathTemplate": "/api/{version}/{catchAll}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                    {
+                        "Host": "localhost",
+                        "Port": 9000
+                    }
+                ],
+            "UpstreamPathTemplate": "/user-api/{version}/{catchAll}"
+        },
+        {
+            "DownstreamPathTemplate": "/api/{version}/userbios/{userId}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 9000
+                }
+            ],
+            "UpstreamHttpMethod": [
+                "Get"
+            ],
+            "UpstreamPathTemplate": "/user-api/{version}/userbios/{userId}",
+            "Key": "user-bio"
+        },
+        {
+            "DownstreamPathTemplate": "/api/{version}/{catchAll}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                    {
+                        "Host": "localhost",
+                        "Port": 9002
+                    }
+                ],
+            "UpstreamPathTemplate": "/post-api/{version}/{catchAll}"
+        },
+        {
+            "DownstreamPathTemplate": "/api/{version}/userposts/user/{userId}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 9002
+                }
+            ],
+            "UpstreamHttpMethod": [
+                "Get"
+            ],
+            "UpstreamPathTemplate": "/post-api/{version}/userposts/user/{userId}",
+            "Key": "user-post"
+        }
+    ],
+    "Aggregates": [
+        {
+            "RouteKeys": [
+                "user-bio",
+                "user-post"
+            ],
+            "UpstreamPathTemplate": "/api/{version}/user-profile/{userId}"
+        }
+    ],
+    "GlobalConfiguration": {
+        "BaseUrl": "http://localhost:8000"
+    }
+}
