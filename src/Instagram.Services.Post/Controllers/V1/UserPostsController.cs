@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Instagram.Services.Post.Controllers.V1
 {
@@ -22,9 +23,11 @@ namespace Instagram.Services.Post.Controllers.V1
     public class UserPostsController : Controller
     {
         private readonly IUserPostService _userPostService;
+        private readonly IPostFileService _postFileService;
 
-        public UserPostsController(IUserPostService userPostService)
+        public UserPostsController(IUserPostService userPostService, IPostFileService postFileService)
         {
+            _postFileService = postFileService;
             _userPostService = userPostService;
         }
 
@@ -44,7 +47,8 @@ namespace Instagram.Services.Post.Controllers.V1
             try
             {
                 var userPost = await _userPostService.GetPostByIdAsync(id);
-                if (userPost != null) {
+                if (userPost != null)
+                {
                     return Ok(userPost);
                 }
 
@@ -52,10 +56,19 @@ namespace Instagram.Services.Post.Controllers.V1
             }
             catch (InstagramException ex)
             {
-                return BadRequest(new {
+                return BadRequest(new
+                {
                     Error = ex.Message
-                }); 
+                });
             }
+        }
+
+        // GET: api/v1/userposts/file/{postFileId}
+        [HttpGet("file/{postFileId}", Name = "GetUserPostFileByPostFileIdAsync")]
+        public async Task<IActionResult> GetUserPostFileByPostFileIdAsync(Guid postFileId)
+        {
+            var data = await _postFileService.GetPostFileAsync(postFileId);
+            return File(data.Content, data.ContentType);
         }
 
         // GET: api/v1/userposts/user/{userId}
@@ -65,7 +78,8 @@ namespace Instagram.Services.Post.Controllers.V1
             try
             {
                 var userPost = await _userPostService.GetPostByUserIdAsync(userId);
-                if (userPost != null) {
+                if (userPost != null)
+                {
                     return Ok(userPost);
                 }
 
@@ -73,25 +87,26 @@ namespace Instagram.Services.Post.Controllers.V1
             }
             catch (InstagramException ex)
             {
-                return BadRequest(new {
+                return BadRequest(new
+                {
                     Error = ex.Message
-                }); 
+                });
             }
         }
 
         //POST api/v1/userPosts
         [HttpPost]
-        public async Task<ActionResult<UserPostCreateDto>> CreateUserPostAsync([FromBody]UserPostCreateDto post)
+        public async Task<ActionResult<UserPostCreateDto>> CreateUserPostAsync([FromBody] UserPostCreateDto post)
         {
             var userId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
             var userPostReadDto = await _userPostService.CreatePostAsync(userId, post);
 
-            return CreatedAtRoute(nameof(GetUserPostByIdAsync), new {Id = userPostReadDto.Id}, userPostReadDto);      
+            return CreatedAtRoute(nameof(GetUserPostFileByPostFileIdAsync), new { postFileId = userPostReadDto.FileId }, userPostReadDto);
         }
 
         //PUT api/v1/userPosts/{id}
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateUserPostAsync(Guid id, [FromBody]UserPostUpdateDto post)
+        public async Task<ActionResult> UpdateUserPostAsync(Guid id, [FromBody] UserPostUpdateDto post)
         {
             var userPostModel = await _userPostService.UpdatePostAsync(id, post);
             if (userPostModel != null)

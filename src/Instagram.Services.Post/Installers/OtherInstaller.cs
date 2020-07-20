@@ -17,6 +17,9 @@ namespace Instagram.Services.Post.Installers
             services.AddRabbitMq(configuration);
             services.AddScoped<IUserPostService, UserPostService>();
             services.AddScoped<IUserPostRepository, UserPostRepository>();
+            services.AddScoped<IBlobService, BlobService>();
+            services.AddScoped<IPostFileService, PostFileService>();
+            services.AddScoped<IPostFileRepository, PostFileRepository>();
         }
     }
 }

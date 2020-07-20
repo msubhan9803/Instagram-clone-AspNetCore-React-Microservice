@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Instagram.Services.User.Migrations
+namespace Instagram.Services.User.Domain.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     [Migration("20200714174331_AddUserBio")]

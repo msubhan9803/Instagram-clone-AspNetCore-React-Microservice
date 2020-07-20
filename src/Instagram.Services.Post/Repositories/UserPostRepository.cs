@@ -34,9 +34,10 @@ namespace Instagram.Services.Post.Repositories
             return await _context.Posts.Where(x => x.UserId == userId).ToListAsync();
         }
 
-        public async Task CreatePostAsync(UserPost post)
+        public async Task CreatePostAsync(UserPost post, PostFile postFileModel)
         {
             await _context.Posts.AddAsync(post);
+            await _context.PostFiles.AddAsync(postFileModel);
             await _context.SaveChangesAsync();
         }
 

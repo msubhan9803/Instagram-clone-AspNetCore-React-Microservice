@@ -9,6 +9,7 @@
     <UserSecretsId>563cd4c8-2e75-4a56-a0b3-aebb39b04c6b</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.4.4" />
     <PackageReference Include="RawRabbit" Version="2.0.0-beta8" />
     <PackageReference Include="RawRabbit.DependencyInjection.ServiceCollection" Version="2.0.0-beta8" />
     <PackageReference Include="RawRabbit.Operations.Publish" Version="2.0.0-beta8" />

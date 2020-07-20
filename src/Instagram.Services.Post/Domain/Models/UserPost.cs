@@ -8,10 +8,8 @@ namespace Instagram.Services.Post.Domain.Models
     {
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
-        public string Type { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public string Url { get; set; }
+        public string Caption { get; set; }
+        public Guid FileId { get; set; }
         public DateTime CreatedAt { get; set; }
         // public DateTime UpdatedAt { get; set; }
 
@@ -20,15 +18,12 @@ namespace Instagram.Services.Post.Domain.Models
             
         }
 
-        public UserPost(Guid userId, string type, string title,
-            string description, string url)
+        public UserPost(Guid userId, string caption, Guid fileId)
         {
-            Id = new Guid();
+            Id = Guid.NewGuid();
             UserId = userId;
-            Type = type;
-            Title = title;
-            Description = description;
-            Url = url;
+            Caption = caption;
+            FileId = fileId;
             CreatedAt = DateTime.UtcNow;
         }
     }

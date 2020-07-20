@@ -33,5 +33,6 @@ namespace Instagram.Services.Post.Data
         }
 
         public DbSet<UserPost> Posts { get; set; }
+        public DbSet<PostFile> PostFiles { get; set; }
     }
 }

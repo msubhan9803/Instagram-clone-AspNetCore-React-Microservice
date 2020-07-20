@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Instagram.Services.Post.Migrations
+namespace Instagram.Services.Post.Domain.Data.Migrations
 {
     public partial class AddUserPost : Migration
     {
@@ -13,10 +13,8 @@ namespace Instagram.Services.Post.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     UserId = table.Column<Guid>(nullable: false),
-                    Type = table.Column<string>(nullable: true),
-                    Title = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    Url = table.Column<string>(nullable: true),
+                    Caption = table.Column<string>(nullable: true),
+                    FileId = table.Column<Guid>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>

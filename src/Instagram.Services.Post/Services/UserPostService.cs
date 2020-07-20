@@ -13,12 +13,15 @@ namespace Instagram.Services.Post.Services
     public class UserPostService : IUserPostService
     {
         private readonly IUserPostRepository _userPostRepository;
+        private readonly IBlobService _blobService;
         private readonly IMapper _mapper;
 
-        public UserPostService(IUserPostRepository userPostRepository, IMapper mapper = null)
+        public UserPostService(IUserPostRepository userPostRepository, 
+            IBlobService blobService, IMapper mapper = null)
         {
             _userPostRepository = userPostRepository;
             _mapper = mapper;
+            _blobService = blobService;
         }
 
         public async Task<IEnumerable<UserPostReadDto>> GetAllPostsAsync()
@@ -56,9 +59,14 @@ namespace Instagram.Services.Post.Services
 
         public async Task<UserPostReadDto> CreatePostAsync(Guid userId, UserPostCreateDto post)
         {
+            // normalize fileName
+            await _blobService.UploadFileBlobAsync(post.FilePath, post.FileName);
+            var postFileModel = new PostFile(post.FileName, "image");
+
             var userPostModel = _mapper.Map<UserPost>(post);
             userPostModel.UserId = userId;
-            await _userPostRepository.CreatePostAsync(userPostModel);
+            userPostModel.FileId = postFileModel.Id;
+            await _userPostRepository.CreatePostAsync(userPostModel, postFileModel);
             
             return _mapper.Map<UserPostReadDto>(userPostModel);
         }

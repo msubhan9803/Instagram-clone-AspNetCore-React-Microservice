@@ -10,7 +10,7 @@ namespace Instagram.Services.Post.Domain.Repositories
         Task<IEnumerable<UserPost>> GetAllPostsAsync();
         Task<UserPost> GetPostByIdAsync(Guid id);
         Task<IEnumerable<UserPost>> GetPostByUserIdAsync(Guid userId);
-        Task CreatePostAsync(UserPost post);
+        Task CreatePostAsync(UserPost post, PostFile postFileModel);
         Task UpdatePostAsync(UserPost post);
         void DeletePost(Guid id);   
     }

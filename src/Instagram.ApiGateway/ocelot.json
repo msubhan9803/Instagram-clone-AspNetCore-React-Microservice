@@ -27,6 +27,12 @@
             "Key": "user-bio"
         },
         {
+            "DownstreamHeaderTransform": {
+                "Location": "http://localhost:9002/api, {BaseUrl}/post-api"
+            },
+             "HttpHandlerOptions": {
+                "AllowAutoRedirect": false
+            },
             "DownstreamPathTemplate": "/api/{version}/{catchAll}",
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [

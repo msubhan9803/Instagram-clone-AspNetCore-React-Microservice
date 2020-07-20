@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Instagram.Services.User.Migrations
+namespace Instagram.Services.User.Domain.Data.Migrations
 {
     public partial class AddUserBio : Migration
     {

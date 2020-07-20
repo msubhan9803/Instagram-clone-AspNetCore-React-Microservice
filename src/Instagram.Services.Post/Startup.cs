@@ -35,6 +35,7 @@ namespace Instagram.Services.Post
             Configuration.GetSection(nameof(SwaggerOptions)).Bind(swaggerOptions);
 
             app.UseAuthentication();
+            app.UseAuthorization();
             app.UseApiVersioning();
 
             app.UseSwagger(options => options.RouteTemplate = swaggerOptions.JsonRoute );
