@@ -1,0 +1,77 @@
+version: "3"
+
+services:
+  mysql_db_service:
+    image: mysql:8.0.21
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "Pa$$WorD"
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - /home/mranonymous/Projects/Instagram-Volumes/mysql:/var/lib/mysql
+      - ./mysql/:/docker-entrypoint-initdb.d
+
+  api_gateway_service:
+    build: ../src/Instagram.ApiGateway
+    container_name: api_gateway
+    restart: always
+    depends_on:
+      - mysql_db_service
+      - user_service
+      - post_service
+    ports:
+      - '8000:8000'
+    expose:
+      - '8000'
+
+  user_service:
+    build: ../src/Instagram.Services.User
+    container_name: user
+    restart: always
+    expose:
+      - '9000'
+    depends_on:
+      - mysql_db_service
+
+  post_service:
+    build: ../src/Instagram.Services.Post
+    container_name: post
+    restart: always
+    expose:
+      - '9001'
+    volumes:
+        - "/home/mranonymous/Pictures:/home/mranonymous/Pictures"
+    depends_on:
+      - mysql_db_service
+      - user_service
+      - azurite_service
+
+  azurite_service:
+    image: "mcr.microsoft.com/azure-storage/azurite"
+    container_name: azurite
+    hostname: azurite
+    restart: always
+    volumes:
+        - "/home/mranonymous/Projects/Instagram-Volumes/Azurite:/data"
+        - "/home/mranonymous/Projects/Instagram-Volumes/Azurite/debug.log:/data/debug.log"
+        - "/etc/timezone:/etc/timezone:ro"
+        - "/etc/localtime:/etc/localtime:ro"
+    expose:
+      - '10000'
+      - '10001'
+    ports:
+    - 10000:10000
+    - 10001:10001
+
+volumes:
+  mysql:
+
+  # rabbitmq:
+  #   image: rabbitmq:3.6.5-management
+  #   ports:
+  #     - '5672:5672'
+  #     - '15672:15672'

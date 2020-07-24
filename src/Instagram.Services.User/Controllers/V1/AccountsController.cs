@@ -21,7 +21,7 @@ namespace Instagram.Services.User.Controllers.V1
             _accountService = accountService;
         }
 
-        // POST: api/v1/users/login
+        // POST: api/v1/acctounts/login
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserAuthenticateDto user)
         {
@@ -45,7 +45,7 @@ namespace Instagram.Services.User.Controllers.V1
             }
         }
 
-        // POST: api/v1/users/
+        // POST: api/v1/acctounts/
         [HttpPost("")]
         public async Task<IActionResult> Register([FromBody]UserRegisterDto user)
         {

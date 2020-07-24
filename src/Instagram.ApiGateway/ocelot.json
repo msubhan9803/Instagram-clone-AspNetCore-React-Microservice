@@ -5,7 +5,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                     {
-                        "Host": "localhost",
+                        "Host": "user_service",
                         "Port": 9000
                     }
                 ],
@@ -16,7 +16,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "user_service",
                     "Port": 9000
                 }
             ],
@@ -28,7 +28,7 @@
         },
         {
             "DownstreamHeaderTransform": {
-                "Location": "http://localhost:9002/api, {BaseUrl}/post-api"
+                "Location": "http://post_service:9001/api, {BaseUrl}/post-api"
             },
              "HttpHandlerOptions": {
                 "AllowAutoRedirect": false
@@ -37,8 +37,8 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                     {
-                        "Host": "localhost",
-                        "Port": 9002
+                        "Host": "post_service",
+                        "Port": 9001
                     }
                 ],
             "UpstreamPathTemplate": "/post-api/{version}/{catchAll}"
@@ -48,8 +48,8 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
-                    "Port": 9002
+                    "Host": "post_service",
+                    "Port": 9001
                 }
             ],
             "UpstreamHttpMethod": [

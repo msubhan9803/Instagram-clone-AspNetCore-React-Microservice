@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Instagram.Services.Post.Extensions;
+using Microsoft.AspNetCore.Http;
 using BlobInfo = Instagram.Common.DTOs.Post.BlobInfo;
 
 namespace Instagram.Services.Post.Services
@@ -15,6 +16,8 @@ namespace Instagram.Services.Post.Services
         public BlobService(BlobServiceClient blobServiceClient)
         {
             _blobServiceClient = blobServiceClient;
+            BlobContainerClient container = blobServiceClient.GetBlobContainerClient("images");
+            container.CreateIfNotExists();
         }
 
         public async Task<BlobInfo> GetBlobAsync(string name)
