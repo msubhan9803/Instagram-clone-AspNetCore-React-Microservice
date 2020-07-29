@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8E90FD4F-D463-4550-8EF0-46867B32F7D8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{8E90FD4F-D463-4550-8EF0-46867B32F7D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instagram.Common", "src\Instagram.Common\Instagram.Common.csproj", "{F00C4340-0357-40FF-B68E-558BA24AB42A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instagram.Common", "services\Instagram.Common\Instagram.Common.csproj", "{F00C4340-0357-40FF-B68E-558BA24AB42A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instagram.Services.User", "src\Instagram.Services.User\Instagram.Services.User.csproj", "{8E28430D-BA13-4459-83F6-837EE93983B3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instagram.Services.User", "services\Instagram.Services.User\Instagram.Services.User.csproj", "{8E28430D-BA13-4459-83F6-837EE93983B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instagram.Services.Post", "src\Instagram.Services.Post\Instagram.Services.Post.csproj", "{51F64307-B084-451E-8CCD-25A2A1F8D5E7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instagram.Services.Post", "services\Instagram.Services.Post\Instagram.Services.Post.csproj", "{51F64307-B084-451E-8CCD-25A2A1F8D5E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instagram.ApiGateway", "src\Instagram.ApiGateway\Instagram.ApiGateway.csproj", "{A33FFC1E-5D6C-4680-B725-2E54726B6953}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instagram.ApiGateway", "services\Instagram.ApiGateway\Instagram.ApiGateway.csproj", "{A33FFC1E-5D6C-4680-B725-2E54726B6953}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

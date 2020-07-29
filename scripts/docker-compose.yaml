@@ -16,7 +16,7 @@ services:
       - ./mysql/:/docker-entrypoint-initdb.d
 
   api_gateway_service:
-    build: ../src/Instagram.ApiGateway
+    build: ../backend/services/Instagram.ApiGateway
     container_name: api_gateway
     restart: always
     depends_on:
@@ -29,7 +29,7 @@ services:
       - '8000'
 
   user_service:
-    build: ../src/Instagram.Services.User
+    build: ../backend/services/Instagram.Services.User
     container_name: user
     restart: always
     expose:
@@ -38,7 +38,7 @@ services:
       - mysql_db_service
 
   post_service:
-    build: ../src/Instagram.Services.Post
+    build: ../backend/services/Instagram.Services.Post
     container_name: post
     restart: always
     expose:
