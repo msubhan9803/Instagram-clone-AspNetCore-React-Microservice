@@ -1,0 +1,37 @@
+body {
+    background-color: #fafafa !important;
+}
+
+.wrapper {
+    content: "";
+    display: flex;
+    clear: both;
+    width: 70vw;
+    height: 100vh;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
+    padding: 30px;
+    overflow: auto;
+}
+
+.wrapper-left {
+    float: left;
+}
+
+.wrapper-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    float: left;
+}
+
+.wrapper-left img {
+    width: 400px;
+}

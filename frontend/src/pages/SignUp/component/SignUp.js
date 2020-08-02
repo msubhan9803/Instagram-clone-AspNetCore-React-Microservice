@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {userSignUpPostFetch} from '../../../actions/Authentication';
+import AuthTemplate from '../../../common/components/AuthTemplateHoc';
 
 const SignUp = (props) => {
   const [signUpFormData, setSignUpFormData] = useState({
@@ -69,4 +70,4 @@ const mapDispatchToProps = dispatch => ({
   userSignUpDataPost: userSignUpData => dispatch(userSignUpPostFetch(userSignUpData))
 });
 
-export default connect(null, mapDispatchToProps)(SignUp);
+export default AuthTemplate(connect(null, mapDispatchToProps)(SignUp));
