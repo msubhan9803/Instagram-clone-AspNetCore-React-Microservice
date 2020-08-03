@@ -1,12 +1,13 @@
 body {
     background-color: #fafafa !important;
+    overflow: initial;
 }
 
 .wrapper {
     content: "";
     display: flex;
     clear: both;
-    width: 70vw;
+    width: 800px;
     height: 100vh;
     position: absolute;
     left: 0;
@@ -14,14 +15,19 @@ body {
     top: 0;
     bottom: 0;
     margin: auto;
-    max-width: 100%;
     max-height: 100%;
     padding: 30px;
-    overflow: auto;
 }
 
 .wrapper-left {
     float: left;
+    align-self: center;
+    background-image: url('../../../assets/images/auth-slideshow-phone.png');
+    background-position: -42px 0;
+    background-size: 454px 618px;
+    -ms-flex-preferred-size: 454px;
+    flex-basis: 454px;
+    height: 618px;
 }
 
 .wrapper-right {
@@ -34,4 +40,12 @@ body {
 
 .wrapper-left img {
     width: 400px;
+}
+
+.slide-container img {
+    position: relative;
+    width: 243px;
+    margin-top: 97px;
+    margin-left: 93px;
+    overflow: hidden;
 }

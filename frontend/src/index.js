@@ -6,6 +6,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import '../node_modules/bootstrap';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import '../node_modules/react-slideshow-image/dist/styles.css';
 
 ReactDOM.render(
   <Provider store={store}>

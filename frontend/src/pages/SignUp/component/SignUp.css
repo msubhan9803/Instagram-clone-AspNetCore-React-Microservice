@@ -1,0 +1,40 @@
+.wrapper-content {
+    width: 90% !important;
+}
+
+.form {
+    background-color: #fff;
+    border: 1px solid rgba(var(--b6a,219,219,219),1);
+    box-sizing: border-box;
+    height: auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    width: 100%;
+}
+
+.form-logo img {
+    display: block;
+    margin: auto;
+    width: 200px;
+}
+
+.login-link {
+    display: block;
+    background-color: #fff;
+    border: 1px solid rgba(var(--b6a,219,219,219),1);
+    width: 100%;
+    margin-top: 10px;
+}
+
+.login-link p {
+    font-size: 14px;
+    margin: 15px;
+    text-align: center;
+}
+
+.term p {
+    font-size: 12px;
+    color: #8e8e8e;
+    margin: 7px;
+    text-align: center;
+}
