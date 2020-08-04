@@ -1,3 +1,5 @@
 export default {
-    currentUser: {}
+    currentUser: {},
+    loginErrors: [],
+    registerErrors: []
 }

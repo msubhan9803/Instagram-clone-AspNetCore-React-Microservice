@@ -31,3 +31,10 @@
     margin: 15px;
     text-align: center;
 }
+
+.field-error {
+    font-size: 14px;
+    margin: 15px;
+    text-align: left;
+    color: red;
+}
