@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
+import { withRouter } from "react-router-dom";
 import {userLoginPostFetch} from '../../../actions/Authentication';
 import AuthTemplate from '../../../common/components/AuthTemplateHoc';
 import './Login.css';
@@ -11,6 +12,25 @@ const Login = (props) => {
     fieldErrors: {
       email: "",
       password: ""
+    }
+  });
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const tokenExpiry = localStorage.getItem("expires");
+    var timeStamp = Math.floor(new Date().getTime() / 1000);
+
+    if (token && tokenExpiry) {
+      console.log("TimeStamp: "+timeStamp);
+      console.log("Expies: "+ tokenExpiry);
+      if (timeStamp < tokenExpiry) {
+        console.log("Token is valid");
+        props.history.push('/');
+      } else {
+        console.log("Token is expired");
+        localStorage.removeItem("token");
+        localStorage.removeItem("expires");
+      }
     }
   });
 
@@ -72,6 +92,8 @@ const Login = (props) => {
   };
 
   return (
+    
+
     <div className="wrapper-content">
       <div className="form">
         <div className="form-logo">
@@ -127,7 +149,7 @@ const Login = (props) => {
 
 const mapStateToProps = state => {
   return {
-    loginErrors: state.Authentication.loginErrors
+    loginErrors: state.Login.loginErrors
   }
 }
 
@@ -136,4 +158,4 @@ const mapDispatchToProps = dispatch => ({
 });
 
 
-export default AuthTemplate(connect(mapStateToProps, mapDispatchToProps)(Login));
+export default AuthTemplate(withRouter(connect(mapStateToProps, mapDispatchToProps)(Login)));

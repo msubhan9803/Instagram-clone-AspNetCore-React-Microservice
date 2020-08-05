@@ -110,9 +110,9 @@ const SignUp = (props) => {
         <div className="form-fields d-block m-auto col-md-10">
           <div className="field-error">
             {
-              Array.isArray(props.registerErrors) ? 
-              props.registerErrors.map(error => <p>{error.message}</p>) : 
-              <p>{props.registerErrors}</p>
+              Array.isArray(props.signUpErrors) ? 
+              props.signUpErrors.map(error => <p>{error.message}</p>) : 
+              <p>{props.signUpErrors}</p>
             }
           </div>
           <form onSubmit={handleSubmit}>
@@ -188,7 +188,7 @@ const SignUp = (props) => {
 
 const mapStateToProps = state => {
   return {
-		registerErrors: state.Authentication.registerErrors
+		signUpErrors: state.SignUp.signUpErrors
 	}
 }
 

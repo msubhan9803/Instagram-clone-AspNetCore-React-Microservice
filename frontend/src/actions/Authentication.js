@@ -1,3 +1,5 @@
+import history from "../common/utils/History";
+
 export const userSignUpPostFetch = userSignUpData => {
   return dispatch => {
     return fetch("/user-api/v1/accounts/", {
@@ -13,16 +15,20 @@ export const userSignUpPostFetch = userSignUpData => {
         throw resp.text();
       }
 
-      alert("You have successfully registered! Please Login to continue")
+      dispatch(resetSignUpErrors());
+      alert("You have successfully Registered! Please Login to continue");
+      history.push("/login");
     })
     .catch(error => {
       Promise.resolve(error).then((value) =>{
         var result = JSON.parse(value);
-        console.log(result.errors);
+        
         if (result.error) {
-          dispatch(registerErrors(result.error));
+          console.log(result.error);
+          dispatch(signUpErrors(result.error));
         } else {
-          dispatch(registerErrors(result.errors));
+          console.log(result.errors);
+          dispatch(signUpErrors(result.errors));
         }
       });
     });
@@ -52,12 +58,13 @@ export const userLoginPostFetch = userLoginData => {
       var result = JSON.parse(data);
       localStorage.setItem("token", result.token);
       localStorage.setItem("expires", result.expires);
-      dispatch(loginUser(data.user));
+      history.push("/");
+      dispatch(resetLoginErrors());
     })
     .catch(error => {
       Promise.resolve(error).then((value) =>{
         var result = JSON.parse(value);
-        console.log(result.errors);
+        
         if (result.error) {
           dispatch(loginErrors(result.error));
         } else {
@@ -68,17 +75,20 @@ export const userLoginPostFetch = userLoginData => {
   };
 };
 
-const loginUser = userObj => ({
-    type: 'LOGIN_USER',
-    payload: userObj
-});
-
 const loginErrors = errors => ({
   type: 'LOGIN_ERRORS',
   payload: errors
 });
 
-const registerErrors = errors => ({
-  type: 'REGISTER_ERRORS',
+const resetLoginErrors = () => ({
+  type: 'RESET_LOGIN_ERRORS'
+});
+
+const signUpErrors = errors => ({
+  type: 'SIGNUP_ERRORS',
   payload: errors
+});
+
+const resetSignUpErrors = () => ({
+  type: 'RESET_SIGNUP_ERRORS'
 });
