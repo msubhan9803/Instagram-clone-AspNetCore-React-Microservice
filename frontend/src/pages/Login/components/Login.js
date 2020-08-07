@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import {userLoginPostFetch} from '../../../actions/Authentication';
 import AuthTemplate from '../../../common/components/AuthTemplateHoc';
+import tokenChecker from '../../../common/helpers/tokenChecker';
 import './Login.css';
 
 const Login = (props) => {
@@ -16,21 +17,10 @@ const Login = (props) => {
   });
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const tokenExpiry = localStorage.getItem("expires");
-    var timeStamp = Math.floor(new Date().getTime() / 1000);
+    const tokenValidator = tokenChecker();
 
-    if (token && tokenExpiry) {
-      console.log("TimeStamp: "+timeStamp);
-      console.log("Expies: "+ tokenExpiry);
-      if (timeStamp < tokenExpiry) {
-        console.log("Token is valid");
-        props.history.push('/');
-      } else {
-        console.log("Token is expired");
-        localStorage.removeItem("token");
-        localStorage.removeItem("expires");
-      }
+    if (tokenValidator === true) {
+      props.history.push('/userprofile');
     }
   });
 
@@ -141,7 +131,7 @@ const Login = (props) => {
         </div>
       </div>
       <div className="signup-link">
-        <p>Don't have an account? <a href="/signup">Sign up</a></p>
+        <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
       </div>
     </div>
   );

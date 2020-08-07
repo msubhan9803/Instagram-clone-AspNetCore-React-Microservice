@@ -17,7 +17,7 @@ export const userSignUpPostFetch = userSignUpData => {
 
       dispatch(resetSignUpErrors());
       alert("You have successfully Registered! Please Login to continue");
-      history.push("/login");
+      history.push("/");
     })
     .catch(error => {
       Promise.resolve(error).then((value) =>{
@@ -58,7 +58,7 @@ export const userLoginPostFetch = userLoginData => {
       var result = JSON.parse(data);
       localStorage.setItem("token", result.token);
       localStorage.setItem("expires", result.expires);
-      history.push("/");
+      history.push("/userprofile");
       dispatch(resetLoginErrors());
     })
     .catch(error => {

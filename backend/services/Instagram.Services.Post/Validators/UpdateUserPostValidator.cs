@@ -7,20 +7,14 @@ namespace Instagram.Services.Post.Validators
     {
         public UpdateUserPostValidator()
         {
-            RuleFor(x => x.UserId)
-                .NotEmpty().WithMessage("UserId is required.");
-                
-            RuleFor(x => x.Type)
-                .NotEmpty().WithMessage("Type is required.");
+            RuleFor(x => x.Caption)
+                .NotEmpty().WithMessage("Caption is required.");
 
-            RuleFor(x => x.Title)
-                .NotEmpty().WithMessage("Title is required.");
+            RuleFor(x => x.FileName)
+                .NotEmpty().WithMessage("FileName is required.");
 
-            RuleFor(x => x.Description)
-                .NotEmpty().WithMessage("Description is required.");
-
-            RuleFor(x => x.Url)
-                .NotEmpty().WithMessage("Url is required.");
+            RuleFor(x => x.FilePath)
+                .NotEmpty().WithMessage("FilePath is required.");
         }
     }
 }

@@ -1,7 +1,9 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
+import { withRouter, Link } from 'react-router-dom';
 import {userSignUpPostFetch} from '../../../actions/Authentication';
 import AuthTemplate from '../../../common/components/AuthTemplateHoc';
+import tokenChecker from '../../../common/helpers/tokenChecker';
 import './SignUp.css';
 
 const SignUp = (props) => {
@@ -15,6 +17,14 @@ const SignUp = (props) => {
       email: "",
       password: "",
       confirmPassword: ""
+    }
+  });
+
+  useEffect(() => {
+    const tokenValidator = tokenChecker();
+
+    if (tokenValidator === true) {
+      props.history.push('/userprofile');
     }
   });
 
@@ -180,7 +190,7 @@ const SignUp = (props) => {
         </div>
       </div>
       <div className="login-link">
-        <p>Already have an account? <a href="/login">Login</a></p>
+        <p>Already have an account? <Link to="/">Login</Link></p>
       </div>
     </div>
   );
@@ -196,4 +206,4 @@ const mapDispatchToProps = dispatch => ({
   userSignUpDataPost: userSignUpData => dispatch(userSignUpPostFetch(userSignUpData))
 });
 
-export default AuthTemplate(connect(mapStateToProps, mapDispatchToProps)(SignUp));
+export default AuthTemplate(withRouter(connect(mapStateToProps, mapDispatchToProps)(SignUp)));
