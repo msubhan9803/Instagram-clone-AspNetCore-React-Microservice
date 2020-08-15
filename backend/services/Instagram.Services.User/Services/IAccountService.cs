@@ -8,6 +8,6 @@ namespace Instagram.Services.User.Services
     public interface IAccountService
     {
         Task RegisterAsync(string email, string password, string name);
-        Task<JsonWebToken> LoginAsync(string email, string password);
+        Task<object> LoginAsync(string email, string password);
     }
 }

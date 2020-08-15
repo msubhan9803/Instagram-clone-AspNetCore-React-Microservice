@@ -27,7 +27,9 @@ namespace Instagram.Services.User.Controllers.V1
         {
             try
             {
-                return Json(await _accountService.LoginAsync(user.Email, user.Password));
+                return Json(
+                    await _accountService.LoginAsync(user.Email, user.Password)
+                );
             }
             catch (InstagramException ex)
             {

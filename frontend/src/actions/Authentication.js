@@ -1,5 +1,28 @@
 import history from "../common/utils/History";
 
+const storeUserData = userData => ({
+  type: 'STORE_USER_DATA',
+  payload: userData
+});
+
+const loginErrors = errors => ({
+  type: 'LOGIN_ERRORS',
+  payload: errors
+});
+
+const resetLoginErrors = () => ({
+  type: 'RESET_LOGIN_ERRORS'
+});
+
+const signUpErrors = errors => ({
+  type: 'SIGNUP_ERRORS',
+  payload: errors
+});
+
+const resetSignUpErrors = () => ({
+  type: 'RESET_SIGNUP_ERRORS'
+});
+
 export const userSignUpPostFetch = userSignUpData => {
   return dispatch => {
     return fetch("/user-api/v1/accounts/", {
@@ -54,10 +77,11 @@ export const userLoginPostFetch = userLoginData => {
     })
     .then(resp => resp.text())
     .then(data => {
-      console.log(data);
       var result = JSON.parse(data);
-      localStorage.setItem("token", result.token);
-      localStorage.setItem("expires", result.expires);
+      localStorage.setItem("token", result.token.token);
+      localStorage.setItem("expires", result.token.expires);
+      console.log(result);
+      dispatch(storeUserData(result.user));
       history.push("/userprofile");
       dispatch(resetLoginErrors());
     })
@@ -74,21 +98,3 @@ export const userLoginPostFetch = userLoginData => {
     });
   };
 };
-
-const loginErrors = errors => ({
-  type: 'LOGIN_ERRORS',
-  payload: errors
-});
-
-const resetLoginErrors = () => ({
-  type: 'RESET_LOGIN_ERRORS'
-});
-
-const signUpErrors = errors => ({
-  type: 'SIGNUP_ERRORS',
-  payload: errors
-});
-
-const resetSignUpErrors = () => ({
-  type: 'RESET_SIGNUP_ERRORS'
-});

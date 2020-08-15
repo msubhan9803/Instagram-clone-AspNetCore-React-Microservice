@@ -63,9 +63,7 @@ namespace Instagram.Services.Post.Services
             await _blobService.UploadFileBlobAsync(post.FilePath, post.FileName);
             var postFileModel = new PostFile(post.FileName, "image");
 
-            var userPostModel = _mapper.Map<UserPost>(post);
-            userPostModel.UserId = userId;
-            userPostModel.FileId = postFileModel.Id;
+            var userPostModel = new UserPost(userId, post.Caption, postFileModel.Id);
             await _userPostRepository.CreatePostAsync(userPostModel, postFileModel);
             
             return _mapper.Map<UserPostReadDto>(userPostModel);

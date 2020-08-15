@@ -13,11 +13,6 @@ namespace Instagram.Services.Post.Domain.Models
         public DateTime CreatedAt { get; set; }
         // public DateTime UpdatedAt { get; set; }
 
-        UserPost()
-        {
-            
-        }
-
         public UserPost(Guid userId, string caption, Guid fileId)
         {
             Id = Guid.NewGuid();

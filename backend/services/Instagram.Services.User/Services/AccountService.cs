@@ -21,7 +21,7 @@ namespace Instagram.Services.User.Services
             _jwtHandler = jwtHandler;
         }
 
-        public async Task<JsonWebToken> LoginAsync(string email, string password)
+        public async Task<object> LoginAsync(string email, string password)
         {
             var user = await _accountRepository.GetAsync(email);
             if (user == null)
@@ -35,7 +35,14 @@ namespace Instagram.Services.User.Services
                     $"Invalid credentials.");
             }
 
-            return _jwtHandler.Create(user.Id);
+            return new {
+                token = _jwtHandler.Create(user.Id),
+                user = new {
+                    userId = user.Id,
+                    userName = user.UserName,
+                    email = email
+                } 
+            };
         }
 
         public async Task RegisterAsync(string userName, string email, string password)

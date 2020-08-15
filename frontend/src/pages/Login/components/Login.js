@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import { withRouter, Link } from "react-router-dom";
 import {userLoginPostFetch} from '../../../actions/Authentication';
 import AuthTemplate from '../../../common/components/AuthTemplateHoc';
-import tokenChecker from '../../../common/helpers/tokenChecker';
+import TokenChecker from '../../../common/helpers/TokenChecker';
 import './Login.css';
 
 const Login = (props) => {
@@ -17,7 +17,7 @@ const Login = (props) => {
   });
 
   useEffect(() => {
-    const tokenValidator = tokenChecker();
+    const tokenValidator = TokenChecker();
 
     if (tokenValidator === true) {
       props.history.push('/userprofile');
@@ -82,8 +82,6 @@ const Login = (props) => {
   };
 
   return (
-    
-
     <div className="wrapper-content">
       <div className="form">
         <div className="form-logo">

@@ -119,7 +119,7 @@ namespace Instagram.Services.Post.Controllers.V1
 
         //DELETE api/v1/userPosts/{id}
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteCommand(Guid id)
+        public async Task<ActionResult> DeleteUserPostAsync(Guid id)
         {
             var userPostModel = await _userPostService.DeletePostAsync(id);
             if (userPostModel != null)

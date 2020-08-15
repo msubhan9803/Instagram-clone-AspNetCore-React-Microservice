@@ -1,0 +1,19 @@
+.navbar {
+    background-color: #fff;
+    -webkit-box-shadow: 0 4px 5px -5px #999;
+    -moz-box-shadow: 0 4px 5px -5px #999;
+    box-shadow: 0 4px 5px -5px #999;
+}
+
+.navbar img {
+    width: 103px;
+    height: 30px;
+}
+
+.search-field {
+    font-family: Arial, FontAwesome;
+    font-size: 0.85rem !important;
+    text-align: center !important;
+    background-color: #fafafa !important;
+    height: 28px !important;
+}
