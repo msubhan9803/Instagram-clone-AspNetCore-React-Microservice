@@ -9,12 +9,6 @@ namespace Instagram.Services.Post.Validators
         {
             RuleFor(x => x.Caption)
                 .NotEmpty().WithMessage("Caption is required.");
-
-            RuleFor(x => x.FileName)
-                .NotEmpty().WithMessage("FileName is required.");
-
-            RuleFor(x => x.FilePath)
-                .NotEmpty().WithMessage("FilePath is required.");
         }
     }
 }

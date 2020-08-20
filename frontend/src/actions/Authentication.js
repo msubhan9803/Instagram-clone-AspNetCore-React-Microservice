@@ -1,8 +1,12 @@
 import history from "../common/utils/History";
 
-const storeUserData = userData => ({
+const storeCurrentUserData = userData => ({
   type: 'STORE_USER_DATA',
   payload: userData
+});
+
+const logoutCurrentUser = ({
+  type: 'LOGOUT_USER'
 });
 
 const loginErrors = errors => ({
@@ -80,8 +84,7 @@ export const userLoginPostFetch = userLoginData => {
       var result = JSON.parse(data);
       localStorage.setItem("token", result.token.token);
       localStorage.setItem("expires", result.token.expires);
-      console.log(result);
-      dispatch(storeUserData(result.user));
+      dispatch(storeCurrentUserData(result.user));
       history.push("/userprofile");
       dispatch(resetLoginErrors());
     })
@@ -96,5 +99,16 @@ export const userLoginPostFetch = userLoginData => {
         }
       });
     });
+  };
+};
+
+export const logoutUser = () => {
+  return dispatch => {
+    return () => {
+      dispatch(logoutCurrentUser);
+      localStorage.removeItem("token");
+      localStorage.removeItem("expires");
+      history.push("/");
+    }
   };
 };

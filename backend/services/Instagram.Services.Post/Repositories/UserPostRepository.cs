@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Instagram.Common.DTOs.Post;
 using Instagram.Common.Exceptions;
 using Instagram.Services.Post.Data;
 using Instagram.Services.Post.Domain.Models;
@@ -19,19 +20,67 @@ namespace Instagram.Services.Post.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<UserPost>> GetAllPostsAsync()
+        public async Task<IEnumerable<UserPostReadDto>> GetAllPostsAsync()
         {
-            return await _context.Posts.ToListAsync();
+            var result = await (
+                        from post in _context.Set<UserPost>()
+                        join postFile in _context.Set<PostFile>()
+                        on post.FileId equals postFile.Id
+                        select (new UserPostReadDto {
+                            Id = post.Id,
+                            UserId = post.UserId,
+                            Caption = post.Caption,
+                            FileId = post.FileId,
+                            FileType = postFile.Type,
+                            CreatedAt = post.CreatedAt
+                        })
+                        ).ToListAsync();
+
+            return result;
         }
 
-        public async Task<UserPost> GetPostByIdAsync(Guid id)
+        public async Task<UserPost> GetPostModelByIdAsync(Guid id)
         {
             return await _context.Posts.FindAsync(id);
         }
 
-        public async Task<IEnumerable<UserPost>> GetPostByUserIdAsync(Guid userId)
+        public async Task<UserPostReadDto> GetPostByIdAsync(Guid id)
         {
-            return await _context.Posts.Where(x => x.UserId == userId).ToListAsync();
+            var result = await (
+                            from post in _context.Set<UserPost>()
+                            join postFile in _context.Set<PostFile>()
+                            on post.FileId equals postFile.Id
+                            where post.Id == id
+                            select (new UserPostReadDto {
+                                Id = post.Id,
+                                UserId = post.UserId,
+                                Caption = post.Caption,
+                                FileId = post.FileId,
+                                FileType = postFile.Type,
+                                CreatedAt = post.CreatedAt
+                            })
+                        ).FirstOrDefaultAsync();
+
+            return result;
+        }
+
+        public async Task<IEnumerable<UserPostReadDto>> GetPostByUserIdAsync(Guid userId)
+        {
+            var result = await (
+                        from post in _context.Set<UserPost>()
+                        join postFile in _context.Set<PostFile>()
+                        on post.FileId equals postFile.Id
+                        select (new UserPostReadDto {
+                            Id = post.Id,
+                            UserId = post.UserId,
+                            Caption = post.Caption,
+                            FileId = post.FileId,
+                            FileType = postFile.Type,
+                            CreatedAt = post.CreatedAt
+                        })
+                        ).ToListAsync();
+
+            return result;
         }
 
         public async Task CreatePostAsync(UserPost post, PostFile postFileModel)

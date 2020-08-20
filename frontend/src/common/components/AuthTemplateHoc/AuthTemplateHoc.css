@@ -42,6 +42,10 @@ body {
     width: 400px;
 }
 
+.slide-container {
+    z-index: 1000;
+}
+
 .slide-container img {
     position: relative;
     width: 243px;

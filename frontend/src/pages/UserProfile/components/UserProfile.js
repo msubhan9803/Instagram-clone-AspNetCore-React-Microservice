@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
-import TokenChecker from '../../../common/helpers/TokenChecker';
 import './UserProfile.css';
 import Navbar from '../../../common/components/Navbar';
 import PostModal from '../../../common/components/PostModal';
-import {getUserProfileData} from '../../../actions/UserProfile';
+import {getUserProfileData, clearUserProfileData} from '../../../actions/UserProfile';
+import {logoutUser} from '../../../actions/Authentication';
 
 const UserProfile = (props) => {
   const [postModalState, setPostModalState] = useState({
@@ -13,19 +13,18 @@ const UserProfile = (props) => {
   });
 
   useEffect(() => {
-    const tokenValidator = TokenChecker();
-
-    if (tokenValidator === false || tokenValidator === null) {
-      props.history.push('/');
-    }
-    console.log("here");
     props.getUserProfileDataAction(props.currentUserData.userId);
-  });
+  }, []);
 
   const toggleModal = () => setPostModalState({
     ...postModalState,
     visible: !postModalState.visible
   });
+
+  const logout = event => {
+    event.preventDefault();
+    props.logoutUser();
+  };
 
   return (
     <React.Fragment>
@@ -39,7 +38,7 @@ const UserProfile = (props) => {
             </div>
           <div className="container profile-desc col-8 p-2">
             <div className="row align-items-center">
-              <h3 className="mb-0">subisubhan</h3>
+              <h3 className="mb-0">{props.currentUserData.userName}</h3>
               <Link className="btn ml-4" to='/'>Edit Profile</Link>
               <i className="fa fa-2x fa-bars ml-4"></i>
             </div>
@@ -47,6 +46,18 @@ const UserProfile = (props) => {
               <p><b>10</b> posts</p>
               <p className="ml-5"><b>165</b> followers</p>
               <p className="ml-5"><b>120</b> following</p>
+            </div>
+            <div className="row">
+              <p>
+                {props.userBio.text}
+                <br/>
+                {props.userBio.gender}
+                <br/>
+                {props.userBio.websiteUrl}
+              </p>
+            </div>
+            <div className="row">
+              <button className="btn btn-outline-primary" onClick={logout}>Logout</button>
             </div>
           </div>
         </div>
@@ -76,12 +87,16 @@ const UserProfile = (props) => {
 
 const mapStateToProps = state => {
   return {
-    currentUserData: state.Login.currentUserData
+    currentUserData: state.Login.currentUserData,
+    userBio: state.UserProfile.userBio,
+    userPosts: state.UserProfile.userPosts
   }
 };
 
 const mapDispatchToProps = dispatch => ({
-  getUserProfileDataAction: (userId) => dispatch(getUserProfileData(userId))
+  getUserProfileDataAction: (userId) => dispatch(getUserProfileData(userId)),
+  clearUserProfileDataAction: () => dispatch(clearUserProfileData),
+  logoutUser: dispatch(logoutUser())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);

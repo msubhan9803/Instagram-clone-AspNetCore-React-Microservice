@@ -20,7 +20,12 @@ namespace Instagram.ApiGateway
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((host, config) => {
-                    config.AddJsonFile("ocelot.json");
+                    if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+                    {
+                        config.AddJsonFile("ocelot.Development.json");
+                    } else {
+                        config.AddJsonFile("ocelot.json");
+                    }
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

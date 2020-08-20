@@ -5,8 +5,8 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                     {
-                        "Host": "user_service",
-                        "Port": 9000
+                        "Host": "localhost",
+                        "Port": 4000
                     }
                 ],
             "UpstreamPathTemplate": "/user-api/{version}/{catchAll}"
@@ -16,8 +16,8 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "user_service",
-                    "Port": 9000
+                    "Host": "localhost",
+                    "Port": 4000
                 }
             ],
             "UpstreamHttpMethod": [
@@ -28,7 +28,7 @@
         },
         {
             "DownstreamHeaderTransform": {
-                "Location": "http://post_service:9001/api, {BaseUrl}/post-api"
+                "Location": "http://localhost:4002/api, {BaseUrl}/post-api"
             },
              "HttpHandlerOptions": {
                 "AllowAutoRedirect": false
@@ -37,8 +37,8 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                     {
-                        "Host": "post_service",
-                        "Port": 9001
+                        "Host": "localhost",
+                        "Port": 4002
                     }
                 ],
             "UpstreamPathTemplate": "/post-api/{version}/{catchAll}"
@@ -48,8 +48,8 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "post_service",
-                    "Port": 9001
+                    "Host": "localhost",
+                    "Port": 4002
                 }
             ],
             "UpstreamHttpMethod": [
@@ -69,6 +69,6 @@
         }
     ],
     "GlobalConfiguration": {
-        "BaseUrl": "http://localhost:8000"
+        "BaseUrl": "http://localhost:8080"
     }
 }

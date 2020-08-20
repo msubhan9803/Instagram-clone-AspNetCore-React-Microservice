@@ -41,11 +41,14 @@ namespace Instagram.Services.Post.Services
             return items;
         }
 
-        public async Task UploadFileBlobAsync(string filePath, string fileName)
+        public async Task UploadFileBlobAsync(IFormFile file)
         {
             var containerClient = _blobServiceClient.GetBlobContainerClient("images");
-            var blobClient = containerClient.GetBlobClient(fileName);
-            await blobClient.UploadAsync(filePath, new BlobHttpHeaders {ContentType = filePath.GetContentType()});
+            var blob = containerClient.GetBlobClient(file.FileName);
+
+            using(var stream = file.OpenReadStream()) {
+                await blob.UploadAsync(stream, new BlobHttpHeaders {ContentType = file.FileName.GetContentType()});
+            }
         }
     }
 }

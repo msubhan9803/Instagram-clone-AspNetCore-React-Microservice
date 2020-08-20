@@ -26,9 +26,7 @@ namespace Instagram.Services.Post.Services
 
         public async Task<IEnumerable<UserPostReadDto>> GetAllPostsAsync()
         {
-            var userPosts = await _userPostRepository.GetAllPostsAsync();
-
-            return _mapper.Map<IEnumerable<UserPostReadDto>>(userPosts);
+            return await _userPostRepository.GetAllPostsAsync();
         }
 
         public async Task<UserPostReadDto> GetPostByIdAsync(Guid id)
@@ -39,9 +37,7 @@ namespace Instagram.Services.Post.Services
                     $"User Id is required, can't be null.");
             }
 
-            var userPost = await _userPostRepository.GetPostByIdAsync(id);
-            
-            return _mapper.Map<UserPostReadDto>(userPost);
+            return await _userPostRepository.GetPostByIdAsync(id);
         }
 
         public async Task<IEnumerable<UserPostReadDto>> GetPostByUserIdAsync(Guid userId)
@@ -52,26 +48,24 @@ namespace Instagram.Services.Post.Services
                     $"User Id is required, can't be null.");
             }
 
-            var userPost = await _userPostRepository.GetPostByUserIdAsync(userId);
-            
-            return _mapper.Map<IEnumerable<UserPostReadDto>>(userPost);
+            return await _userPostRepository.GetPostByUserIdAsync(userId);
         }
 
         public async Task<UserPostReadDto> CreatePostAsync(Guid userId, UserPostCreateDto post)
         {
             // normalize fileName
-            await _blobService.UploadFileBlobAsync(post.FilePath, post.FileName);
-            var postFileModel = new PostFile(post.FileName, "image");
+            await _blobService.UploadFileBlobAsync(post.File);
+            var postFileModel = new PostFile(post.File.FileName, "image");
 
             var userPostModel = new UserPost(userId, post.Caption, postFileModel.Id);
             await _userPostRepository.CreatePostAsync(userPostModel, postFileModel);
             
-            return _mapper.Map<UserPostReadDto>(userPostModel);
+            return await _userPostRepository.GetPostByIdAsync(userPostModel.Id);
         }
 
         public async Task<UserPost> UpdatePostAsync(Guid id, UserPostUpdateDto post)
         {
-            var userPostModel = await _userPostRepository.GetPostByIdAsync(id);
+            var userPostModel = await _userPostRepository.GetPostModelByIdAsync(id);
 
             if(userPostModel == null)
             {
@@ -86,7 +80,7 @@ namespace Instagram.Services.Post.Services
 
         public async Task<UserPost> DeletePostAsync(Guid id)
         {
-            var userPostModel = await _userPostRepository.GetPostByIdAsync(id);
+            var userPostModel = await _userPostRepository.GetPostModelByIdAsync(id);
             
             if(userPostModel == null)
             {

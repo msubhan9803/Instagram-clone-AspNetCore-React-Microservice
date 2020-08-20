@@ -1,12 +1,6 @@
 import React from 'react';
 import './AuthTemplateHoc.css';
-import { Fade } from 'react-slideshow-image';
-
-const slideshowProps = {
-    duration: 2000,
-    transitionDuration: 1500,
-    arrows: false
-  };
+import { Carousel } from 'antd';
 
 const authTemplate = (WrapComponent) => {
     const componentWithAuthTemplate = () =>{
@@ -14,7 +8,7 @@ const authTemplate = (WrapComponent) => {
             <div className="wrapper">
                 <div className="wrapper-left col-sm-6 col-md-6">
                     <div className="slide-container">
-                        <Fade {...slideshowProps}>
+                        <Carousel effect="fade" speed="2000" autoplay>
                             <div className="each-fade">
                                 <div className="image-container">
                                     <img src={require('../../../assets/images/slideshow-img-1.jpg')} alt="slideshow-1"/>
@@ -40,7 +34,7 @@ const authTemplate = (WrapComponent) => {
                                     <img src={require('../../../assets/images/slideshow-img-5.jpg')} alt="slideshow-5"/>
                                 </div>
                             </div>
-                        </Fade>
+                        </Carousel>
                     </div>
                 </div>
                 <div className="wrapper-right ml-1 col-sm-6 col-md-6">

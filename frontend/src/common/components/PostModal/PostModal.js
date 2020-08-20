@@ -3,12 +3,10 @@ import { Modal } from 'antd';
 
 const PostModal = (props) => {
     const handleOk = e => {
-        console.log(e);
         props.toggleModal();
     };
     
     const handleCancel = e => {
-        console.log(e);
         props.toggleModal();
     };
 
