@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Instagram.Services.Post.Domain.Models
@@ -11,7 +12,6 @@ namespace Instagram.Services.Post.Domain.Models
         public string Caption { get; set; }
         public Guid FileId { get; set; }
         public DateTime CreatedAt { get; set; }
-        // public DateTime UpdatedAt { get; set; }
 
         public UserPost(Guid userId, string caption, Guid fileId)
         {
@@ -20,6 +20,16 @@ namespace Instagram.Services.Post.Domain.Models
             Caption = caption;
             FileId = fileId;
             CreatedAt = DateTime.UtcNow;
+            CreatedAt = new DateTime(
+                                CreatedAt.Year, 
+                                CreatedAt.Month, 
+                                CreatedAt.Day, 
+                                CreatedAt.Hour, 
+                                CreatedAt.Minute, 
+                                CreatedAt.Second, 
+                                CreatedAt.Kind
+                            );
+            Console.WriteLine(CreatedAt);
         }
     }
 }

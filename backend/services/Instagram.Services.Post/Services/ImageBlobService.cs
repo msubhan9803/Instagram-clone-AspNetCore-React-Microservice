@@ -9,11 +9,11 @@ using BlobInfo = Instagram.Common.DTOs.Post.BlobInfo;
 
 namespace Instagram.Services.Post.Services
 {
-    public class BlobService : IBlobService
+    public class ImageBlobService : IImageBlobService
     {
         private readonly BlobServiceClient _blobServiceClient;
 
-        public BlobService(BlobServiceClient blobServiceClient)
+        public ImageBlobService(BlobServiceClient blobServiceClient)
         {
             _blobServiceClient = blobServiceClient;
             BlobContainerClient container = blobServiceClient.GetBlobContainerClient("images");

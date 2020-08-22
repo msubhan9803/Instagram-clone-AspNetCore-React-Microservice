@@ -26,6 +26,7 @@ namespace Instagram.Services.Post.Repositories
                         from post in _context.Set<UserPost>()
                         join postFile in _context.Set<PostFile>()
                         on post.FileId equals postFile.Id
+                        orderby post.CreatedAt descending
                         select (new UserPostReadDto {
                             Id = post.Id,
                             UserId = post.UserId,
@@ -70,6 +71,7 @@ namespace Instagram.Services.Post.Repositories
                         from post in _context.Set<UserPost>()
                         join postFile in _context.Set<PostFile>()
                         on post.FileId equals postFile.Id
+                        orderby post.CreatedAt descending
                         select (new UserPostReadDto {
                             Id = post.Id,
                             UserId = post.UserId,

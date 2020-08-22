@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Instagram.Services.Post.Services
 {
-    public interface IBlobService
+    public interface IImageBlobService
     {
         Task<BlobInfo> GetBlobAsync(string name);
 

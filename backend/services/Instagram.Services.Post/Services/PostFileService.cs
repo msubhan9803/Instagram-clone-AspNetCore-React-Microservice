@@ -8,18 +8,27 @@ namespace Instagram.Services.Post.Services
     public class PostFileService : IPostFileService
     {
         public IPostFileRepository _postFileRepository;
-        private readonly IBlobService _blobService;
-        public PostFileService(IPostFileRepository postFileRepository, IBlobService blobService)
+        private readonly IImageBlobService _imageBlobService;
+        private readonly IVideoBlobService _videoBlobService;
+        public PostFileService(IPostFileRepository postFileRepository, 
+            IImageBlobService blobService, IVideoBlobService videoBlobService)
         {
-            _blobService = blobService;
+            _imageBlobService = blobService;
             _postFileRepository = postFileRepository;
-
+            _videoBlobService = videoBlobService;
         }
 
         public async Task<BlobInfo> GetPostFileAsync(Guid postFileId)
         {
-            var postFileName = await _postFileRepository.GetPostFileNameByIdAsync(postFileId);
-            return await _blobService.GetBlobAsync(postFileName);
+            var postFile = await _postFileRepository.GetPostFileByIdAsync(postFileId);
+
+            if (postFile.Type == "image")
+            {
+                return await _imageBlobService.GetBlobAsync(postFile.Name);
+            } else {
+                return await _videoBlobService.GetBlobAsync(postFile.Name);
+            }
+            
         }
     }
 }

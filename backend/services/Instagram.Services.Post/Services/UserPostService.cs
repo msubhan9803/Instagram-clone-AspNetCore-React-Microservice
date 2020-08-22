@@ -6,6 +6,7 @@ using Instagram.Common.DTOs.Post;
 using Instagram.Common.Exceptions;
 using Instagram.Services.Post.Domain.Models;
 using Instagram.Services.Post.Domain.Repositories;
+using Instagram.Services.Post.Extensions;
 using Newtonsoft.Json;
 
 namespace Instagram.Services.Post.Services
@@ -13,15 +14,17 @@ namespace Instagram.Services.Post.Services
     public class UserPostService : IUserPostService
     {
         private readonly IUserPostRepository _userPostRepository;
-        private readonly IBlobService _blobService;
+        private readonly IImageBlobService _imageBlobService;
+        private readonly IVideoBlobService _videoBlobService;
         private readonly IMapper _mapper;
 
-        public UserPostService(IUserPostRepository userPostRepository, 
-            IBlobService blobService, IMapper mapper = null)
+        public UserPostService(IUserPostRepository userPostRepository,
+            IImageBlobService blobService, IMapper mapper = null, IVideoBlobService videoBlobService = null)
         {
             _userPostRepository = userPostRepository;
             _mapper = mapper;
-            _blobService = blobService;
+            _imageBlobService = blobService;
+            _videoBlobService = videoBlobService;
         }
 
         public async Task<IEnumerable<UserPostReadDto>> GetAllPostsAsync()
@@ -34,7 +37,7 @@ namespace Instagram.Services.Post.Services
             if (id == null)
             {
                 throw new InstagramException("id_is_null",
-                    $"User Id is required, can't be null.");
+                    $"Id is required, can't be null.");
             }
 
             return await _userPostRepository.GetPostByIdAsync(id);
@@ -53,10 +56,16 @@ namespace Instagram.Services.Post.Services
 
         public async Task<UserPostReadDto> CreatePostAsync(Guid userId, UserPostCreateDto post)
         {
-            // normalize fileName
-            await _blobService.UploadFileBlobAsync(post.File);
-            var postFileModel = new PostFile(post.File.FileName, "image");
+            var contentType = post.File.FileName.GetContentType().Substring(0, 5);
+            
+            if (contentType == "image")
+            {
+                await _imageBlobService.UploadFileBlobAsync(post.File);
+            } else if (contentType == "video") {
+                await _videoBlobService.UploadFileBlobAsync(post.File);
+            }
 
+            var postFileModel = new PostFile(post.File.FileName, contentType);
             var userPostModel = new UserPost(userId, post.Caption, postFileModel.Id);
             await _userPostRepository.CreatePostAsync(userPostModel, postFileModel);
             

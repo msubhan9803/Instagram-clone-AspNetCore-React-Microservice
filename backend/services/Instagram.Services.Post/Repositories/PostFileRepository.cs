@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Instagram.Services.Post.Data;
+using Instagram.Services.Post.Domain.Models;
 using Instagram.Services.Post.Domain.Repositories;
 
 namespace Instagram.Services.Post.Repositories
@@ -14,10 +15,10 @@ namespace Instagram.Services.Post.Repositories
 
         }
 
-        public async Task<string> GetPostFileNameByIdAsync(Guid postFileId)
+        public async Task<PostFile> GetPostFileByIdAsync(Guid postFileId)
         {
             var postFile = await _context.PostFiles.FindAsync(postFileId);
-            return postFile.Name;
+            return postFile;
         }
     }
 }
