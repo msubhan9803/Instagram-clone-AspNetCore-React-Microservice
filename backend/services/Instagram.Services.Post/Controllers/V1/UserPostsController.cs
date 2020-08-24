@@ -63,6 +63,7 @@ namespace Instagram.Services.Post.Controllers.V1
             }
         }
 
+        [AllowAnonymous]
         // GET: api/v1/userposts/file/{postFileId}
         [HttpGet("file/{postFileId}", Name = "GetUserPostFileByPostFileIdAsync")]
         public async Task<IActionResult> GetUserPostFileByPostFileIdAsync(Guid postFileId)

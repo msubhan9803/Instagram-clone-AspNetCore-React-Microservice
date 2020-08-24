@@ -6,6 +6,7 @@ import Navbar from '../../../common/components/Navbar';
 import PostModal from '../../../common/components/PostModal';
 import {getUserProfileData, clearUserProfileData} from '../../../actions/UserProfile';
 import {logoutUser} from '../../../actions/Authentication';
+import {postFileUrl} from '../constants';
 
 const UserProfile = (props) => {
   const [postModalState, setPostModalState] = useState({
@@ -68,8 +69,24 @@ const UserProfile = (props) => {
           <div className="row justify-content-center">
             <div className="post-gallery">
               <PostModal visible={postModalState.visible} toggleModal={toggleModal} />
-              
-              <img className="p-3" onClick={toggleModal} src="https://instagram.flyp1-1.fna.fbcdn.net/v/t51.2885-19/s150x150/17266075_1962256160661159_275316685097926656_a.jpg?_nc_ht=instagram.flyp1-1.fna.fbcdn.net&_nc_ohc=ram0norGLDEAX8_HgEu&oh=db4fba2f68a103ce555c7fe291b05b79&oe=5F578D24" alt=""/>
+
+              {props.userPosts.map((post, index) => {
+                if (post.fileType === "image")
+                {
+                  return <img key={index} className="p-3" onClick={toggleModal} src={postFileUrl + post.fileId} alt=""/>;
+                }
+                 else if (post.fileType === "video")
+                {
+                  return (
+                    <video key={index} className="post" controls>
+                      <source src={postFileUrl + post.fileId} type="video/mp4" />
+                    </video>
+                  );
+                }
+                return null;
+              })}
+
+              {/* <img className="p-3" onClick={toggleModal} src="https://instagram.flyp1-1.fna.fbcdn.net/v/t51.2885-19/s150x150/17266075_1962256160661159_275316685097926656_a.jpg?_nc_ht=instagram.flyp1-1.fna.fbcdn.net&_nc_ohc=ram0norGLDEAX8_HgEu&oh=db4fba2f68a103ce555c7fe291b05b79&oe=5F578D24" alt=""/>
               <img className="p-3" onClick={toggleModal} src="https://instagram.flyp1-1.fna.fbcdn.net/v/t51.2885-19/s150x150/17266075_1962256160661159_275316685097926656_a.jpg?_nc_ht=instagram.flyp1-1.fna.fbcdn.net&_nc_ohc=ram0norGLDEAX8_HgEu&oh=db4fba2f68a103ce555c7fe291b05b79&oe=5F578D24" alt=""/>
               <img className="p-3" onClick={toggleModal} src="https://instagram.flyp1-1.fna.fbcdn.net/v/t51.2885-19/s150x150/17266075_1962256160661159_275316685097926656_a.jpg?_nc_ht=instagram.flyp1-1.fna.fbcdn.net&_nc_ohc=ram0norGLDEAX8_HgEu&oh=db4fba2f68a103ce555c7fe291b05b79&oe=5F578D24" alt=""/>
               <img className="p-3" onClick={toggleModal} src="https://instagram.flyp1-1.fna.fbcdn.net/v/t51.2885-19/s150x150/17266075_1962256160661159_275316685097926656_a.jpg?_nc_ht=instagram.flyp1-1.fna.fbcdn.net&_nc_ohc=ram0norGLDEAX8_HgEu&oh=db4fba2f68a103ce555c7fe291b05b79&oe=5F578D24" alt=""/>
