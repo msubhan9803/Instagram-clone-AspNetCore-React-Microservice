@@ -1,26 +1,27 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <ItemGroup>
-    <ProjectReference Include="..\Instagram.Common\Instagram.Common.csproj" />
+    <ProjectReference Include="..\Instagram.Common\Instagram.Common.csproj"/>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.4.4"/>
+    <PackageReference Include="RawRabbit" Version="2.0.0-beta8"/>
+    <PackageReference Include="RawRabbit.DependencyInjection.ServiceCollection" Version="2.0.0-beta8"/>
+    <PackageReference Include="RawRabbit.Operations.Publish" Version="2.0.0-beta8"/>
+    <PackageReference Include="RawRabbit.Operations.Subscribe" Version="2.0.0-beta8"/>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.5"/>
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.0"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.5"/>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="8.5.0"/>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.3.1"/>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.1.1"/>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0"/>
+    <PackageReference Include="System.Drawing.Common" Version="4.7.0"/>
+    <PackageReference Include="FFMpegCore" Version="2.2.6"/>
   </ItemGroup>
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
     <UserSecretsId>563cd4c8-2e75-4a56-a0b3-aebb39b04c6b</UserSecretsId>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Azure.Storage.Blobs" Version="12.4.4" />
-    <PackageReference Include="RawRabbit" Version="2.0.0-beta8" />
-    <PackageReference Include="RawRabbit.DependencyInjection.ServiceCollection" Version="2.0.0-beta8" />
-    <PackageReference Include="RawRabbit.Operations.Publish" Version="2.0.0-beta8" />
-    <PackageReference Include="RawRabbit.Operations.Subscribe" Version="2.0.0-beta8" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.5" />
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.5" />
-    <PackageReference Include="FluentValidation.AspNetCore" Version="8.5.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.3.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.1.1" />
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
-  </ItemGroup>
 </Project>

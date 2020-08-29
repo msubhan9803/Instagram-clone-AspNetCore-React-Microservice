@@ -28,7 +28,18 @@ namespace Instagram.Services.Post.Services
             } else {
                 return await _videoBlobService.GetBlobAsync(postFile.Name);
             }
-            
+        }
+
+        public async Task<BlobInfo> GetPostFileTHumbnailAsync(Guid postFileId)
+        {
+            var postFileThumb = await _postFileRepository.GetPostFileThumbnailByIdAsync(postFileId);
+
+            if (postFileThumb != null)
+            {
+                return await _imageBlobService.GetBlobAsync(postFileThumb);
+            }
+
+            return null;
         }
     }
 }

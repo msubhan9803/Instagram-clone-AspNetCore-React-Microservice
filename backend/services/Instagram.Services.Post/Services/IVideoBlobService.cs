@@ -12,6 +12,6 @@ namespace Instagram.Services.Post.Services
 
         Task<IEnumerable<string>> ListBlobsAsync();
 
-        Task UploadFileBlobAsync(IFormFile file);
+        Task UploadFileBlobAsync(IFormFile file, string fileNewName);
     }
 }

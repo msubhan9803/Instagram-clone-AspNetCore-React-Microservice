@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Instagram.Common.DTOs.Post;
 using Instagram.Services.Post.Domain.Models;
@@ -12,6 +13,7 @@ namespace Instagram.Services.Post.Services
 
         Task<IEnumerable<string>> ListBlobsAsync();
 
-        Task UploadFileBlobAsync(IFormFile file);
+        Task UploadFileBlobAsync(IFormFile file, string fileNewName);
+        Task UploadFileBlobAsync(Stream file, string fileNewName);
     }
 }

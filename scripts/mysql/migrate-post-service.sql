@@ -10,7 +10,6 @@ CREATE TABLE IF NOT EXISTS `__EFMigrationsHistory` (
     CONSTRAINT `PK___EFMigrationsHistory` PRIMARY KEY (`MigrationId`)
 );
 
-
 DROP PROCEDURE IF EXISTS MigrationsScript;
 DELIMITER //
 CREATE PROCEDURE MigrationsScript()
@@ -85,4 +84,32 @@ CALL MigrationsScript();
 DROP PROCEDURE MigrationsScript;
 
 
+DROP PROCEDURE IF EXISTS MigrationsScript;
+DELIMITER //
+CREATE PROCEDURE MigrationsScript()
+BEGIN
+    IF NOT EXISTS(SELECT 1 FROM `__EFMigrationsHistory` WHERE `MigrationId` = '20200827155504_UpdatedPostFile') THEN
 
+    ALTER TABLE `PostFiles` ADD `Thumbail` longtext CHARACTER SET utf8mb4 NULL;
+
+    END IF;
+END //
+DELIMITER ;
+CALL MigrationsScript();
+DROP PROCEDURE MigrationsScript;
+
+
+DROP PROCEDURE IF EXISTS MigrationsScript;
+DELIMITER //
+CREATE PROCEDURE MigrationsScript()
+BEGIN
+    IF NOT EXISTS(SELECT 1 FROM `__EFMigrationsHistory` WHERE `MigrationId` = '20200827155504_UpdatedPostFile') THEN
+
+    INSERT INTO `__EFMigrationsHistory` (`MigrationId`, `ProductVersion`)
+    VALUES ('20200827155504_UpdatedPostFile', '3.1.5');
+
+    END IF;
+END //
+DELIMITER ;
+CALL MigrationsScript();
+DROP PROCEDURE MigrationsScript;

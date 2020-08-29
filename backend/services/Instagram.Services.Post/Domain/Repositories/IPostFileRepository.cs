@@ -7,5 +7,6 @@ namespace Instagram.Services.Post.Domain.Repositories
     public interface IPostFileRepository
     {
         Task<PostFile> GetPostFileByIdAsync(Guid postFileId);
+        Task<string> GetPostFileThumbnailByIdAsync(Guid postFileId);
     }
 }

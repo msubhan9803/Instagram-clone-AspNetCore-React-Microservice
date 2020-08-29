@@ -20,6 +20,7 @@ namespace Instagram.Services.Post.Installers
             services.AddScoped<IImageBlobService, ImageBlobService>();
             services.AddScoped<IVideoBlobService, VideoBlobService>();
             services.AddScoped<IPostFileService, PostFileService>();
+            services.AddScoped<IFileOptimizationService, FileOptimizationService>();
             services.AddScoped<IPostFileRepository, PostFileRepository>();
         }
     }

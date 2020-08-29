@@ -41,10 +41,10 @@ namespace Instagram.Services.Post.Services
             return items;
         }
 
-        public async Task UploadFileBlobAsync(IFormFile file)
+        public async Task UploadFileBlobAsync(IFormFile file, string fileNewName)
         {
             var containerClient = _blobServiceClient.GetBlobContainerClient("videos");
-            var blob = containerClient.GetBlobClient(file.FileName);
+            var blob = containerClient.GetBlobClient(fileNewName);
 
             using(var stream = file.OpenReadStream()) {
                 await blob.UploadAsync(stream, new BlobHttpHeaders {ContentType = file.FileName.GetContentType()});

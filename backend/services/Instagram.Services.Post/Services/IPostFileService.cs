@@ -7,5 +7,6 @@ namespace Instagram.Services.Post.Services
     public interface IPostFileService
     {
         Task<BlobInfo> GetPostFileAsync(Guid postFileId);
+        Task<BlobInfo> GetPostFileTHumbnailAsync(Guid postFileId);
     }
 }

@@ -20,5 +20,11 @@ namespace Instagram.Services.Post.Repositories
             var postFile = await _context.PostFiles.FindAsync(postFileId);
             return postFile;
         }
+
+        public async Task<string> GetPostFileThumbnailByIdAsync(Guid postFileId)
+        {
+            var postFile = await _context.PostFiles.FindAsync(postFileId);
+            return postFile.Thumbail;
+        }
     }
 }

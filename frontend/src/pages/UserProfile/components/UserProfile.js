@@ -6,21 +6,37 @@ import Navbar from '../../../common/components/Navbar';
 import PostModal from '../../../common/components/PostModal';
 import {getUserProfileData, clearUserProfileData} from '../../../actions/UserProfile';
 import {logoutUser} from '../../../actions/Authentication';
-import {postFileUrl} from '../constants';
+import {postFileThumbnailUrl} from '../constants';
+import TokenChecker from '../../../common/helpers/TokenChecker';
 
 const UserProfile = (props) => {
   const [postModalState, setPostModalState] = useState({
     visible: false
   });
 
+  const [activeImage, setActiveImage] = useState({
+    active: null
+  });
+
   useEffect(() => {
-    props.getUserProfileDataAction(props.currentUserData.userId);
+    const tokenValidator = TokenChecker();
+    console.log("idhar");
+
+    if (tokenValidator === true) {
+      props.getUserProfileDataAction(props.currentUserData.userId);
+    } else {
+      props.history.push('/');
+    }
+
+    // return dispatch(remove_UserBio_userPosts)
   }, []);
 
-  const toggleModal = () => setPostModalState({
+  const toggleModal = () => {
+    setPostModalState({
     ...postModalState,
     visible: !postModalState.visible
-  });
+    });
+  };
 
   const logout = event => {
     event.preventDefault();
@@ -68,18 +84,22 @@ const UserProfile = (props) => {
           </div>
           <div className="row justify-content-center">
             <div className="post-gallery">
-              <PostModal visible={postModalState.visible} toggleModal={toggleModal} />
+              {
+                postModalState.visible && 
+                <PostModal visible={postModalState.visible} activeImage={activeImage.active} toggleModal={toggleModal} />
+              }
 
               {props.userPosts.map((post, index) => {
                 if (post.fileType === "image")
                 {
-                  return <img key={index} className="p-3" onClick={toggleModal} src={postFileUrl + post.fileId} alt=""/>;
+                  return <img key={index} className="p-3" onClick={() => {setActiveImage({active: index}); toggleModal();}} 
+                    src={postFileThumbnailUrl + post.fileId} alt=""/>;
                 }
                  else if (post.fileType === "video")
                 {
                   return (
                     <video key={index} className="post" controls>
-                      <source src={postFileUrl + post.fileId} type="video/mp4" />
+                      <source src={postFileThumbnailUrl + post.fileId} type="video/mp4" />
                     </video>
                   );
                 }

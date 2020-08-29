@@ -29,7 +29,6 @@ namespace Instagram.Services.Post.Domain.Models
                                 CreatedAt.Second, 
                                 CreatedAt.Kind
                             );
-            Console.WriteLine(CreatedAt);
         }
     }
 }

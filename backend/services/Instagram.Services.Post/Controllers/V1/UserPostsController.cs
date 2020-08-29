@@ -72,6 +72,15 @@ namespace Instagram.Services.Post.Controllers.V1
             return File(data.Content, data.ContentType);
         }
 
+        [AllowAnonymous]
+        // GET: api/v1/userposts/filethumb/{postFileId}
+        [HttpGet("filethumb/{postFileId}", Name = "GetUserPostFileThumbByPostFileIdAsync")]
+        public async Task<IActionResult> GetUserPostFileThumbByPostFileIdAsync(Guid postFileId)
+        {
+            var data = await _postFileService.GetPostFileTHumbnailAsync(postFileId);
+            return File(data.Content, data.ContentType);
+        }
+
         // GET: api/v1/userposts/user/{userId}
         [HttpGet("user/{userId}", Name = "GetUserPostByUserIdAsync")]
         public async Task<ActionResult<IEnumerable<UserPostReadDto>>> GetUserPostByUserIdAsync(Guid userId)
