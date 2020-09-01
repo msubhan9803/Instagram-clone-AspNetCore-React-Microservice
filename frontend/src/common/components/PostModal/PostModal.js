@@ -5,28 +5,20 @@ import { Modal } from 'antd';
 import './PostModal.css';
 
 const PostModal = (props) => {
-    const [localState, setLocalState] = useState({
-        currentIndex: null,
-        currentFileData: {}
-        // loading
-    });
+    const [currentIndex, setCurrentIndex] = useState(null);
+
+    const [currentFileData, setCurrentFileData] = useState({});
 
     useEffect(() => {
-        setLocalState({
-            ...localState,
-            currentIndex: props.activeImage
-        });
+        setCurrentIndex(props.activeImage);
     }, []);
 
     useEffect(() => {
-        if (localState.currentIndex != null) {
-            var fileData = props.userPosts[localState.currentIndex];
-            setLocalState({
-                ...localState,
-                currentFileData: fileData
-            });
+        if (currentIndex != null) {
+            var fileData = props.userPosts[currentIndex];
+            setCurrentFileData(fileData);
         }
-    }, [localState.currentIndex]);
+    }, [currentIndex]);
 
     const handleOk = e => {
         props.toggleModal();
@@ -36,23 +28,71 @@ const PostModal = (props) => {
         props.toggleModal();
     };
 
+    const postContent = () => {
+        var fileType = currentFileData.fileType;
+        if (fileType === "image")
+        {
+            return <img key={currentIndex} className="post-content p-3" src={"/post-api/v1/userposts/file/" + 
+            currentFileData.fileId} alt="" /> 
+        }
+        else if (fileType === "video")
+        {
+            return (
+            <video key={currentIndex} className="post-content p-3" controls>
+                <source src={"/post-api/v1/userposts/file/" + currentFileData.fileId} type="video/mp4" />
+            </video>
+            );
+        }
+    };
+
+    const prev = () => {
+        if (currentIndex >= 0) {
+            setCurrentIndex(currentIndex - 1);
+        }
+    };
+
+    const next = () => {
+        setCurrentIndex(currentIndex + 1);
+    };
+
     return (
         <React.Fragment>
             {props.visible &&
                 <Modal
-                    visible={props.visible}
-                    centered="true"
-                    onOk={handleOk}
-                    onCancel={handleCancel}
-                    zIndex="10000"
-                    footer={null}
-                >
-                    {localState.currentFileData.fileId ?
-                        <img className="post-content p-3" src={"/post-api/v1/userposts/file/" + 
-                            localState.currentFileData.fileId} alt="" /> 
-                            :
-                        null
-                    }
+                className=""
+                visible={props.visible}
+                centered="true"
+                onOk={handleOk}
+                onCancel={handleCancel}
+                zIndex="10000"
+                footer={null}>
+                    <div className="container">
+                        <div className="row align-items-center">
+                            <div className="col-1">
+                                {
+                                    (currentIndex > 0) ?
+                                    <a className="button-prev" onClick={prev}><i className="fa fa-chevron-left"></i></a>
+                                    : null
+                                }
+                            </div>
+                            <div className="container post-content col-10">
+                                {currentFileData.fileId ?
+                                    <React.Fragment>
+                                        {postContent()}
+                                    </React.Fragment>
+                                    :
+                                    null
+                                }
+                            </div>
+                            <div className="col-1">
+                                {
+                                    currentIndex === (props.userPosts.length - 1) ?
+                                    null :
+                                    <a className="button-next col-1" onClick={next}><i className="fa fa-chevron-right"></i></a>
+                                }
+                            </div>
+                        </div>
+                    </div>
                 </Modal>
             }
         </React.Fragment>

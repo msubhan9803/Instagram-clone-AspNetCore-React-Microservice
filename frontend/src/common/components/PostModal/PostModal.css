@@ -1,3 +1,28 @@
+.ant-modal-content {
+    background-color: transparent !important;
+    box-shadow: unset !important;
+    -webkit-box-shadow: unset !important;
+}
+
+.ant-modal-close {
+    position: fixed !important;
+}
+
 .post-content {
-    width: 100%
+    background-color: #fff;
+    width: 100%;
+}
+
+.button-prev {
+    font-size: 20px;
+    padding: 0;
+    border: none;
+    background: none;
+}
+
+.button-next {
+    font-size: 20px;
+    padding: 0;
+    border: none;
+    background: none;
 }

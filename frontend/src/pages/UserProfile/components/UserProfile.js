@@ -90,30 +90,9 @@ const UserProfile = (props) => {
               }
 
               {props.userPosts.map((post, index) => {
-                if (post.fileType === "image")
-                {
-                  return <img key={index} className="p-3" onClick={() => {setActiveImage({active: index}); toggleModal();}} 
+                return <img key={index} className="p-3" onClick={() => {setActiveImage({active: index}); toggleModal();}} 
                     src={postFileThumbnailUrl + post.fileId} alt=""/>;
-                }
-                 else if (post.fileType === "video")
-                {
-                  return (
-                    <video key={index} className="post" controls>
-                      <source src={postFileThumbnailUrl + post.fileId} type="video/mp4" />
-                    </video>
-                  );
-                }
-                return null;
               })}
-
-              {/* <img className="p-3" onClick={toggleModal} src="https://instagram.flyp1-1.fna.fbcdn.net/v/t51.2885-19/s150x150/17266075_1962256160661159_275316685097926656_a.jpg?_nc_ht=instagram.flyp1-1.fna.fbcdn.net&_nc_ohc=ram0norGLDEAX8_HgEu&oh=db4fba2f68a103ce555c7fe291b05b79&oe=5F578D24" alt=""/>
-              <img className="p-3" onClick={toggleModal} src="https://instagram.flyp1-1.fna.fbcdn.net/v/t51.2885-19/s150x150/17266075_1962256160661159_275316685097926656_a.jpg?_nc_ht=instagram.flyp1-1.fna.fbcdn.net&_nc_ohc=ram0norGLDEAX8_HgEu&oh=db4fba2f68a103ce555c7fe291b05b79&oe=5F578D24" alt=""/>
-              <img className="p-3" onClick={toggleModal} src="https://instagram.flyp1-1.fna.fbcdn.net/v/t51.2885-19/s150x150/17266075_1962256160661159_275316685097926656_a.jpg?_nc_ht=instagram.flyp1-1.fna.fbcdn.net&_nc_ohc=ram0norGLDEAX8_HgEu&oh=db4fba2f68a103ce555c7fe291b05b79&oe=5F578D24" alt=""/>
-              <img className="p-3" onClick={toggleModal} src="https://instagram.flyp1-1.fna.fbcdn.net/v/t51.2885-19/s150x150/17266075_1962256160661159_275316685097926656_a.jpg?_nc_ht=instagram.flyp1-1.fna.fbcdn.net&_nc_ohc=ram0norGLDEAX8_HgEu&oh=db4fba2f68a103ce555c7fe291b05b79&oe=5F578D24" alt=""/>
-              <img className="p-3" onClick={toggleModal} src="https://instagram.flyp1-1.fna.fbcdn.net/v/t51.2885-19/s150x150/17266075_1962256160661159_275316685097926656_a.jpg?_nc_ht=instagram.flyp1-1.fna.fbcdn.net&_nc_ohc=ram0norGLDEAX8_HgEu&oh=db4fba2f68a103ce555c7fe291b05b79&oe=5F578D24" alt=""/>
-              {/* <video className="post" controls>
-                <source src="https://youtu.be/jz-Af48ZTps" type="video/mp4" />
-              </video> */}
             </div>
           </div>
         </div>
