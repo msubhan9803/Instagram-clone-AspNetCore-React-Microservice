@@ -1,28 +1,42 @@
+.ant-modal {
+    width: 100% !important;
+}
+
+.postModal-wrapper {
+    max-width: 100% !important;
+}
+
 .ant-modal-content {
     background-color: transparent !important;
     box-shadow: unset !important;
     -webkit-box-shadow: unset !important;
 }
 
-.ant-modal-close {
-    position: fixed !important;
+.ant-modal-body {
+    padding: 0 !important;
 }
 
-.post-content {
-    background-color: #fff;
-    width: 100%;
+.ant-modal-close {
+    position: fixed !important;
+    color: #fff !important;
+}
+
+.ant-modal-close-icon {
+    font-size: 2rem !important;
 }
 
 .button-prev {
-    font-size: 20px;
+    font-size: 2rem !important;
     padding: 0;
     border: none;
     background: none;
+    color: #fff !important;
 }
 
 .button-next {
-    font-size: 20px;
+    font-size: 2rem !important;
     padding: 0;
     border: none;
     background: none;
+    color: #fff !important;
 }

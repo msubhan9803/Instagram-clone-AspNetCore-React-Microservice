@@ -41,6 +41,7 @@ namespace Instagram.Services.Post.Controllers.V1
         }
 
         // GET: api/v1/userposts/{id}
+        // Returns all data related to post (also add data of user[userName, userImageId] using RabbitMQ)
         [HttpGet("{id}", Name = "GetUserPostByIdAsync")]
         public async Task<ActionResult<UserPostReadDto>> GetUserPostByIdAsync(Guid id)
         {
@@ -82,6 +83,7 @@ namespace Instagram.Services.Post.Controllers.V1
         }
 
         // GET: api/v1/userposts/user/{userId}
+        // Reduce this to return only PostId & FileId
         [HttpGet("user/{userId}", Name = "GetUserPostByUserIdAsync")]
         public async Task<ActionResult<IEnumerable<UserPostReadDto>>> GetUserPostByUserIdAsync(Guid userId)
         {

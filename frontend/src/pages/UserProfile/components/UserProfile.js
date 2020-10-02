@@ -1,18 +1,16 @@
-import React, {useEffect, useState} from 'react';
-import {connect} from 'react-redux';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
 import './UserProfile.css';
 import Navbar from '../../../common/components/Navbar';
 import PostModal from '../../../common/components/PostModal';
-import {getUserProfileData, clearUserProfileData} from '../../../actions/UserProfile';
-import {logoutUser} from '../../../actions/Authentication';
-import {postFileThumbnailUrl} from '../constants';
+import { getUserProfileData, clearUserProfileData } from '../../../actions/UserProfile';
+import { logoutUser } from '../../../actions/Authentication';
+import * as Constants from '../constants';
 import TokenChecker from '../../../common/helpers/TokenChecker';
 
 const UserProfile = (props) => {
-  const [postModalState, setPostModalState] = useState({
-    visible: false
-  });
+  let location = useLocation();
 
   const [activeImage, setActiveImage] = useState({
     active: null
@@ -20,7 +18,6 @@ const UserProfile = (props) => {
 
   useEffect(() => {
     const tokenValidator = TokenChecker();
-    console.log("idhar");
 
     if (tokenValidator === true) {
       props.getUserProfileDataAction(props.currentUserData.userId);
@@ -31,13 +28,6 @@ const UserProfile = (props) => {
     // return dispatch(remove_UserBio_userPosts)
   }, []);
 
-  const toggleModal = () => {
-    setPostModalState({
-    ...postModalState,
-    visible: !postModalState.visible
-    });
-  };
-
   const logout = event => {
     event.preventDefault();
     props.logoutUser();
@@ -46,13 +36,12 @@ const UserProfile = (props) => {
   return (
     <React.Fragment>
       <Navbar />
-      
+
       <div className="container p-4">
-        <div className="row user-details">
+        <div className="row user-details align-items-center">
           <div className="profile-img col-4">
-              <img className="mx-auto d-block rounded-circle" 
-                src="https://instagram.flyp1-1.fna.fbcdn.net/v/t51.2885-19/s150x150/17266075_1962256160661159_275316685097926656_a.jpg?_nc_ht=instagram.flyp1-1.fna.fbcdn.net&_nc_ohc=ram0norGLDEAX8_HgEu&oh=db4fba2f68a103ce555c7fe291b05b79&oe=5F578D24" alt="profile-img"/>
-            </div>
+            <img className="mx-auto rounded-circle d-block" src={require('../../../assets/images/iron-man.jpg')} alt="profile-img" />
+          </div>
           <div className="container profile-desc col-8 p-2">
             <div className="row align-items-center">
               <h3 className="mb-0">{props.currentUserData.userName}</h3>
@@ -67,9 +56,9 @@ const UserProfile = (props) => {
             <div className="row">
               <p>
                 {props.userBio.text}
-                <br/>
+                <br />
                 {props.userBio.gender}
-                <br/>
+                <br />
                 {props.userBio.websiteUrl}
               </p>
             </div>
@@ -83,15 +72,34 @@ const UserProfile = (props) => {
             <span className="p-2"><a><i className="fa fa-th"></i> POSTS</a></span>
           </div>
           <div className="row justify-content-center">
-            <div className="post-gallery">
-              {
-                postModalState.visible && 
-                <PostModal visible={postModalState.visible} activeImage={activeImage.active} toggleModal={toggleModal} />
-              }
-
+            <div className="post-gallery row">
               {props.userPosts.map((post, index) => {
-                return <img key={index} className="p-3" onClick={() => {setActiveImage({active: index}); toggleModal();}} 
-                    src={postFileThumbnailUrl + post.fileId} alt=""/>;
+                return <div className="parent-wrapper text-center" key={index}>
+                  <Link
+                    className="d-block"
+                    key={index}
+                    to={{
+                      pathname: `/post/${props.userPosts[index].id}/${index}`,
+                      // This is the trick! This link sets
+                      // the `background` in location state.
+                      state: { 
+                        background: location,
+                        postList: "userposts"
+                      }
+                    }}
+                  >
+                    <div className="child-wrapper text-white">
+                      {
+                        post.fileType === "video" ?
+                          <><i className="fa fa-1x fa-play"></i> 150</> :
+                          <><i className="fa fa-1x fa-heart"></i> 150</>
+                      }
+                          &nbsp;&nbsp;&nbsp;
+                          <i className="fa fa-1x fa-comment"></i> 240
+                        </div>
+                    <img key={index} className="p-3" src={Constants.postFileThumbnailUrl + post.fileId} alt="" />
+                  </Link>
+                </div>
               })}
             </div>
           </div>

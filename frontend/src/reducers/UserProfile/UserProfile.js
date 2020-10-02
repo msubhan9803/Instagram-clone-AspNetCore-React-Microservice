@@ -16,6 +16,9 @@ export default (state = InitialState, action) => {
         userPosts: {}
       }
 
+    case 'LOGOUT_USER':
+      return {userBio: {}, userPosts: []}
+
     default:
       return state;
   }

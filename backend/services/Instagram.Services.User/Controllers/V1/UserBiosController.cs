@@ -52,7 +52,7 @@ namespace Instagram.Services.User.Controllers.V1
 
         //POST api/v1/userBios
         [HttpPost]
-        public async Task<ActionResult<UserBioCreateDto>> CreateUserBioAsync([FromBody]UserBioCreateDto bio)
+        public async Task<ActionResult<UserBioReadDto>> CreateUserBioAsync([FromBody]UserBioCreateDto bio)
         {
             var userId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
             var response = await _userBioService.CreateUserBioAsync(userId, bio);

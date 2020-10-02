@@ -1,0 +1,46 @@
+.post-content {
+    max-height: 70vh;
+    max-width: fit-content !important;
+}
+
+.post-content img, .post-content video {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+}
+
+.post-content video {
+    height: 370px;
+}
+
+.post-details {
+    max-height: 70vh;
+}
+
+.custom-flex-grow {
+    flex: 1 1 auto !important;
+    overflow-y: scroll !important;
+    height: 0px !important;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.custom-flex-grow::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.custom-flex-grow {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.hashtag {
+    color: rgba(var(--fe0,0,55,107),1);
+}
+
+.add-comment-field {
+    font-size: 0.85rem !important;
+    background-color: #fafafa !important;
+    height: 28px !important;
+}

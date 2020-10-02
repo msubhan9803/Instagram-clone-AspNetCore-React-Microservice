@@ -1,108 +1,173 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import {connect} from 'react-redux';
+import { Link, useLocation, useParams, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { Modal } from 'antd';
 import './PostModal.css';
+import Post from '../../../common/components/Post';
+import PostData from './services/fetchPostData';
 
 const PostModal = (props) => {
-    const [currentIndex, setCurrentIndex] = useState(null);
+    let location = useLocation();
+    let { id, index } = useParams();
 
-    const [currentFileData, setCurrentFileData] = useState({});
+    const [state, setLocalState] = useState({
+        currentPostId: null,
+        currentIndex: null,
+        currentFileData: null,
+        postListLength: null
+    });
+
+    const [postModalState, setPostModalState] = useState({
+        visible: true
+    });
 
     useEffect(() => {
-        setCurrentIndex(props.activeImage);
+        const postListLength = props.location.state.postList === "userposts"
+            ? props.userPosts.length
+            : null;
+
+        setLocalState({
+            ...state,
+            currentPostId: id,
+            currentIndex: parseInt(index),
+            postListLength
+        });
     }, []);
 
     useEffect(() => {
-        if (currentIndex != null) {
-            var fileData = props.userPosts[currentIndex];
-            setCurrentFileData(fileData);
+        let mounted = true
+
+        if (mounted) {
+            if (state.currentPostId != null) {
+                Promise.resolve(PostData(state.currentPostId)).then(result => {
+                    setLocalState({
+                        ...state,
+                        currentFileData: result
+                    });
+                });
+            }
         }
-    }, [currentIndex]);
+
+        return () => mounted = false;
+    }, [state.currentPostId]);
+
+    const toggleModal = () => {
+        setPostModalState({
+            ...postModalState,
+            visible: !postModalState.visible
+        });
+    };
 
     const handleOk = e => {
-        props.toggleModal();
+        e.stopPropagation();
+        props.history.push("/userprofile");
+        toggleModal();
     };
-    
+
     const handleCancel = e => {
-        props.toggleModal();
+        e.stopPropagation();
+        props.history.push("/userprofile");
+        toggleModal();
     };
 
-    const postContent = () => {
-        var fileType = currentFileData.fileType;
-        if (fileType === "image")
-        {
-            return <img key={currentIndex} className="post-content p-3" src={"/post-api/v1/userposts/file/" + 
-            currentFileData.fileId} alt="" /> 
-        }
-        else if (fileType === "video")
-        {
-            return (
-            <video key={currentIndex} className="post-content p-3" controls>
-                <source src={"/post-api/v1/userposts/file/" + currentFileData.fileId} type="video/mp4" />
-            </video>
-            );
-        }
+    const prevPost = () => {
+        const newPostId = props.location.state.postList === "userposts"
+            ? props.userPosts[state.currentIndex - 1].id
+            : null;
+
+        setLocalState({
+            ...state,
+            currentPostId: newPostId,
+            currentIndex: state.currentIndex - 1
+        });
     };
 
-    const prev = () => {
-        if (currentIndex >= 0) {
-            setCurrentIndex(currentIndex - 1);
-        }
-    };
+    const nextPost = () => {
+        const newPostId = props.location.state.postList === "userposts"
+            ? props.userPosts[state.currentIndex + 1].id
+            : null;
 
-    const next = () => {
-        setCurrentIndex(currentIndex + 1);
+        setLocalState({
+            ...state,
+            currentPostId: newPostId,
+            currentIndex: state.currentIndex + 1
+        });
     };
 
     return (
         <React.Fragment>
-            {props.visible &&
-                <Modal
-                className=""
-                visible={props.visible}
+            <Modal
+                visible={true}
                 centered="true"
                 onOk={handleOk}
                 onCancel={handleCancel}
                 zIndex="10000"
                 footer={null}>
-                    <div className="container">
-                        <div className="row align-items-center">
-                            <div className="col-1">
-                                {
-                                    (currentIndex > 0) ?
-                                    <a className="button-prev" onClick={prev}><i className="fa fa-chevron-left"></i></a>
+                <div className="container postModal-wrapper">
+                    <div className="row align-items-center">
+                        <div className="col-1 text-right">
+                            {
+                                (state.currentIndex > 0) ?
+                                    <Link
+                                        onClick={prevPost}
+                                        className="button-prev"
+                                        to={{
+                                            pathname: `/post/${props.userPosts[state.currentIndex - 1].id}/${state.currentIndex - 1}`,
+                                            // This is the trick! This link sets
+                                            // the `background` in location state.
+                                            state: {
+                                                background: location,
+                                                postList: props.location.state.postList
+                                            }
+                                        }}
+                                    >
+                                        <i className="fa fa-chevron-left"></i>
+                                    </Link>
                                     : null
-                                }
-                            </div>
-                            <div className="container post-content col-10">
-                                {currentFileData.fileId ?
-                                    <React.Fragment>
-                                        {postContent()}
-                                    </React.Fragment>
-                                    :
-                                    null
-                                }
-                            </div>
-                            <div className="col-1">
-                                {
-                                    currentIndex === (props.userPosts.length - 1) ?
+                            }
+                        </div>
+                        <div className="col-10">
+                            {state.currentFileData ?
+                                <React.Fragment>
+                                    <Post currentPostId={state.currentPostId} currentFileData={state.currentFileData} />
+                                </React.Fragment>
+                                :
+                                null
+                            }
+                        </div>
+                        <div className="col-1">
+                            {
+                                state.currentIndex === (state.postListLength - 1) ?
                                     null :
-                                    <a className="button-next col-1" onClick={next}><i className="fa fa-chevron-right"></i></a>
-                                }
-                            </div>
+                                    <Link
+                                        onClick={nextPost}
+                                        className="button-next"
+                                        to={{
+                                            pathname: `/post/${props.userPosts[state.currentIndex + 1].id}/${state.currentIndex + 1}`,
+                                            // This is the trick! This link sets
+                                            // the `background` in location state.
+                                            state: {
+                                                background: location,
+                                                postList: props.location.state.postList
+                                            }
+                                        }}
+                                    >
+                                        <i className="fa fa-chevron-right"></i>
+                                    </Link>
+                            }
                         </div>
                     </div>
-                </Modal>
-            }
+                </div>
+            </Modal>
         </React.Fragment>
     )
 };
 
 const mapStateToProps = state => {
-  return {
-    userPosts: state.UserProfile.userPosts
-  }
+    return {
+        userPosts: state.UserProfile.userPosts
+    }
 };
 
-export default connect(mapStateToProps)(PostModal);
+export default withRouter(connect(mapStateToProps)(PostModal));

@@ -1,0 +1,1 @@
+export const postDataUrl = "/post-api/v1/userposts/";
