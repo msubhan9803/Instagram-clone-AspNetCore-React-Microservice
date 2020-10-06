@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import './UserProfile.css';
 import Navbar from '../../../common/components/Navbar';
 import PostModal from '../../../common/components/PostModal';
@@ -8,9 +8,11 @@ import { getUserProfileData, clearUserProfileData } from '../../../actions/UserP
 import { logoutUser } from '../../../actions/Authentication';
 import * as Constants from '../constants';
 import TokenChecker from '../../../common/helpers/TokenChecker';
+import FetchUserId from '../services/fetchUserId';
 
 const UserProfile = (props) => {
   let location = useLocation();
+  let { username } = useParams();
 
   const [activeImage, setActiveImage] = useState({
     active: null
@@ -20,18 +22,16 @@ const UserProfile = (props) => {
     const tokenValidator = TokenChecker();
 
     if (tokenValidator === true) {
-      props.getUserProfileDataAction(props.currentUserData.userId);
+      Promise.resolve(FetchUserId(username))
+        .then(result => {
+          props.getUserProfileDataAction(result);
+        });
     } else {
       props.history.push('/');
     }
 
-    // return dispatch(remove_UserBio_userPosts)
+    return () => props.clearUserProfileDataAction();
   }, []);
-
-  const logout = event => {
-    event.preventDefault();
-    props.logoutUser();
-  };
 
   return (
     <React.Fragment>
@@ -44,9 +44,14 @@ const UserProfile = (props) => {
           </div>
           <div className="container profile-desc col-8 p-2">
             <div className="row align-items-center">
-              <h3 className="mb-0">{props.currentUserData.userName}</h3>
-              <Link className="btn ml-4" to='/'>Edit Profile</Link>
-              <i className="fa fa-2x fa-bars ml-4"></i>
+              <h3 className="mb-0">{username}</h3>
+              {username === props.currentUserData.userName ?
+                <>
+                  <Link className="btn ml-4" to='/accounts/edit'>Edit Profile</Link>
+                  <i className="fa fa-2x fa-bars ml-4"></i>
+                </> :
+                null
+              }
             </div>
             <div className="row mt-3 justify-content-start">
               <p><b>10</b> posts</p>
@@ -62,9 +67,6 @@ const UserProfile = (props) => {
                 {props.userBio.websiteUrl}
               </p>
             </div>
-            <div className="row">
-              <button className="btn btn-outline-primary" onClick={logout}>Logout</button>
-            </div>
           </div>
         </div>
         <div className="container user-posts mt-3">
@@ -76,13 +78,13 @@ const UserProfile = (props) => {
               {props.userPosts.map((post, index) => {
                 return <div className="parent-wrapper text-center" key={index}>
                   <Link
-                    className="d-block"
+                    className="img-fluid"
                     key={index}
                     to={{
                       pathname: `/post/${props.userPosts[index].id}/${index}`,
                       // This is the trick! This link sets
                       // the `background` in location state.
-                      state: { 
+                      state: {
                         background: location,
                         postList: "userposts"
                       }
@@ -96,7 +98,7 @@ const UserProfile = (props) => {
                       }
                           &nbsp;&nbsp;&nbsp;
                           <i className="fa fa-1x fa-comment"></i> 240
-                        </div>
+                    </div>
                     <img key={index} className="p-3" src={Constants.postFileThumbnailUrl + post.fileId} alt="" />
                   </Link>
                 </div>
@@ -119,7 +121,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   getUserProfileDataAction: (userId) => dispatch(getUserProfileData(userId)),
-  clearUserProfileDataAction: () => dispatch(clearUserProfileData),
+  clearUserProfileDataAction: () => dispatch(clearUserProfileData()),
   logoutUser: dispatch(logoutUser())
 });
 

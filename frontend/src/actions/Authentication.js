@@ -85,7 +85,7 @@ export const userLoginPostFetch = userLoginData => {
       localStorage.setItem("token", result.token.token);
       localStorage.setItem("expires", result.token.expires);
       dispatch(storeCurrentUserData(result.user));
-      history.push("/userprofile");
+      window.location.href = `/userprofile/${result.user.userName}`;
       dispatch(resetLoginErrors());
     })
     .catch(error => {

@@ -61,13 +61,15 @@ const PostModal = (props) => {
 
     const handleOk = e => {
         e.stopPropagation();
-        props.history.push("/userprofile");
+        const parentUrl = getParentUrl(props.location.state.background);
+        props.history.push(parentUrl);
         toggleModal();
     };
 
     const handleCancel = e => {
         e.stopPropagation();
-        props.history.push("/userprofile");
+        const parentUrl = getParentUrl(props.location.state.background);
+        props.history.push(parentUrl);
         toggleModal();
     };
 
@@ -93,6 +95,19 @@ const PostModal = (props) => {
             currentPostId: newPostId,
             currentIndex: state.currentIndex + 1
         });
+    };
+
+    const getParentUrl = (x) => {        
+        if (typeof x.state !== 'object') {
+            return x.pathname;
+        }
+
+        let prop;
+        for (prop in x) {
+            if (prop === 'state') {
+                return getParentUrl(x[prop].background)
+            }
+        }
     };
 
     return (

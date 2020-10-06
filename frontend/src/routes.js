@@ -1,11 +1,12 @@
 import React from 'react';
-import { Router, Switch, Route, useLocation} from 'react-router-dom';
+import { Router, Switch, Route} from 'react-router-dom';
 import History from './common/utils/History';
 import Signup from './pages/SignUp';
 import Login from './pages/Login';
 import UserProfile from './pages/UserProfile';
 import NotFound from './pages/NotFound';
 import PostModal from './common/components/PostModal';
+import Edit from './common/components/Edit';
 
 // Background & Location stuff shows how to render two different screens
 // (or the same screen in a different context) at the same URL,
@@ -28,8 +29,9 @@ function Routes() {
       <Switch>
         <Route exact path="/" component={Login}/>
         <Route path="/signup" component={Signup}/>
-        <Route path={["/userprofile", "/post/:id/:index"]} children={<UserProfile history={History}/>} />
+        <Route path={["/userprofile/:username", "/post/:id/:index"]} children={<UserProfile history={History}/>} />
         {/* Add route to get post by id without Modal */}
+        <Route path="/accounts/edit" component={Edit}/>
         <Route path="*" component={NotFound}/>
       </Switch>
 

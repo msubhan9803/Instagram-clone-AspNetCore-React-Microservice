@@ -52,6 +52,7 @@ body {
 	-o-filter: brightness(100%);
 	-ms-filter: brightness(100%);
 	filter: brightness(100%);
+    object-fit: cover;
 }
 
 .post-gallery .parent-wrapper:hover .child-wrapper {

@@ -1,0 +1,13 @@
+.settings-wrapper {
+    padding: 30px 10% 10px 10%;
+    height: 90vh;
+}
+
+.settings-layout {
+    border: 1px solid rgba(var(--b6a,219,219,219),1);
+}
+
+.settings-content {
+    background-color: #ffffff;
+    height: 70vh;
+}

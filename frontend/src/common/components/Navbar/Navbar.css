@@ -17,3 +17,29 @@
     background-color: #fafafa !important;
     height: 28px !important;
 }
+
+.dropdown-menu-center {
+    right: -5px !important;
+    left: auto !important;
+    margin: 1.125rem 0 0 !important;
+    text-align: center !important;
+    transform: translate(0, 0) !important;
+}
+
+.dropdown-menu a:before {
+    content: "";
+    position: absolute;
+    right: 11px;
+    top: -10px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 10px 10px 10px;
+    border-color: transparent transparent #ffffff transparent;
+    z-index: 9999;
+}
+
+.dropdown-item:active {
+    color: #212529 !important;
+    background-color: #f8f9fa !important;
+}

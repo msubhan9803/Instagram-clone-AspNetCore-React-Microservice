@@ -20,7 +20,7 @@ const Login = (props) => {
     const tokenValidator = TokenChecker();
 
     if (tokenValidator === true) {
-      props.history.push('/userprofile');
+      props.history.push(`/userprofile/${props.currentUserData.userName}`);
     }
   });
 
@@ -70,6 +70,7 @@ const Login = (props) => {
     event.preventDefault();
     const isValid = validate();
     if (isValid) {
+      console.log(loginFormData);
       props.userLoginDataPost(loginFormData);
       setLoginFormData({
         ...loginFormData,
@@ -137,6 +138,7 @@ const Login = (props) => {
 
 const mapStateToProps = state => {
   return {
+    currentUserData: state.Login.currentUserData,
     loginErrors: state.Login.loginErrors
   }
 }
