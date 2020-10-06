@@ -27,7 +27,8 @@ namespace Instagram.Services.Post.Repositories
                         join postFile in _context.Set<PostFile>()
                         on post.FileId equals postFile.Id
                         orderby post.CreatedAt descending
-                        select (new UserPostReadDto {
+                        select (new UserPostReadDto
+                        {
                             Id = post.Id,
                             UserId = post.UserId,
                             Caption = post.Caption,
@@ -52,7 +53,8 @@ namespace Instagram.Services.Post.Repositories
                             join postFile in _context.Set<PostFile>()
                             on post.FileId equals postFile.Id
                             where post.Id == id
-                            select (new UserPostReadDto {
+                            select (new UserPostReadDto
+                            {
                                 Id = post.Id,
                                 UserId = post.UserId,
                                 Caption = post.Caption,
@@ -71,8 +73,10 @@ namespace Instagram.Services.Post.Repositories
                         from post in _context.Set<UserPost>()
                         join postFile in _context.Set<PostFile>()
                         on post.FileId equals postFile.Id
+                        where post.UserId == userId
                         orderby post.CreatedAt descending
-                        select (new UserPostReadDto {
+                        select (new UserPostReadDto
+                        {
                             Id = post.Id,
                             UserId = post.UserId,
                             Caption = post.Caption,

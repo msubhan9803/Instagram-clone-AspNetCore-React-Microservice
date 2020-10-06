@@ -7,9 +7,6 @@ namespace Instagram.Common.Validators
     {
         public UserBioUpdateDtoValidator()
         {
-            RuleFor(x => x.UserId)
-                .NotEmpty().WithMessage("Type is required.");
-
             RuleFor(x => x.Text)
                 .NotEmpty().WithMessage("Title is required.");
 
