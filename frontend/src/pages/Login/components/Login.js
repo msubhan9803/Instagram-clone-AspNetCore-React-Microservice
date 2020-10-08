@@ -70,7 +70,6 @@ const Login = (props) => {
     event.preventDefault();
     const isValid = validate();
     if (isValid) {
-      console.log(loginFormData);
       props.userLoginDataPost(loginFormData);
       setLoginFormData({
         ...loginFormData,

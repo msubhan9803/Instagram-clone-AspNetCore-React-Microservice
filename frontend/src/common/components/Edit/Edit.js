@@ -7,17 +7,21 @@ import {
     Cascader, DatePicker, InputNumber, TreeSelect, Switch, message
 } from 'antd';
 import { fetchUserBio, updateUserBio } from './services/editUserBio';
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 
 const { Content, Sider } = Layout;
+const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const Edit = (props) => {
     const [formData, setFormData] = useState({
         id: null,
-        text: null,
-        gender: null,
-        websiteUrl: null
+        text: "",
+        gender: "",
+        websiteUrl: ""
     });
     const [showMessage, setMessage] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         Promise.resolve(fetchUserBio(props.currentUserData.userId))
@@ -28,6 +32,7 @@ const Edit = (props) => {
                     gender: result.gender,
                     websiteUrl: result.websiteUrl
                 });
+                setLoading(false);
             });
     }, []);
 
@@ -50,83 +55,98 @@ const Edit = (props) => {
 
     return (
         <>
-            <Navbar />
-
-            {showMessage ?
-                message.success(
-                    {
-                        content: 'This is a success message',
-                        style: {
-                            marginTop: '20vh'
-                        },
-                        onClose: () => {
-                            setMessage(false)
-                        }
-                    })
-                : null}
-
-            <Content className="container settings-wrapper">
-                <Layout className="settings-layout site-layout-background">
-                    <Sider className="site-layout-background" width={200}>
-                        <Menu
-                            mode="inline"
-                            defaultSelectedKeys={['1']}
-                            style={{ height: '100%' }}
-                        >
-                            <Menu.Item key="1">Edit Profile</Menu.Item>
-                            <Menu.Item key="2">option2</Menu.Item>
-                        </Menu>
-                    </Sider>
-
-                    <div className="container settings-content">
-                        <div className="row">
-                            <div className="col-sm-12 col-md-8 m-auto p-4">
-                                <form onSubmit={handleSubmit}>
-                                    <div className="form-group row">
-                                        <label htmlFor="text" className="col-sm-2 col-form-label">Text</label>
-                                        <div className="col-sm-10">
-                                            <input
-                                                type="text"
-                                                className="field-text form-control"
-                                                name="text"
-                                                placeholder="text"
-                                                value={formData.text}
-                                                onChange={handleChange}
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div className="form-group row">
-                                        <label htmlFor="text" className="col-sm-2 col-form-label">Text</label>
-                                        <div className="col-sm-10">
-                                            <select name="gender" className="form-control" value={formData.gender} onChange={handleChange}>
-                                                <option>male</option>
-                                                <option>female</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div className="form-group row">
-                                        <label htmlFor="websiteUrl" className="col-sm-2 col-form-label">Text</label>
-                                        <div className="col-sm-10">
-                                            <input
-                                                type="text"
-                                                className="field-text form-control"
-                                                name="websiteUrl"
-                                                placeholder="websiteUrl"
-                                                value={formData.websiteUrl}
-                                                onChange={handleChange}
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </form>
-                            </div>
+            {loading ?
+                <div className="container" style={{ height: '100vh' }}>
+                    <div className="row h-100 text-center  align-items-center">
+                        <div className="col">
+                            <Spin indicator={antIcon} />
                         </div>
                     </div>
-                </Layout>
-            </Content>
+                </div> :
+                <>
+                    <Navbar />
+
+                    {showMessage ?
+                        message.success(
+                            {
+                                content: 'This is a success message',
+                                style: {
+                                    marginTop: '20vh'
+                                },
+                                onClose: () => {
+                                    setMessage(false)
+                                }
+                            })
+                        : null}
+
+                    <Content className="container settings-wrapper">
+                        <Layout className="settings-layout site-layout-background">
+                            <Sider className="site-layout-background" width={200}>
+                                <Menu
+                                    mode="inline"
+                                    defaultSelectedKeys={['1']}
+                                    style={{ height: '100%' }}
+                                >
+                                    <Menu.Item key="1">Edit Profile</Menu.Item>
+                                    <Menu.Item key="2">option2</Menu.Item>
+                                </Menu>
+                            </Sider>
+
+                            <div className="container settings-content">
+                                <div className="row">
+                                    <div className="col-sm-12 col-md-8 m-auto p-4">
+                                        <form onSubmit={handleSubmit}>
+                                            <div className="form-group row">
+                                                <label htmlFor="text" className="col-sm-2 col-form- font-weight-bold">Text</label>
+                                                <div className="col-sm-10">
+                                                    <input
+                                                        type="text"
+                                                        className="field-text form-control"
+                                                        name="text"
+                                                        placeholder="text"
+                                                        value={formData.text}
+                                                        onChange={handleChange}
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div className="form-group row">
+                                                <label htmlFor="text" className="col-sm-2 col-form-label font-weight-bold">Gender</label>
+                                                <div className="col-sm-10">
+                                                    <select name="gender" className="form-control" value={formData.gender} onChange={handleChange}>
+                                                        <option>male</option>
+                                                        <option>female</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div className="form-group row">
+                                                <label htmlFor="websiteUrl" className="col-sm-2 col-form-label font-weight-bold">Website Url</label>
+                                                <div className="col-sm-10">
+                                                    <input
+                                                        type="text"
+                                                        className="field-text form-control"
+                                                        name="websiteUrl"
+                                                        placeholder="websiteUrl"
+                                                        value={formData.websiteUrl}
+                                                        onChange={handleChange}
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div className="row">
+                                                <div className="col-10 offset-2">
+                                                    <button type="submit" className="btn btn-primary text-light">Submit</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </Layout>
+                    </Content>
+                </>
+            }
         </>
     );
 };

@@ -1,4 +1,4 @@
-import BearerToken from '../../../helpers/BearerToken'
+import BearerToken from '../../../helpers/BearerToken';
 
 export const fetchUserBio = (userId) => {
     return fetch(`/user-api/v1/userBios/${userId}`, {
