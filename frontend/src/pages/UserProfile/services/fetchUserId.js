@@ -10,7 +10,7 @@ const fetchUserId = (userName) => {
     .then(result => result.text())
     .then(data => {
         var json = JSON.parse(data);
-        return json.id;
+        return json;
     })
 };
 

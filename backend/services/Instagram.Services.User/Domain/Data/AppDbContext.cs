@@ -13,13 +13,13 @@ namespace Instagram.Services.User.Data
     {
         public IConfiguration Configuration { get; }
         private readonly IWebHostEnvironment _env;
-        
+
         public AppDbContext() : base()
         {
 
         }
 
-        public AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration configuration, 
+        public AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration configuration,
             IWebHostEnvironment env) : base(options)
         {
             Configuration = configuration;
@@ -43,5 +43,6 @@ namespace Instagram.Services.User.Data
 
         public DbSet<Domain.Models.User> Users { get; set; }
         public DbSet<Domain.Models.UserBio> UserBios { get; set; }
+        public DbSet<Domain.Models.UserRelation> UserRelations { get; set; }
     }
 }

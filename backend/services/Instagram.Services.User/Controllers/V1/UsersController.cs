@@ -40,7 +40,8 @@ namespace Instagram.Services.User.Controllers.V1
             try
             {
                 var users = await _userService.GetUserByUsernameAsync(userName);
-                if (users != null) {
+                if (users != null)
+                {
                     return Ok(users);
                 }
 
@@ -48,10 +49,48 @@ namespace Instagram.Services.User.Controllers.V1
             }
             catch (InstagramException ex)
             {
-                return BadRequest(new {
+                return BadRequest(new
+                {
                     Error = ex.Message
-                }); 
+                });
             }
+        }
+
+        // GET: api/v1/users/follow/uid/fuid
+        [HttpGet("follow/{userId}/{followedUserId}")]
+        public async Task<ActionResult<object>> GetUserRelation(Guid userId, Guid followedUserId)
+        {
+            var userRelation = await _userService.CheckRelationshipAsync(userId, followedUserId);
+            if (userRelation != null)
+            {
+                return Ok(userRelation);
+            }
+
+            return new {
+                Relation = 0
+            };
+        }
+
+        // POST: api/v1/users/follow/
+        [HttpPost("follow")]
+        public async Task<ActionResult<IEnumerable<UserRelationReadDto>>> CreateUserRelation([FromBody] UserRelationCreateDto userRelation)
+        {
+            var userRelationReadDto = await _userService.CreateUserRelationAsync(userRelation);
+
+            return Ok(userRelationReadDto);
+        }
+
+        // DELETE: api/v1/users/unfollow/{userId}/{followedUserId}
+        [HttpDelete("unfollow/{userId}/{followedUserId}")]
+        public async Task<ActionResult<IEnumerable<UserRelationReadDto>>> DeleteUserRelation(Guid userId, Guid followedUserId)
+        {
+            var userRelationReadDto = await _userService.DeleteUserRelation(userId, followedUserId);
+            if (userRelationReadDto != null)
+            {
+                return NoContent();
+            }
+
+            return NotFound();
         }
     }
 }

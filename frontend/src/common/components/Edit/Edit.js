@@ -6,7 +6,7 @@ import {
     Layout, Menu, Form, Input, Button, Radio, Select,
     Cascader, DatePicker, InputNumber, TreeSelect, Switch, message
 } from 'antd';
-import { fetchUserBio, updateUserBio } from './services/editUserBio';
+import { fetchUserBio, postUserBioRequest, updateUserBio } from './services/editUserBio';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 
@@ -22,16 +22,22 @@ const Edit = (props) => {
     });
     const [showMessage, setMessage] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [postUserBio, setPostUserBio] = useState(false);
 
     useEffect(() => {
         Promise.resolve(fetchUserBio(props.currentUserData.userId))
             .then(result => {
-                setFormData({
-                    id: result.id,
-                    text: result.text,
-                    gender: result.gender,
-                    websiteUrl: result.websiteUrl
-                });
+                if (result !== null) {
+                    setFormData({
+                        id: result.id,
+                        text: result.text,
+                        gender: result.gender,
+                        websiteUrl: result.websiteUrl
+                    });
+                } else {
+                    setPostUserBio(true);
+                }
+                
                 setLoading(false);
             });
     }, []);
@@ -47,10 +53,17 @@ const Edit = (props) => {
     const handleSubmit = event => {
         event.preventDefault();
 
-        Promise.resolve(updateUserBio(formData))
+        if (postUserBio === true) {
+            Promise.resolve(postUserBioRequest(formData))
             .then(result => {
                 setMessage(true);
             });
+        } else {
+            Promise.resolve(updateUserBio(formData))
+            .then(result => {
+                setMessage(true);
+            });
+        }
     };
 
     return (
@@ -69,7 +82,7 @@ const Edit = (props) => {
                     {showMessage ?
                         message.success(
                             {
-                                content: 'This is a success message',
+                                content: 'Changes made successfully!',
                                 style: {
                                     marginTop: '20vh'
                                 },
@@ -114,8 +127,9 @@ const Edit = (props) => {
                                                 <label htmlFor="text" className="col-sm-2 col-form-label font-weight-bold">Gender</label>
                                                 <div className="col-sm-10">
                                                     <select name="gender" className="form-control" value={formData.gender} onChange={handleChange}>
-                                                        <option>male</option>
-                                                        <option>female</option>
+                                                        {!formData.gender ? <option selected>choose gender</option> : null}
+                                                        <option value="male">Male</option>
+                                                        <option value="female">Female</option>
                                                     </select>
                                                 </div>
                                             </div>

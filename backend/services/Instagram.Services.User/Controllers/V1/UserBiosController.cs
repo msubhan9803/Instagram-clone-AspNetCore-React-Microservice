@@ -40,7 +40,7 @@ namespace Instagram.Services.User.Controllers.V1
                     return Ok(userBio);
                 }
 
-                return NotFound();
+                return NoContent();
             }
             catch (InstagramException ex)
             {

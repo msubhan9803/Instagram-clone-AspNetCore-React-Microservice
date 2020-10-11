@@ -67,7 +67,7 @@ const Post = (props) => {
                                         <div className="row mt-3 border-bottom">
                                             <div className="col-2">
                                                 <img className="mx-auto d-block rounded-circle border m-2" width="35px" height="35px"
-                                                    src="https://instagram.flyp1-1.fna.fbcdn.net/v/t51.2885-19/s150x150/67787461_2128295447293313_30715278228717568_n.jpg?_nc_ht=instagram.flyp1-1.fna.fbcdn.net&_nc_ohc=8AhweJ31nncAX8qUH6n&oh=46d16157f104530a2e54c1dbb0b1448f&oe=5F81226C" alt="profile-img" />
+                                                    src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.thenews.com.pk%2Flatest%2F718025-esra-bilgic-speaks-out-on-gender-equality&psig=AOvVaw2ZnMsk3uJpITOTLDAEUJy6&ust=1602502284512000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCOiH-8O4rOwCFQAAAAAdAAAAABAD" alt="profile-img" />
                                             </div>
 
                                             <div className="col-8">

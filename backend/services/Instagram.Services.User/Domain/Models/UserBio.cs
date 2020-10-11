@@ -10,7 +10,7 @@ namespace Instagram.Services.User.Domain.Models
         public string Text { get; set; }
         public string Gender { get; set; }
         public string WebsiteUrl { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         UserBio()
         {

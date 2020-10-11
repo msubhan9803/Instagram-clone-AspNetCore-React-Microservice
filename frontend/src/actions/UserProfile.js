@@ -19,8 +19,10 @@ export const getUserProfileData = (userId) => {
         })
             .then(resp => resp.text())
             .then(data => {
-                const text = JSON.parse(data);
-                dispatch(storeUserProfile(text));
+                const json = JSON.parse(data);
+                dispatch(storeUserProfile(json));
+
+                return json;
             })
             .catch(error => console.log(error));
     };

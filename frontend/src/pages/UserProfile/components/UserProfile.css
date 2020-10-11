@@ -26,6 +26,10 @@ body {
     font-weight: 700;
 }
 
+.post-gallery {
+    width: 100%;
+}
+
 .post-gallery .parent-wrapper {
     width: 33%;
     height: 200px !important;

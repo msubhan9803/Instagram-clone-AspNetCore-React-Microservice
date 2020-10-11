@@ -9,6 +9,7 @@ import { logoutUser } from '../../../actions/Authentication';
 import * as Constants from '../constants';
 import TokenChecker from '../../../common/helpers/TokenChecker';
 import FetchUserId from '../services/fetchUserId';
+import { fetchUserRelation, followUserRequest, unFollowUserRequest } from '../services/followUnfollowUser';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 
@@ -18,10 +19,12 @@ const UserProfile = (props) => {
   let location = useLocation();
   let { username } = useParams();
 
+  const [userData, setUserData] = useState(null);
   const [activeImage, setActiveImage] = useState({
     active: null
   });
   const [loading, setLoading] = useState(true);
+  const [followButton, setFollowButton] = useState(null);
 
   useEffect(() => {
     const tokenValidator = TokenChecker();
@@ -29,8 +32,26 @@ const UserProfile = (props) => {
     if (tokenValidator === true) {
       Promise.resolve(FetchUserId(username))
         .then(result => {
-          props.getUserProfileDataAction(result);
-          setLoading(false);
+          setUserData(result);
+
+          Promise.resolve(props.getUserProfileDataAction(result.id))
+            .then(r => {
+              if (username !== props.currentUserData.userName) {
+                const userId = props.currentUserData.userId;
+                const followedUserId = result.id;
+
+                Promise.resolve(fetchUserRelation(userId, followedUserId))
+                  .then(data => {
+                    if (data.relation === 1) {
+                      setFollowButton(1);
+                    } else {
+                      setFollowButton(0);
+                    }
+                  })
+              }
+
+              setLoading(false);
+            });
         });
     } else {
       props.history.push('/');
@@ -39,10 +60,30 @@ const UserProfile = (props) => {
     return () => props.clearUserProfileDataAction();
   }, []);
 
+  const followUser = () => {
+    const userId = props.currentUserData.userId;
+    const followedUserId = userData.id;
+
+    Promise.resolve(followUserRequest(userId, followedUserId))
+      .then(result => {
+        setFollowButton(1);
+      });
+  };
+
+  const unFollowUser = () => {
+    const userId = props.currentUserData.userId;
+    const followedUserId = userData.id;
+
+    Promise.resolve(unFollowUserRequest(userId, followedUserId))
+      .then(result => {
+        setFollowButton(0);
+      });
+  };
+
   return (
     <React.Fragment>
       {loading ?
-        <div className="container" style={{height: '100vh'}}>
+        <div className="container" style={{ height: '100vh' }}>
           <div className="row h-100 text-center  align-items-center">
             <div className="col">
               <Spin indicator={antIcon} />
@@ -60,6 +101,11 @@ const UserProfile = (props) => {
               <div className="container profile-desc col-8 p-2">
                 <div className="row align-items-center">
                   <h3 className="mb-0">{username}</h3>
+                  {followButton === 1 ?
+                    <button className="btn btn-secondary m-3" onClick={unFollowUser}>Following</button>
+                    : followButton === 0 ? <button className="btn btn-primary m-3" onClick={followUser}>Follow</button>
+                      : null
+                  }
                   {username === props.currentUserData.userName ?
                     <>
                       <Link className="btn ml-4" to='/accounts/edit'>Edit Profile</Link>
@@ -88,7 +134,7 @@ const UserProfile = (props) => {
               <div className="row justify-content-center posts-nav">
                 <span className="p-2"><a><i className="fa fa-th"></i> POSTS</a></span>
               </div>
-              <div className="row justify-content-center">
+              <div className="row justify-content-left">
                 <div className="post-gallery row">
                   {props.userPosts.map((post, index) => {
                     return <div className="parent-wrapper text-center" key={index}>

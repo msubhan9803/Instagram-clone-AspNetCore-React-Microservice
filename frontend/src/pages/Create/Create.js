@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../../common/components/Navbar';
 import CreatePost from './services/createPost';
 import TokenChecker from '../../common/helpers/TokenChecker';
-import { Spin } from 'antd';
+import { Spin, message } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -13,6 +13,7 @@ const Create = (props) => {
         file: {}
     });
     const [loading, setLoading] = useState(true);
+    const [showMessage, setMessage] = useState(false);
 
     useEffect(() => {
         const tokenValidator = TokenChecker();
@@ -49,7 +50,7 @@ const Create = (props) => {
 
         Promise.resolve(CreatePost(data))
             .then(result => {
-                console.log(result);
+                setMessage(true);
             })
     };
 
@@ -65,6 +66,19 @@ const Create = (props) => {
                 </div> :
                 <>
                     <Navbar />
+
+                    {showMessage ?
+                        message.success(
+                            {
+                                content: 'Post Created!',
+                                style: {
+                                    marginTop: '20vh'
+                                },
+                                onClose: () => {
+                                    setMessage(false)
+                                }
+                            })
+                        : null}
 
                     <div className="container p-5">
                         <div className="row justify-content-center">
@@ -93,7 +107,7 @@ const Create = (props) => {
                                         <div className="col-sm-9">
                                             <div className="custom-file">
                                                 <input type="file" name="file" className="custom-file-input" id="customFile" onChange={handleChange} />
-                                                <label className="custom-file-label" htmlFor="customFile">Choose file</label>
+                                                <label className="custom-file-label" htmlFor="customFile">{ !post.file.name ? "Choose file" : post.file.name.slice(0, 5) + '...' }</label>
                                             </div>
                                         </div>
                                     </div>

@@ -7,11 +7,34 @@ export const fetchUserBio = (userId) => {
             'Authorization': BearerToken()
         }
     })
-    .then(result => result.text())
+    .then(response => {
+      if (response.status === 204) {
+        return null;
+      }
+
+      return response.text();
+    })
+    .then(result => {
+        var json = JSON.parse(result);
+        return json;
+    });
+};
+
+export const postUserBioRequest = (userBio) => {
+    console.log(userBio)
+    return fetch('/user-api/v1/userBios/', {
+        method: 'POST',
+        headers: {
+            'Authorization': BearerToken(),
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userBio)
+    })
     .then(data => {
         var json = JSON.parse(data);
         return json;
     })
+    .catch(error => null);
 };
 
 export const updateUserBio = (userBio) => {
@@ -23,6 +46,9 @@ export const updateUserBio = (userBio) => {
         },
         body: JSON.stringify(userBio)
     })
-    .then(result => result.text())
-    .then(data => data);
+    .then(data => {
+        var json = JSON.parse(data);
+        return json;
+    })
+    .catch(error => null);
 };

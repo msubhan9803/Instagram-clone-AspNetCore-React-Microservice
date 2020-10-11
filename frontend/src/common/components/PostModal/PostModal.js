@@ -97,7 +97,7 @@ const PostModal = (props) => {
         });
     };
 
-    const getParentUrl = (x) => {        
+    const getParentUrl = (x) => {
         if (typeof x.state !== 'object') {
             return x.pathname;
         }
