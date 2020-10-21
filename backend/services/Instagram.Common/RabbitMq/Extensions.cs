@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using System.Threading.Tasks;
 using Instagram.Common.Commands;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using RawRabbit;
 using RawRabbit.Instantiation;
 using RawRabbit.Pipe;
+using Newtonsoft.Json;
 
 namespace Instagram.Common.RabbitMq
 {
@@ -15,13 +17,13 @@ namespace Instagram.Common.RabbitMq
         public static Task WithCommandHandlerAsync<TCommand>(this IBusClient bus,
             ICommandHandler<TCommand> handler) where TCommand : ICommand
             => bus.SubscribeAsync<TCommand>(msg => handler.HandleAsync(msg),
-                ctx => ctx.UseConsumerConfiguration(cfg => 
+                ctx => ctx.UseSubscribeConfiguration(cfg => 
                 cfg.FromDeclaredQueue(q => q.WithName(GetQueueName<TCommand>()))));
 
         public static Task WithEventHandlerAsync<TEvent>(this IBusClient bus,
             IEventHandler<TEvent> handler) where TEvent : IEvent
             => bus.SubscribeAsync<TEvent>(msg => handler.HandleAsync(msg),
-                ctx => ctx.UseConsumerConfiguration(cfg => 
+                ctx => ctx.UseSubscribeConfiguration(cfg => 
                 cfg.FromDeclaredQueue(q => q.WithName(GetQueueName<TEvent>()))));
 
         private static string GetQueueName<T>()

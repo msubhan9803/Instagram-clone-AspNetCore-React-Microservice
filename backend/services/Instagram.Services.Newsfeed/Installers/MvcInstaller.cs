@@ -11,8 +11,9 @@ namespace Instagram.Services.Newsfeed.Installers
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {
+            services.AddControllers();
+            services.AddMvc(option => option.EnableEndpointRouting = false);
             services.AddLogging();
-
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
     }

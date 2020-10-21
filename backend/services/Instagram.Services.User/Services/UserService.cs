@@ -9,6 +9,8 @@ using AutoMapper;
 using Instagram.Common.DTOs.User;
 using System;
 using Instagram.Services.User.Domain.Models;
+using RawRabbit;
+using Instagram.Common.Events;
 
 namespace Instagram.Services.User.Services
 {
@@ -16,11 +18,13 @@ namespace Instagram.Services.User.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
+        private readonly IBusClient _busClient;
 
-        public UserService(IUserRepository userRepository, IEncrypter encrypter, IJwtHandler jwtHandler, IMapper mapper)
+        public UserService(IUserRepository userRepository, IEncrypter encrypter, IJwtHandler jwtHandler, IMapper mapper, IBusClient busClient)
         {
             _userRepository = userRepository;
             _mapper = mapper;
+            _busClient = busClient;
         }
 
         public async Task<IEnumerable<UserReadDto>> GetAllUsersAsync()
@@ -60,6 +64,9 @@ namespace Instagram.Services.User.Services
 
                 var userRelationDto = _mapper.Map<UserRelationReadDto>(userRelationModel);
                 userRelationDto.Relation = 1;
+                
+                Console.WriteLine("here");
+                await _busClient.PublishAsync(new UserFollowed(userRelation.UserId, userRelation.FollowedUserId));
 
                 return userRelationDto;
             }

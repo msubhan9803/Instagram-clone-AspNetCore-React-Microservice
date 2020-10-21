@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Instagram.Services.Newsfeed.Installers;
+using Instagram.Common.Mongo;
 
 namespace Instagram.Services.Newsfeed
 {
@@ -36,15 +37,9 @@ namespace Instagram.Services.Newsfeed
             {
                 app.UseDeveloperExceptionPage();
             }
+            // app.ApplicationServices.GetService<IDatabaseInitializer>().InitializeAsync();
 
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseMvc();
         }
     }
 }

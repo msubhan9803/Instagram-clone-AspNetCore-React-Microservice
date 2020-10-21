@@ -5,6 +5,9 @@ using models = Instagram.Services.User.Domain.Models;
 using Instagram.Services.User.Domain.Services;
 using Instagram.Services.User.Domain.Repositories;
 using System.Collections.Generic;
+using RawRabbit;
+using AutoMapper;
+using Instagram.Common.Events;
 
 namespace Instagram.Services.User.Services
 {
@@ -13,12 +16,16 @@ namespace Instagram.Services.User.Services
         private readonly IAccountRepository _accountRepository;
         private readonly IEncrypter _encrypter;
         private readonly IJwtHandler _jwtHandler;
+        private readonly IBusClient _busClient;
+        private readonly IMapper _mapper;
 
-        public AccountService(IAccountRepository accountRepository, IEncrypter encrypter, IJwtHandler jwtHandler)
+        public AccountService(IAccountRepository accountRepository, IEncrypter encrypter, IJwtHandler jwtHandler, IBusClient busClient, IMapper mapper)
         {
             _accountRepository = accountRepository;
             _encrypter = encrypter;
             _jwtHandler = jwtHandler;
+            _busClient = busClient;
+            _mapper = mapper;
         }
 
         public async Task<object> LoginAsync(string email, string password)
@@ -56,6 +63,8 @@ namespace Instagram.Services.User.Services
             user = new models.User(userName, email);
             user.SetPassword(password, _encrypter);
             await _accountRepository.AddAsync(user);
+
+            await _busClient.PublishAsync(new UserCreated(user.Id));
         }
     }
 }

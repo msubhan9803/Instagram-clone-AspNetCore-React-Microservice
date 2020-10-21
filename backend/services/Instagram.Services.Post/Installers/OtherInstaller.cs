@@ -1,6 +1,8 @@
 using Instagram.Common.Auth;
+using Instagram.Common.Commands;
 using Instagram.Common.RabbitMq;
 using Instagram.Services.Post.Domain.Repositories;
+using Instagram.Services.Post.Handlers;
 using Instagram.Services.Post.Repositories;
 // using Instagram.Services.Post.Repositories;
 using Instagram.Services.Post.Services;
@@ -15,13 +17,14 @@ namespace Instagram.Services.Post.Installers
         {
             services.AddJwt(configuration);
             services.AddRabbitMq(configuration);
-            services.AddScoped<IUserPostService, UserPostService>();
-            services.AddScoped<IUserPostRepository, UserPostRepository>();
+            services.AddTransient<IUserPostService, UserPostService>();
+            services.AddTransient<IUserPostRepository, UserPostRepository>();
             services.AddScoped<IImageBlobService, ImageBlobService>();
             services.AddScoped<IVideoBlobService, VideoBlobService>();
             services.AddScoped<IPostFileService, PostFileService>();
             services.AddScoped<IFileOptimizationService, FileOptimizationService>();
             services.AddScoped<IPostFileRepository, PostFileRepository>();
+            services.AddTransient<ICommandHandler<GetUserNewPosts>, GetUserNewPostsHandler>();
         }
     }
 }

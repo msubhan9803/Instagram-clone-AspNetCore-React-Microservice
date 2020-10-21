@@ -5,9 +5,14 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Instagram.Common.DTOs.Post;
 using Instagram.Common.Exceptions;
+using Instagram.Services.Post.Data;
 using Instagram.Services.Post.Domain.Models;
 using Instagram.Services.Post.Domain.Repositories;
 using Instagram.Services.Post.Extensions;
+using Instagram.Services.Post.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 
 namespace Instagram.Services.Post.Services
@@ -21,7 +26,7 @@ namespace Instagram.Services.Post.Services
         private readonly IMapper _mapper;
 
         public UserPostService(IUserPostRepository userPostRepository,
-            IImageBlobService blobService, IMapper mapper = null, 
+            IImageBlobService blobService, IMapper mapper = null,
             IVideoBlobService videoBlobService = null, IFileOptimizationService fileOptimizationService = null)
         {
             _userPostRepository = userPostRepository;
@@ -58,6 +63,11 @@ namespace Instagram.Services.Post.Services
             return await _userPostRepository.GetPostByUserIdAsync(userId);
         }
 
+        public async Task<IEnumerable<UserPostReadDto>> GetUserLatestPostsAsync(Guid userId, DateTime lastModified)
+        {
+            return await _userPostRepository.GetUserLatestPostsAsync(userId, lastModified);
+        }
+
         public async Task<UserPostReadDto> CreatePostAsync(Guid userId, UserPostCreateDto post)
         {
             var contentType = post.File.FileName.GetContentType();
@@ -72,7 +82,9 @@ namespace Instagram.Services.Post.Services
                 var thumbnail = _fileOptimizationService.CreateImageThumbnail(post.File);
                 await _imageBlobService.UploadFileBlobAsync(post.File, fileNewName);
                 await _imageBlobService.UploadFileBlobAsync(thumbnail, thumbnailNewName);
-            } else if (type == "video") {
+            }
+            else if (type == "video")
+            {
                 var thumbnail = await _fileOptimizationService.CreateVideoThumbnailAsync(post.File, thumbnailNewName);
                 await _videoBlobService.UploadFileBlobAsync(post.File, fileNewName);
                 await _imageBlobService.UploadFileBlobAsync(thumbnail, thumbnailNewName);
@@ -81,7 +93,7 @@ namespace Instagram.Services.Post.Services
             var postFileModel = new PostFile(fileNewName, type, thumbnailNewName);
             var userPostModel = new UserPost(userId, post.Caption, postFileModel.Id);
             await _userPostRepository.CreatePostAsync(userPostModel, postFileModel);
-            
+
             return await _userPostRepository.GetPostByIdAsync(userPostModel.Id);
         }
 
@@ -89,7 +101,7 @@ namespace Instagram.Services.Post.Services
         {
             var userPostModel = await _userPostRepository.GetPostModelByIdAsync(id);
 
-            if(userPostModel == null)
+            if (userPostModel == null)
             {
                 return userPostModel;
             }
@@ -103,12 +115,12 @@ namespace Instagram.Services.Post.Services
         public async Task<UserPost> DeletePostAsync(Guid id)
         {
             var userPostModel = await _userPostRepository.GetPostModelByIdAsync(id);
-            
-            if(userPostModel == null)
+
+            if (userPostModel == null)
             {
                 return userPostModel;
             }
-            
+
             _userPostRepository.DeletePost(id);
 
             return userPostModel;

@@ -29,12 +29,14 @@ namespace Instagram.Common.Services
                 .Build();
             var webHostBuilder = WebHost.CreateDefaultBuilder(args)
                 .UseConfiguration(config)
-                .UseStartup<TStartup>();
+                .UseStartup<TStartup>()
+                .UseDefaultServiceProvider(options =>
+                    options.ValidateScopes = false);
 
             return new HostBuilder(webHostBuilder.Build());
         }
 
-        public abstract class BuilderBase 
+        public abstract class BuilderBase
         {
             public abstract ServiceHost Build();
         }
@@ -65,7 +67,7 @@ namespace Instagram.Common.Services
         public class BusBuilder : BuilderBase
         {
             private readonly IWebHost _webHost;
-            private IBusClient _bus; 
+            private IBusClient _bus;
 
             public BusBuilder(IWebHost webHost, IBusClient bus)
             {

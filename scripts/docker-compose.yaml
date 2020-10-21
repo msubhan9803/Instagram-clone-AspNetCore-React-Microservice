@@ -15,6 +15,23 @@ services:
       - /home/mranonymous/Projects/Instagram-Volumes/mysql:/var/lib/mysql
       - ./mysql/:/docker-entrypoint-initdb.d
 
+  mongo_db_service:
+    image: mongo
+    container_name: mongo_db
+    restart: always
+    volumes:
+      - /home/mranonymous/Projects/Instagram-Volumes/mysql:/data/db
+    ports:
+      - '27017:27017'
+
+  rabbitmq_service:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+
   api_gateway_service:
     build: ../backend/services/Instagram.ApiGateway
     container_name: api_gateway
@@ -36,6 +53,7 @@ services:
       - '9000'
     depends_on:
       - mysql_db_service
+      - rabbitmq_service
 
   post_service:
     build: ../backend/services/Instagram.Services.Post
@@ -49,6 +67,7 @@ services:
       - mysql_db_service
       - user_service
       - azurite_service
+      - rabbitmq_service
 
   azurite_service:
     image: "mcr.microsoft.com/azure-storage/azurite"
@@ -69,9 +88,3 @@ services:
 
 volumes:
   mysql:
-
-  # rabbitmq:
-  #   image: rabbitmq:3.6.5-management
-  #   ports:
-  #     - '5672:5672'
-  #     - '15672:15672'

@@ -8,6 +8,7 @@ using Instagram.Services.Post.Data;
 using Instagram.Services.Post.Domain.Models;
 using Instagram.Services.Post.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace Instagram.Services.Post.Repositories
 {
@@ -87,6 +88,33 @@ namespace Instagram.Services.Post.Repositories
                         ).ToListAsync();
 
             return result;
+        }
+
+        public async Task<IEnumerable<UserPostReadDto>> GetUserLatestPostsAsync(Guid userId, DateTime lastModified)
+        {
+            using (var c = new AppDbContext())
+            {
+                Console.WriteLine($"UserRepository for User: {userId}");
+                var result = await (
+                        from post in c.Set<UserPost>()
+                        join postFile in c.Set<PostFile>()
+                        on post.FileId equals postFile.Id
+                        where post.UserId == userId
+                        && post.CreatedAt > lastModified
+                        orderby post.CreatedAt descending
+                        select (new UserPostReadDto
+                        {
+                            Id = post.Id,
+                            UserId = post.UserId,
+                            Caption = post.Caption,
+                            FileId = post.FileId,
+                            FileType = postFile.Type,
+                            CreatedAt = post.CreatedAt
+                        })
+                        ).ToListAsync();
+
+                return result;
+            }
         }
 
         public async Task CreatePostAsync(UserPost post, PostFile postFileModel)

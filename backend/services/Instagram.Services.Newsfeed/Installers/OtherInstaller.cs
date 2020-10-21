@@ -1,0 +1,28 @@
+using Instagram.Common.Events;
+using Instagram.Services.Newsfeed.Handlers;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Instagram.Common.RabbitMq;
+using Instagram.Common.Mongo;
+using Instagram.Services.Newsfeed.Domain.Repositories;
+using Instagram.Services.Newsfeed.Repositories;
+using Instagram.Services.Newsfeed.Services;
+
+namespace Instagram.Services.Newsfeed.Installers
+{
+    public class OtherInstaller : IInstaller
+    {
+        public void InstallServices(IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddRabbitMq(configuration);
+            services.AddMongoDB(configuration);
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<INewsfeedRepository, NewsfeedRepository>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<INewsfeedService, NewsfeedService>();
+            services.AddScoped<IEventHandler<UserCreated>, UserCreatedHandler>();
+            services.AddScoped<IEventHandler<UserFollowed>, UserFollowedHandler>();
+            // services.AddScoped<IDatabaseSeeder, CustomMongoSeeder>();
+        }
+    }
+}

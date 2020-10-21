@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Instagram.Common.Commands;
 using Instagram.Common.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -16,6 +17,7 @@ namespace Instagram.Services.Post
         {
             ServiceHost.Create<Startup>(args)
                 .UseRabbitMq()
+                .SubscribeToCommand<GetUserNewPosts>()
                 .Build()
                 .Run();
         }

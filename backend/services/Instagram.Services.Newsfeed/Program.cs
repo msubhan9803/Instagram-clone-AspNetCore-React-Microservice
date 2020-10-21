@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Instagram.Common.Services;
+using Instagram.Common.Events;
 
 namespace Instagram.Services.Newsfeed
 {
@@ -16,6 +17,8 @@ namespace Instagram.Services.Newsfeed
         {
             ServiceHost.Create<Startup>(args)
                 .UseRabbitMq()
+                .SubscribeToEvent<UserCreated>()
+                .SubscribeToEvent<UserFollowed>()
                 .Build()
                 .Run();
         }
