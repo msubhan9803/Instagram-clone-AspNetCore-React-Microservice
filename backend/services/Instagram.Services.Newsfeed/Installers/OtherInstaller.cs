@@ -17,11 +17,12 @@ namespace Instagram.Services.Newsfeed.Installers
             services.AddRabbitMq(configuration);
             services.AddMongoDB(configuration);
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<INewsfeedRepository, NewsfeedRepository>();
+            services.AddTransient<INewsfeedRepository, NewsfeedRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<INewsfeedService, NewsfeedService>();
             services.AddScoped<IEventHandler<UserCreated>, UserCreatedHandler>();
             services.AddScoped<IEventHandler<UserFollowed>, UserFollowedHandler>();
+            services.AddTransient<IEventHandler<UsersNewPostsFetched>, UsersNewPostsFetchedHandler>();
             // services.AddScoped<IDatabaseSeeder, CustomMongoSeeder>();
         }
     }

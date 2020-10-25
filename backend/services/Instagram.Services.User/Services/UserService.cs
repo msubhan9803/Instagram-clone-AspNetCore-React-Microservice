@@ -65,7 +65,6 @@ namespace Instagram.Services.User.Services
                 var userRelationDto = _mapper.Map<UserRelationReadDto>(userRelationModel);
                 userRelationDto.Relation = 1;
                 
-                Console.WriteLine("here");
                 await _busClient.PublishAsync(new UserFollowed(userRelation.UserId, userRelation.FollowedUserId));
 
                 return userRelationDto;

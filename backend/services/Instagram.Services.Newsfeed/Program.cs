@@ -19,6 +19,7 @@ namespace Instagram.Services.Newsfeed
                 .UseRabbitMq()
                 .SubscribeToEvent<UserCreated>()
                 .SubscribeToEvent<UserFollowed>()
+                .SubscribeToEvent<UsersNewPostsFetched>()
                 .Build()
                 .Run();
         }
