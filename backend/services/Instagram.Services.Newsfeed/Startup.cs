@@ -12,6 +12,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Instagram.Services.Newsfeed.Installers;
 using Instagram.Common.Mongo;
+using Hangfire;
+using Instagram.Services.Newsfeed.Jobs;
 
 namespace Instagram.Services.Newsfeed
 {
@@ -31,14 +33,25 @@ namespace Instagram.Services.Newsfeed
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(
+            IApplicationBuilder app, 
+            IWebHostEnvironment env,
+            IRecurringJobManager recurringJobManager,
+            IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-            // app.ApplicationServices.GetService<IDatabaseInitializer>().InitializeAsync();
+            
+            app.UseHangfireDashboard();
+            recurringJobManager.AddOrUpdate(
+                "Update.Newsfeed",
+                () => serviceProvider.GetService<INewsfeedUpdateJob>().UpdateNewsfeedAsync(),
+                "* * * * *"
+            );
 
+            // app.ApplicationServices.GetService<IDatabaseInitializer>().InitializeAsync();
             app.UseMvc();
         }
     }

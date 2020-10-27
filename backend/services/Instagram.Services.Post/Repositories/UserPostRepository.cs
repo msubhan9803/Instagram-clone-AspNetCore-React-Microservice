@@ -29,14 +29,14 @@ namespace Instagram.Services.Post.Repositories
                         on post.FileId equals postFile.Id
                         orderby post.CreatedAt descending
                         select (new UserPostReadDto
-                        {
-                            Id = post.Id,
-                            UserId = post.UserId,
-                            Caption = post.Caption,
-                            FileId = post.FileId,
-                            FileType = postFile.Type,
-                            CreatedAt = post.CreatedAt
-                        })
+                        (
+                            post.Id,
+                            post.UserId,
+                            post.Caption,
+                            post.FileId,
+                            postFile.Type,
+                            post.CreatedAt
+                        ))
                         ).ToListAsync();
 
             return result;
@@ -55,14 +55,14 @@ namespace Instagram.Services.Post.Repositories
                             on post.FileId equals postFile.Id
                             where post.Id == id
                             select (new UserPostReadDto
-                            {
-                                Id = post.Id,
-                                UserId = post.UserId,
-                                Caption = post.Caption,
-                                FileId = post.FileId,
-                                FileType = postFile.Type,
-                                CreatedAt = post.CreatedAt
-                            })
+                            (
+                                post.Id,
+                                post.UserId,
+                                post.Caption,
+                                post.FileId,
+                                postFile.Type,
+                                post.CreatedAt
+                            ))
                         ).FirstOrDefaultAsync();
 
             return result;
@@ -77,14 +77,14 @@ namespace Instagram.Services.Post.Repositories
                         where post.UserId == userId
                         orderby post.CreatedAt descending
                         select (new UserPostReadDto
-                        {
-                            Id = post.Id,
-                            UserId = post.UserId,
-                            Caption = post.Caption,
-                            FileId = post.FileId,
-                            FileType = postFile.Type,
-                            CreatedAt = post.CreatedAt
-                        })
+                        (
+                            post.Id,
+                            post.UserId,
+                            post.Caption,
+                            post.FileId,
+                            postFile.Type,
+                            post.CreatedAt
+                        ))
                         ).ToListAsync();
 
             return result;
@@ -103,14 +103,14 @@ namespace Instagram.Services.Post.Repositories
                         && post.CreatedAt > lastModified
                         orderby post.CreatedAt descending
                         select (new UserPostReadDto
-                        {
-                            Id = post.Id,
-                            UserId = post.UserId,
-                            Caption = post.Caption,
-                            FileId = post.FileId,
-                            FileType = postFile.Type,
-                            CreatedAt = post.CreatedAt
-                        })
+                        (
+                            post.Id,
+                            post.UserId,
+                            post.Caption,
+                            post.FileId,
+                            postFile.Type,
+                            post.CreatedAt
+                        ))
                         ).ToListAsync();
 
                 return result;

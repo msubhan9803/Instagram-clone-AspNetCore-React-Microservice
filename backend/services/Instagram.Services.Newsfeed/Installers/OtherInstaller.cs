@@ -7,6 +7,9 @@ using Instagram.Common.Mongo;
 using Instagram.Services.Newsfeed.Domain.Repositories;
 using Instagram.Services.Newsfeed.Repositories;
 using Instagram.Services.Newsfeed.Services;
+using Hangfire;
+using Hangfire.MemoryStorage;
+using Instagram.Services.Newsfeed.Jobs;
 
 namespace Instagram.Services.Newsfeed.Installers
 {
@@ -24,6 +27,14 @@ namespace Instagram.Services.Newsfeed.Installers
             services.AddScoped<IEventHandler<UserFollowed>, UserFollowedHandler>();
             services.AddTransient<IEventHandler<UsersNewPostsFetched>, UsersNewPostsFetchedHandler>();
             // services.AddScoped<IDatabaseSeeder, CustomMongoSeeder>();
+            services.AddHangfire(config => 
+                config.SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseDefaultTypeSerializer()
+                .UseMemoryStorage());
+
+            services.AddHangfireServer();
+            services.AddScoped<INewsfeedUpdateJob, NewsfeedUpdateJob>();
         }
     }
 }

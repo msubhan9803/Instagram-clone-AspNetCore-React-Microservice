@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Instagram.Services.Newsfeed.Domain.Repositories;
 using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
+using MongoDB.Driver;
 
 namespace Instagram.Services.Newsfeed.Services
 {
@@ -45,7 +46,10 @@ namespace Instagram.Services.Newsfeed.Services
 
         public async Task AddFollowedUserAsync(Guid userId, Guid followedUserId)
         {
-            await _userRepository.AddFollowerAsync(userId, followedUserId);
+            // Pushing followedUserId to users collection
+            var filter = Builders<BsonDocument>.Filter.Eq("userId", userId.ToString());
+            var fListUpdate = Builders<BsonDocument>.Update.Push("followingList", followedUserId.ToString()).CurrentDate("lastModified");
+            await _userRepository.AddFollowerAsync(filter, fListUpdate);
         }
     }
 }

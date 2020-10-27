@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Instagram.Services.Newsfeed.Domain.Repositories;
 using MongoDB.Bson;
@@ -15,17 +16,33 @@ namespace Instagram.Services.Newsfeed.Repositories
             _database = database;
         }
 
+        public async Task<List<BsonDocument>> GetAllUsersAsync()
+        {
+            return await usersCollection.Find(Builders<BsonDocument>.Filter.Empty).ToListAsync();
+        }
+
+        public async Task<BsonDocument> GetUserAsync(FilterDefinition<BsonDocument> filter)
+        {
+            return await usersCollection.Find(filter).FirstOrDefaultAsync();
+        }
+
         public async Task AddAsync(BsonDocument document)
         {
             await usersCollection.InsertOneAsync(document);
         }
 
-        public async Task AddFollowerAsync(Guid userId, Guid followerUserId)
+        public async Task AddFollowerAsync(
+            FilterDefinition<BsonDocument> filter,
+            UpdateDefinition<BsonDocument> update)
         {
-            // Pushing followedUserId to users collection
-            var filter = Builders<BsonDocument>.Filter.Eq("userId", userId.ToString());
-            var fListUpdate = Builders<BsonDocument>.Update.Push("followingList", followerUserId.ToString()).CurrentDate("lastModified");
-            var followingList = await usersCollection.UpdateOneAsync(filter, fListUpdate);
+            await usersCollection.UpdateOneAsync(filter, update);
+        }
+
+        public async Task SetNewsfeedTimeStampAsync(
+            FilterDefinition<BsonDocument> filter, 
+            UpdateDefinition<BsonDocument> update)
+        {
+            await usersCollection.UpdateOneAsync(filter, update);
         }
 
         private IMongoCollection<BsonDocument> usersCollection

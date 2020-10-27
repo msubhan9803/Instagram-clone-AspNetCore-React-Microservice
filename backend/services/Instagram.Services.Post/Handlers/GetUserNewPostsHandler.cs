@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Instagram.Common.Commands;
 using Instagram.Common.Events;
@@ -26,10 +27,11 @@ namespace Instagram.Services.Post.Handlers
         {
             _logger.LogInformation($"Handler Getting Posts of User: '{command.UserId}'.");
             var userPosts = await _userPostService.GetUserLatestPostsAsync(command.UserId, command.LastModified);
-            var json = JsonConvert.SerializeObject(userPosts, Formatting.Indented);
-            Console.WriteLine(json);
 
-            await _busClient.PublishAsync(new UsersNewPostsFetched(command.ParentUserId, userPosts));
+            if (userPosts.Any())
+            {
+                await _busClient.PublishAsync(new UsersNewPostsFetched(command.ParentUserId, userPosts));
+            }
         }
     }
 }

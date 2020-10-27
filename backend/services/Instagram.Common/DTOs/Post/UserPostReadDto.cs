@@ -10,5 +10,15 @@ namespace Instagram.Common.DTOs.Post
         public Guid FileId { get; set; }
         public string FileType { get; set; }
         public DateTime CreatedAt { get; set; }
+
+        public UserPostReadDto(Guid id, Guid userId, string caption, Guid fileId, string fileType, DateTime createdAt)
+        {
+            Id = id;
+            UserId = userId;
+            Caption = caption;
+            FileId = fileId;
+            FileType = fileType;
+            CreatedAt = createdAt;
+        }
     }
 }
