@@ -3,18 +3,23 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Instagram.Common.DTOs.Post;
 using Instagram.Services.Newsfeed.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace Instagram.Services.Newsfeed.Controllers
 {
-
-    [Route("api/v1/[controller]")]
-    public class NewsfeedController : Controller
+    [ApiVersion("1.0")]
+    [Produces("application/json")]
+    [ApiExplorerSettings(GroupName = "v1")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    public class NewsfeedsController : Controller
     {
         private readonly INewsfeedService _newsfeedService;
 
-        public NewsfeedController(INewsfeedService newsfeedService)
+        public NewsfeedsController(INewsfeedService newsfeedService)
         {
             _newsfeedService = newsfeedService;
         }

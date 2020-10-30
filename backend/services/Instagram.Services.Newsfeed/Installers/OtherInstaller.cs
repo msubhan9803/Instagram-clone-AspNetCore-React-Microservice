@@ -10,6 +10,7 @@ using Instagram.Services.Newsfeed.Services;
 using Hangfire;
 using Hangfire.MemoryStorage;
 using Instagram.Services.Newsfeed.Jobs;
+using Instagram.Common.Auth;
 
 namespace Instagram.Services.Newsfeed.Installers
 {
@@ -17,6 +18,7 @@ namespace Instagram.Services.Newsfeed.Installers
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {
+            services.AddJwt(configuration);
             services.AddRabbitMq(configuration);
             services.AddMongoDB(configuration);
             services.AddScoped<IUserRepository, UserRepository>();

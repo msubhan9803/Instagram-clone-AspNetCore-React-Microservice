@@ -34,7 +34,7 @@ namespace Instagram.Services.Newsfeed
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(
-            IApplicationBuilder app, 
+            IApplicationBuilder app,
             IWebHostEnvironment env,
             IRecurringJobManager recurringJobManager,
             IServiceProvider serviceProvider)
@@ -43,13 +43,22 @@ namespace Instagram.Services.Newsfeed
             {
                 app.UseDeveloperExceptionPage();
             }
-            
-            app.UseHangfireDashboard();
-            recurringJobManager.AddOrUpdate(
-                "Update.Newsfeed",
-                () => serviceProvider.GetService<INewsfeedUpdateJob>().UpdateNewsfeedAsync(),
-                "* * * * *"
-            );
+
+            app.UseRouting();
+            app.UseApiVersioning();
+            app.UseAuthentication();
+            app.UseAuthorization();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+
+            // app.UseHangfireDashboard();
+            // recurringJobManager.AddOrUpdate(
+            //     "Update.Newsfeed",
+            //     () => serviceProvider.GetService<INewsfeedUpdateJob>().UpdateNewsfeedAsync(),
+            //     "* * * * *"
+            // );
 
             // app.ApplicationServices.GetService<IDatabaseInitializer>().InitializeAsync();
             app.UseMvc();

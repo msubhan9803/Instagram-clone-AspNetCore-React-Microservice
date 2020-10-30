@@ -11,7 +11,7 @@ const clearUserProfile = ({
 
 export const getUserProfileData = (userId) => {
     return dispatch => {
-        return fetch('/api/v1/user-profile/' + userId, {
+        return fetch(`/api/v1/user-profile/${userId}`, {
             method: 'GET',
             headers: {
                 'Authorization': BearerToken()

@@ -3,6 +3,7 @@ import { Router, Switch, Route} from 'react-router-dom';
 import History from './common/utils/History';
 import Signup from './pages/SignUp';
 import Login from './pages/Login';
+import Newsfeed from './pages/Newsfeed';
 import UserProfile from './pages/UserProfile';
 import NotFound from './pages/NotFound';
 import PostModal from './common/components/PostModal';
@@ -30,6 +31,7 @@ function Routes() {
       <Switch>
         <Route exact path="/" component={Login}/>
         <Route path="/signup" component={Signup}/>
+        <Route path="/newsfeed" component={Newsfeed} />
         <Route path={["/userprofile/:username", "/post/:id/:index"]} children={<UserProfile history={History}/>} />
         {/* Add route to get post by id without Modal */}
         <Route path="/accounts/edit" component={Edit}/>

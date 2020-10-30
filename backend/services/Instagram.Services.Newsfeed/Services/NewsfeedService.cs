@@ -31,7 +31,6 @@ namespace Instagram.Services.Newsfeed.Services
 
         public async Task<IEnumerable<UserPostReadDto>> GetUserNewsfeedAsync(Guid userId)
         {
-
             var userFilter = Builders<BsonDocument>.Filter.Eq("userId", userId.ToString());
             var user = await _userRepository.GetUserAsync(userFilter);
 
@@ -49,7 +48,7 @@ namespace Instagram.Services.Newsfeed.Services
                     new Guid(post.GetValue("UserId").ToString()),
                     post.GetValue("Caption").ToString(),
                     new Guid(post.GetValue("FileId").ToString()),
-                    post.GetValue("FileId").ToString(),
+                    post.GetValue("FileType").ToString(),
                     Convert.ToDateTime(post.GetValue("CreatedAt").ToString())
                 );
 
@@ -63,7 +62,6 @@ namespace Instagram.Services.Newsfeed.Services
             Guid userId,
             DateTime timeStamp)
         {
-            Console.WriteLine(timeStamp);
             var userFilter = Builders<BsonDocument>.Filter.Eq("userId", userId.ToString());
             var user = await _userRepository.GetUserAsync(userFilter);
 
@@ -82,7 +80,7 @@ namespace Instagram.Services.Newsfeed.Services
                     new Guid(post.GetValue("UserId").ToString()),
                     post.GetValue("Caption").ToString(),
                     new Guid(post.GetValue("FileId").ToString()),
-                    post.GetValue("FileId").ToString(),
+                    post.GetValue("FileType").ToString(),
                     Convert.ToDateTime(post.GetValue("CreatedAt").ToString())
                 );
 

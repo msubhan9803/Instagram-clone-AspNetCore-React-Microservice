@@ -15,6 +15,10 @@ namespace Instagram.Services.Newsfeed.Installers
             services.AddMvc(option => option.EnableEndpointRouting = false);
             services.AddLogging();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddApiVersioning(o => {  
+                o.ReportApiVersions = true;
+                o.AssumeDefaultVersionWhenUnspecified = false;
+            });
         }
     }
 }

@@ -57,6 +57,17 @@
             ],
             "UpstreamPathTemplate": "/post-api/{version}/userposts/user/{userId}",
             "Key": "userPost"
+        },
+        {
+            "DownstreamPathTemplate": "/api/{version}/{catchAll}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                    {
+                        "Host": "localhost",
+                        "Port": 4004
+                    }
+                ],
+            "UpstreamPathTemplate": "/newsfeed-api/{version}/{catchAll}"
         }
     ],
     "Aggregates": [
