@@ -21,3 +21,21 @@ export const fetchInitial = (userId) => {
             .catch(error => console.log(error));
     };
 };
+
+export const fetchUpdatedNewsfeed = (userId, timeStamp) => {
+    return dispatch => {
+        return fetch(`/newsfeed-api/v1/newsfeeds/${userId}/${timeStamp}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': BearerToken()
+            }
+        })
+            .then(resp => resp.text())
+            .then(data => {
+                const result = JSON.parse(data);
+                console.log(result);
+                // dispatch(storeUserNewsfeed(result));
+            })
+            .catch(error => console.log(error));
+    };
+};

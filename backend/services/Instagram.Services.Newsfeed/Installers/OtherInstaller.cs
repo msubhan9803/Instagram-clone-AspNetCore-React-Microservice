@@ -18,6 +18,7 @@ namespace Instagram.Services.Newsfeed.Installers
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {
+            services.AddMvc();
             services.AddJwt(configuration);
             services.AddRabbitMq(configuration);
             services.AddMongoDB(configuration);
@@ -29,7 +30,7 @@ namespace Instagram.Services.Newsfeed.Installers
             services.AddScoped<IEventHandler<UserFollowed>, UserFollowedHandler>();
             services.AddTransient<IEventHandler<UsersNewPostsFetched>, UsersNewPostsFetchedHandler>();
             // services.AddScoped<IDatabaseSeeder, CustomMongoSeeder>();
-            services.AddHangfire(config => 
+            services.AddHangfire(config =>
                 config.SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
                 .UseSimpleAssemblyNameTypeSerializer()
                 .UseDefaultTypeSerializer()

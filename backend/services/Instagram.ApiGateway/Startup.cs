@@ -50,6 +50,7 @@ namespace Instagram.ApiGateway
 
             // app.UseHttpsRedirection();
             app.UseRouting();
+            app.UseWebSockets();
             app.UseOcelot().Wait();
         }
     }

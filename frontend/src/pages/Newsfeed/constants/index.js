@@ -1,0 +1,1 @@
+export const newsfeedHubUrl  = '/newsfeed-api/v1/hubs/newsfeed/';

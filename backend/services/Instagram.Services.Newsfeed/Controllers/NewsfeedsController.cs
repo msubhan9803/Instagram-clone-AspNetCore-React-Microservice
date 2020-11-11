@@ -35,7 +35,7 @@ namespace Instagram.Services.Newsfeed.Controllers
         [HttpGet("{userId}/{timeStamp}")]
         public async Task<ActionResult<IEnumerable<UserPostReadDto>>> GetUserNewsfeedByTimeStampAsync(
             Guid userId,
-            DateTime timeStamp)
+            long timeStamp)
         {
             return Ok(await _newsfeedService.GetUserNewsfeedByTimeStampAsync(userId, timeStamp));
         }

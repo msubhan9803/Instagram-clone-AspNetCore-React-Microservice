@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Instagram.Common.Commands;
+using Instagram.Common.DTOs.Newsfeed;
 using Instagram.Common.DTOs.Post;
 using Instagram.Services.Newsfeed.Domain.Repositories;
 using MongoDB.Bson;
@@ -60,8 +61,13 @@ namespace Instagram.Services.Newsfeed.Services
 
         public async Task<IEnumerable<UserPostReadDto>> GetUserNewsfeedByTimeStampAsync(
             Guid userId,
-            DateTime timeStamp)
+            long timeStamp)
         {
+            DateTime dt_1970 = new DateTime(1970, 1, 1);
+            long tricks_1970 = dt_1970.Ticks;
+            long time_tricks = tricks_1970 + timeStamp * 10000;
+            DateTime dt = new DateTime(time_tricks);
+
             var userFilter = Builders<BsonDocument>.Filter.Eq("userId", userId.ToString());
             var user = await _userRepository.GetUserAsync(userFilter);
 
@@ -70,7 +76,7 @@ namespace Instagram.Services.Newsfeed.Services
             var newsfeedResult = await _newsfeedRepository.GetUserNewsfeedAsync(newsfeedFilter);
 
             var newsfeedByList = newsfeedResult.Select(p => p.AsBsonDocument).
-                Where(p => Convert.ToDateTime(p.GetValue("CreatedAt")) > timeStamp).ToList();
+                Where(p => Convert.ToDateTime(p.GetValue("CreatedAt")) > dt).ToList();
 
             var userPostList = new List<UserPostReadDto>();
             foreach (var post in newsfeedByList)

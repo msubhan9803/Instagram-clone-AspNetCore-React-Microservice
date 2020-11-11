@@ -31,6 +31,8 @@ namespace Instagram.Services.Post.Handlers
             if (userPosts.Any())
             {
                 await _busClient.PublishAsync(new UsersNewPostsFetched(command.ParentUserId, userPosts));
+            } else {
+                Console.WriteLine($"No new posts of User: ${command.UserId}!");
             }
         }
     }

@@ -1,6 +1,6 @@
 using System;
 
-namespace Instagram.Common.DTOs.Post
+namespace Instagram.Common.DTOs.Newsfeed
 {
     public class UserNewPost
     {

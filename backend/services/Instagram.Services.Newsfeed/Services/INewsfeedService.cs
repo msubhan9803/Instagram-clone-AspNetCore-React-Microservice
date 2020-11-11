@@ -10,7 +10,7 @@ namespace Instagram.Services.Newsfeed.Services
         Task<IEnumerable<UserPostReadDto>> GetUserNewsfeedAsync(Guid userId);
         Task<IEnumerable<UserPostReadDto>> GetUserNewsfeedByTimeStampAsync(
             Guid userId,
-            DateTime timeStamp);
+            long timeStamp);
         Task PushUsersNewPostsAsync(Guid userId, IEnumerable<UserPostReadDto> userNewPosts);
         Task UpdateNewsfeedAsync();
     }

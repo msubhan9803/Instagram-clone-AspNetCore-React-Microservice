@@ -1,0 +1,128 @@
+version: "3.8"
+
+services:
+  start-dependencies:
+    image: dadarek/wait-for-dependencies
+    depends_on:
+      - rabbitmq_service
+    command: rabbitmq_service:5672
+
+  rabbitmq_service:
+    container_name: rabbitmq
+    image: rabbitmq:3-management
+    restart: always
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+
+  mysql_db_service:
+    container_name: mysql_db
+    image: mysql:8.0.21
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "Pa$$WorD"
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - /home/mranonymous/Projects/Instagram-Volumes/mysql:/var/lib/mysql
+      - ./mysql/:/docker-entrypoint-initdb.d
+
+  mongo_db_service:
+    container_name: mongo_db
+    image: mongo
+    restart: always
+    volumes:
+      - /home/mranonymous/Projects/Instagram-Volumes/mongo:/data/db
+    ports:
+      - '27017:27017'
+
+  azurite_service:
+    container_name: azurite
+    image: "mcr.microsoft.com/azure-storage/azurite"
+    hostname: azurite
+    restart: always
+    volumes:
+        - "/home/mranonymous/Projects/Instagram-Volumes/Azurite:/data"
+        - "/home/mranonymous/Projects/Instagram-Volumes/Azurite/debug.log:/data/debug.log"
+        - "/etc/timezone:/etc/timezone:ro"
+        - "/etc/localtime:/etc/localtime:ro"
+    expose:
+      - '10000'
+      - '10001'
+    ports:
+    - 10000:10000
+    - 10001:10001
+
+  user_service:
+    container_name: user
+    build: ../backend/services/Instagram.Services.User
+    restart: always
+    expose:
+      - '9000'
+    depends_on:
+      - mysql_db_service
+      - rabbitmq_service
+
+  post_service:
+    container_name: post
+    build: ../backend/services/Instagram.Services.Post
+    restart: always
+    expose:
+      - '9001'
+    volumes:
+        - "/home/mranonymous/Pictures:/home/mranonymous/Pictures"
+    depends_on:
+      - mysql_db_service
+      - user_service
+      - azurite_service
+      - rabbitmq_service
+
+  newsfeed_service:
+    container_name: newsfeed
+    build: ../backend/services/Instagram.Services.Newsfeed
+    restart: always
+    expose:
+      - '9002'
+    depends_on:
+      - mongo_db_service
+      - user_service
+      - post_service
+      - rabbitmq_service
+  
+  nginx_service: 
+    container_name: nginx_gateway
+    build: ../backend/services/Instagram.ApiGateway.Nginx/
+    restart: always
+    depends_on:
+      - user_service
+      - post_service
+      - newsfeed_service
+    volumes:
+      - '../backend/services/Instagram.ApiGateway.Nginx/default.conf:/etc/nginx/conf.d/default.conf'
+    ports:
+      - "8080:80"
+      - "4430:443"
+
+  frontend_service:
+    container_name: frontend
+    build:
+      context: ../frontend/
+    restart: always
+    volumes:
+      - '../frontend/:/app'
+      - '/app/node_modules'
+    expose:
+      - '3000'
+    environment: 
+      # DONT USE IN PRODUCTION: Using cuz of Invalid Host Header
+      DANGEROUSLY_DISABLE_HOST_CHECK: "true"
+    stdin_open: true
+
+networks:
+  default:
+    driver: bridge
+
+volumes:
+  mysql:

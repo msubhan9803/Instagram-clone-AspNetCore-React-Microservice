@@ -67,7 +67,8 @@
                         "Port": 4004
                     }
                 ],
-            "UpstreamPathTemplate": "/newsfeed-api/{version}/{catchAll}"
+            "UpstreamPathTemplate": "/newsfeed-api/{version}/{catchAll}",
+            "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ]
         }
     ],
     "Aggregates": [
