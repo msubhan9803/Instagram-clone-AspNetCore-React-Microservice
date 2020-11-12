@@ -1,11 +1,11 @@
 using FluentValidation;
 using Instagram.Common.DTOs.User;
 
-namespace Instagram.Common.Validators
+namespace Instagram.Services.Users.Validators
 {
-    public class UserBioCreateDtoValidator : AbstractValidator<UserBioCreateDto>
+    public class UserBioUpdateDtoValidator : AbstractValidator<UserBioUpdateDto>
     {
-        public UserBioCreateDtoValidator()
+        public UserBioUpdateDtoValidator()
         {
             RuleFor(x => x.Text)
                 .NotEmpty().WithMessage("Title is required.");

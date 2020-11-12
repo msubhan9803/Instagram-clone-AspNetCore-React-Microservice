@@ -2,7 +2,7 @@ using System.Linq;
 using FluentValidation;
 using Instagram.Common.DTOs.User;
 
-namespace Instagram.Common.Validators
+namespace Instagram.Services.Users.Validators
 {
     public class RegisterUserValidator : AbstractValidator<UserRegisterDto>
     {        

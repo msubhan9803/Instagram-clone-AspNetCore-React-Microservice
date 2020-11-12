@@ -57,7 +57,7 @@ services:
 
   user_service:
     container_name: user
-    build: ../backend/services/Instagram.Services.User
+    build: ../src/Services/Instagram.Services.User
     restart: always
     expose:
       - '9000'
@@ -67,7 +67,7 @@ services:
 
   post_service:
     container_name: post
-    build: ../backend/services/Instagram.Services.Post
+    build: ../src/Services/Instagram.Services.Post
     restart: always
     expose:
       - '9001'
@@ -81,7 +81,7 @@ services:
 
   newsfeed_service:
     container_name: newsfeed
-    build: ../backend/services/Instagram.Services.Newsfeed
+    build: ../src/Services/Instagram.Services.Newsfeed
     restart: always
     expose:
       - '9002'
@@ -93,25 +93,24 @@ services:
   
   nginx_service: 
     container_name: nginx_gateway
-    build: ../backend/services/Instagram.ApiGateway.Nginx/
+    build: ../src/ApiGateway/
     restart: always
     depends_on:
       - user_service
       - post_service
       - newsfeed_service
     volumes:
-      - '../backend/services/Instagram.ApiGateway.Nginx/default.conf:/etc/nginx/conf.d/default.conf'
+      - '../src/ApiGateway/default.conf:/etc/nginx/conf.d/default.conf'
     ports:
       - "8080:80"
       - "4430:443"
 
-  frontend_service:
-    container_name: frontend
-    build:
-      context: ../frontend/
+  web_service:
+    container_name: web
+    build: ../src/Web/
     restart: always
     volumes:
-      - '../frontend/:/app'
+      - '../src/Web/:/app'
       - '/app/node_modules'
     expose:
       - '3000'

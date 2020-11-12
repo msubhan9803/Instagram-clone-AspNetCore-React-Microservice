@@ -2,7 +2,7 @@ using AutoMapper;
 using Instagram.Common.DTOs.Post;
 using Instagram.Services.Post.Domain.Models;
 
-namespace Instagram.Services.User.Profiles
+namespace Instagram.Services.Post.Profiles
 {
     public class UserPostProfile : Profile
     {
