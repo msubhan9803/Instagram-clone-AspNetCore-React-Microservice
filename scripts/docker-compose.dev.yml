@@ -1,0 +1,59 @@
+version: "3.8"
+
+services:
+  start-dependencies:
+    image: dadarek/wait-for-dependencies
+    depends_on:
+      - rabbitmq_service
+    command: rabbitmq_service:5672
+
+  rabbitmq_service:
+    container_name: rabbitmq
+    image: rabbitmq:3-management
+    restart: always
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+
+  mysql_db_service:
+    container_name: mysql_db
+    image: mysql:8.0.21
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "Pa$$WorD"
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - /home/mranonymous/Projects/Instagram-Volumes/mysql:/var/lib/mysql
+      - ./mysql/:/docker-entrypoint-initdb.d
+
+  user_service:
+    build:
+      context: ../src/Services/
+      dockerfile: Instagram.Services.User/Dockerfile.dev
+    container_name: "user"
+    volumes:
+      - ../src/Services/Instagram.Services.User/:/src/Instagram.Services.User
+      - ../src/Services/Instagram.Common/:/src/Instagram.Common/
+      - $HOME/.microsoft/usersecrets/:/root/.microsoft/usersecrets/
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DOTNET_USE_POLLING_FILE_WATCHER=true  
+      - ASPNETCORE_URLS=http://+:4000
+    expose:
+      - '4000'
+    ports:
+      - '4000:4000'
+    depends_on:
+      - mysql_db_service
+      - rabbitmq_service
+    command: ["dotnet", "watch", "run"]
+
+networks:
+  default:
+    driver: bridge
+
+volumes:
+  mysql:
