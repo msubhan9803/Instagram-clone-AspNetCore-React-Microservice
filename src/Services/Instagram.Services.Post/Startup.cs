@@ -40,7 +40,7 @@ namespace Instagram.Services.Post
                 var builder = new MySqlConnectionStringBuilder();
                 builder.ConnectionString = Configuration.GetConnectionString("DefaultConnection");
                 builder.UserID = Configuration["Uid"];
-                builder.Password = Configuration["Password"];
+                builder.Password = Configuration["Pwd"];
 
                 DbContextSetting.ConnectionString = builder.ConnectionString;
             } else {

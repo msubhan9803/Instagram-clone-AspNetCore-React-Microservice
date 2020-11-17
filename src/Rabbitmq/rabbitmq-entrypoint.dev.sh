@@ -1,0 +1,4 @@
+rabbitmqctl trace_on
+rabbitmq-plugins enable rabbitmq_tracing
+rabbitmqctl stop_app
+rabbitmqctl start_app

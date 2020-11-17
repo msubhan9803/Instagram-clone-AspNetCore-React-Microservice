@@ -1,8 +1,5 @@
-﻿CREATE DATABASE IF NOT EXISTS InstagramServicesPost;
-USE InstagramServicesPost;
-
-CREATE USER 'dbuser'@'localhost' IDENTIFIED BY 'Pa$$WorD';
-GRANT ALL PRIVILEGES ON * . * TO 'dbuser'@'localhost';
+﻿CREATE DATABASE IF NOT EXISTS InstagramServicesUser;
+USE InstagramServicesUser;
 
 DROP PROCEDURE IF EXISTS `POMELO_AFTER_ADD_PRIMARY_KEY`;
 DELIMITER //
@@ -153,7 +150,13 @@ CREATE PROCEDURE MigrationsScript()
 BEGIN
     IF NOT EXISTS(SELECT 1 FROM `__EFMigrationsHistory` WHERE `MigrationId` = '20201009215308_AddUserRelation') THEN
 
-    ALTER TABLE `UserRelations` ADD `Id` char(36) NOT NULL DEFAULT '00000000-0000-0000-0000-000000000000';
+    CREATE TABLE `UserRelations` (
+        `Id` char(36) NOT NULL,
+        `UserId` char(36) NOT NULL,
+        `FollowerId` char(36) NOT NULL,
+        `CreatedAt` datetime(6) NOT NULL,
+        CONSTRAINT `PK_UserRelations` PRIMARY KEY (`Id`)
+    );
 
     END IF;
 END //
@@ -161,21 +164,6 @@ DELIMITER ;
 CALL MigrationsScript();
 DROP PROCEDURE MigrationsScript;
 
-
-DROP PROCEDURE IF EXISTS MigrationsScript;
-DELIMITER //
-CREATE PROCEDURE MigrationsScript()
-BEGIN
-    IF NOT EXISTS(SELECT 1 FROM `__EFMigrationsHistory` WHERE `MigrationId` = '20201009215308_AddUserRelation') THEN
-
-    ALTER TABLE `UserRelations` ADD CONSTRAINT `PK_UserRelations` PRIMARY KEY (`Id`);
-    CALL POMELO_AFTER_ADD_PRIMARY_KEY(NULL, 'UserRelations', 'Id');
-
-    END IF;
-END //
-DELIMITER ;
-CALL MigrationsScript();
-DROP PROCEDURE MigrationsScript;
 
 
 DROP PROCEDURE IF EXISTS MigrationsScript;

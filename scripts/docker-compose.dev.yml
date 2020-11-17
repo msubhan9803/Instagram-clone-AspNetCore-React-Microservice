@@ -9,7 +9,9 @@ services:
 
   rabbitmq_service:
     container_name: rabbitmq
-    image: rabbitmq:3-management
+    build: 
+      context: ../src/Rabbitmq
+      dockerfile: Dockerfile.dev
     restart: always
     ports:
       - '5672:5672'
@@ -29,11 +31,38 @@ services:
       - /home/mranonymous/Projects/Instagram-Volumes/mysql:/var/lib/mysql
       - ./mysql/:/docker-entrypoint-initdb.d
 
+  mongo_db_service:
+    container_name: mongo_db
+    image: mongo
+    restart: always
+    volumes:
+      - /home/mranonymous/Projects/Instagram-Volumes/mongo:/data/db
+    ports:
+      - '27017:27017'
+
+  azurite_service:
+    container_name: azurite
+    image: "mcr.microsoft.com/azure-storage/azurite"
+    hostname: azurite
+    restart: always
+    volumes:
+        - "/home/mranonymous/Projects/Instagram-Volumes/azurite:/data"
+        - "/home/mranonymous/Projects/Instagram-Volumes/Azurite/debug.log:/data/debug.log"
+        - "/etc/timezone:/etc/timezone:ro"
+        - "/etc/localtime:/etc/localtime:ro"
+    expose:
+      - '10000'
+      - '10001'
+    ports:
+    - 10000:10000
+    - 10001:10001
+
   user_service:
     build:
       context: ../src/Services/
       dockerfile: Instagram.Services.User/Dockerfile.dev
     container_name: "user"
+    restart: always
     volumes:
       - ../src/Services/Instagram.Services.User/:/src/Instagram.Services.User
       - ../src/Services/Instagram.Common/:/src/Instagram.Common/
@@ -44,12 +73,92 @@ services:
       - ASPNETCORE_URLS=http://+:4000
     expose:
       - '4000'
-    ports:
-      - '4000:4000'
+    ports: 
+      - 4000:4000
     depends_on:
       - mysql_db_service
       - rabbitmq_service
     command: ["dotnet", "watch", "run"]
+
+  post_service:
+    build:
+      context: ../src/Services/
+      dockerfile: Instagram.Services.Post/Dockerfile.dev
+    container_name: "post"
+    restart: always
+    volumes:
+      - ../src/Services/Instagram.Services.Post/:/src/Instagram.Services.Post
+      - ../src/Services/Instagram.Common/:/src/Instagram.Common/
+      - $HOME/.microsoft/usersecrets/:/root/.microsoft/usersecrets/
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DOTNET_USE_POLLING_FILE_WATCHER=true  
+      - ASPNETCORE_URLS=http://+:4002
+    expose:
+      - '4002'
+    ports: 
+      - 4002:4002
+    depends_on:
+      - mysql_db_service
+      - user_service
+      - azurite_service
+      - rabbitmq_service
+    command: ["dotnet", "watch", "run"]
+
+  newsfeed_service:
+    build:
+      context: ../src/Services/
+      dockerfile: Instagram.Services.Newsfeed/Dockerfile.dev
+    container_name: newsfeed
+    restart: always
+    volumes:
+      - ../src/Services/Instagram.Services.Newsfeed/:/src/Instagram.Services.Newsfeed
+      - ../src/Services/Instagram.Common/:/src/Instagram.Common/
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DOTNET_USE_POLLING_FILE_WATCHER=true  
+      - ASPNETCORE_URLS=http://+:4004
+    expose:
+      - '4004'
+    ports: 
+      - 4004:4004
+    depends_on:
+      - mongo_db_service
+      - user_service
+      - post_service
+      - rabbitmq_service
+    command: ["dotnet", "watch", "run"]
+  
+  nginx_service: 
+    container_name: nginx_gateway
+    build:
+      context: ../src/ApiGateway/
+      dockerfile: Dockerfile.dev
+    restart: always
+    depends_on:
+      - user_service
+      - post_service
+      - newsfeed_service
+    volumes:
+      - '../src/ApiGateway/dev/default.conf:/etc/nginx/conf.d/default.conf'
+    ports:
+      - "8080:80"
+      - "4430:443"
+
+  # PLease Change it to Production
+  web_service:
+    container_name: web
+    build: ../src/Web/
+    restart: always
+    volumes:
+      - '../src/Web/:/app'
+      - '/app/node_modules'
+    expose:
+      - '3000'
+    environment: 
+      # DONT USE IN PRODUCTION: Using cuz of Invalid Host Header
+      DANGEROUSLY_DISABLE_HOST_CHECK: "true"
+    stdin_open: true
 
 networks:
   default:

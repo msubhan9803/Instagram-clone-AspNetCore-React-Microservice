@@ -44,8 +44,8 @@ services:
     hostname: azurite
     restart: always
     volumes:
-        - "/home/mranonymous/Projects/Instagram-Volumes/Azurite:/data"
-        - "/home/mranonymous/Projects/Instagram-Volumes/Azurite/debug.log:/data/debug.log"
+        - "/home/mranonymous/Projects/Instagram-Volumes/azurite:/data"
+        - "/home/mranonymous/Projects/Instagram-Volumes/azurite/debug.log:/data/debug.log"
         - "/etc/timezone:/etc/timezone:ro"
         - "/etc/localtime:/etc/localtime:ro"
     expose:
@@ -105,6 +105,7 @@ services:
       - "8080:80"
       - "4430:443"
 
+  # PLease Change it to Production
   web_service:
     container_name: web
     build: ../src/Web/

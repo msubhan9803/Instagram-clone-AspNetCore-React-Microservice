@@ -7,16 +7,19 @@ namespace Instagram.Services.User.Domain.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<Guid>(
-                name: "Id",
-                table: "UserRelations",
-                nullable: false,
-                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_UserRelations",
-                table: "UserRelations",
-                column: "Id");
+            migrationBuilder.CreateTable(
+                name: "UserRelations",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
+                    FollowerId = table.Column<Guid>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserRelations", x => x.Id);
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

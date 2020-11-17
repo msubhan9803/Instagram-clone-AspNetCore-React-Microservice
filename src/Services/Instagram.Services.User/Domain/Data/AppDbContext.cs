@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration.Binder;
 using Microsoft.Extensions.Configuration.Json;
 using MySql.Data.MySqlClient;
 using Microsoft.Extensions.Hosting;
+using Instagram.Common.Options;
 
 namespace Instagram.Services.User.Data
 {
@@ -28,16 +29,9 @@ namespace Instagram.Services.User.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (_env.IsEnvironment("Development")) 
+            if (!optionsBuilder.IsConfigured)
             {
-                var builder = new MySqlConnectionStringBuilder();
-                builder.ConnectionString = Configuration.GetConnectionString("DefaultConnection");
-                builder.UserID = Configuration["Uid"];
-                builder.Password = Configuration["Password"];
-
-                optionsBuilder.UseMySql(builder.ConnectionString);
-            } else {
-                optionsBuilder.UseMySql(Configuration.GetConnectionString("DefaultConnection"));
+                optionsBuilder.UseMySql(DbContextSetting.ConnectionString);
             }
         }
 

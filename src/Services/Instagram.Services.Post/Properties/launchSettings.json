@@ -12,7 +12,6 @@
     "Instagram.Services.Post": {
       "commandName": "Project",
       "launchBrowser": false,
-      "applicationUrl": "http://localhost:4002",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

@@ -17,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using MySql.Data.MySqlClient;
 
 namespace Instagram.Services.User
 {
@@ -43,9 +44,18 @@ namespace Instagram.Services.User
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
             
-            if (env.IsDevelopment())
+            if (env.IsDevelopment()) 
             {
                 app.UseDeveloperExceptionPage();
+                
+                var builder = new MySqlConnectionStringBuilder();
+                builder.ConnectionString = Configuration.GetConnectionString("DefaultConnection");
+                builder.UserID = Configuration["Uid"];
+                builder.Password = Configuration["Pwd"];
+
+                DbContextSetting.ConnectionString = builder.ConnectionString;
+            } else {
+                DbContextSetting.ConnectionString = Configuration.GetConnectionString("DefaultConnection");
             }
 
             var swaggerOptions = new SwaggerOptions();

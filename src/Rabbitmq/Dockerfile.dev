@@ -1,0 +1,7 @@
+FROM rabbitmq:3-management
+
+COPY ./rabbitmq-entrypoint.dev.sh /rabbitmq-entrypoint.dev.sh
+RUN chmod +x /rabbitmq-entrypoint.dev.sh
+
+EXPOSE 5672
+EXPOSE 15672

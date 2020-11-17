@@ -123,22 +123,24 @@ const PostModal = (props) => {
                     <div className="row align-items-center">
                         <div className="col-1 text-right">
                             {
-                                (state.currentIndex > 0) ?
-                                    <Link
-                                        onClick={prevPost}
-                                        className="button-prev"
-                                        to={{
-                                            pathname: `/post/${props.userPosts[state.currentIndex - 1].id}/${state.currentIndex - 1}`,
-                                            // This is the trick! This link sets
-                                            // the `background` in location state.
-                                            state: {
-                                                background: location,
-                                                postList: props.location.state.postList
-                                            }
-                                        }}
-                                    >
-                                        <i className="fa fa-chevron-left"></i>
-                                    </Link>
+                                props.userPosts.length > 1 ?
+                                    (state.currentIndex > 0) ?
+                                        <Link
+                                            onClick={prevPost}
+                                            className="button-prev"
+                                            to={{
+                                                pathname: `/post/${props.userPosts[state.currentIndex - 1].id}/${state.currentIndex - 1}`,
+                                                // This is the trick! This link sets
+                                                // the `background` in location state.
+                                                state: {
+                                                    background: location,
+                                                    postList: props.location.state.postList
+                                                }
+                                            }}
+                                        >
+                                            <i className="fa fa-chevron-left"></i>
+                                        </Link>
+                                        : null
                                     : null
                             }
                         </div>
@@ -153,23 +155,25 @@ const PostModal = (props) => {
                         </div>
                         <div className="col-1">
                             {
-                                state.currentIndex === (state.postListLength - 1) ?
-                                    null :
-                                    <Link
-                                        onClick={nextPost}
-                                        className="button-next"
-                                        to={{
-                                            pathname: `/post/${props.userPosts[state.currentIndex + 1].id}/${state.currentIndex + 1}`,
-                                            // This is the trick! This link sets
-                                            // the `background` in location state.
-                                            state: {
-                                                background: location,
-                                                postList: props.location.state.postList
-                                            }
-                                        }}
-                                    >
-                                        <i className="fa fa-chevron-right"></i>
-                                    </Link>
+                                props.userPosts.length > 1 ?
+                                    state.currentIndex === (state.postListLength - 1) ?
+                                        null :
+                                        <Link
+                                            onClick={nextPost}
+                                            className="button-next"
+                                            to={{
+                                                pathname: `/post/${props.userPosts[state.currentIndex + 1].id}/${state.currentIndex + 1}`,
+                                                // This is the trick! This link sets
+                                                // the `background` in location state.
+                                                state: {
+                                                    background: location,
+                                                    postList: props.location.state.postList
+                                                }
+                                            }}
+                                        >
+                                            <i className="fa fa-chevron-right"></i>
+                                        </Link>
+                                    : null
                             }
                         </div>
                     </div>
