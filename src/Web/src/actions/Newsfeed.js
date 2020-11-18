@@ -5,6 +5,11 @@ const storeUserNewsfeed = newsfeed => ({
     payload: newsfeed
 });
 
+const updateUserNewsfeed = newPost => ({
+    type: 'UPDATE_USER_NEWSFEED',
+    payload: newPost
+});
+
 export const fetchInitial = (userId) => {
     return dispatch => {
         return fetch(`/newsfeed-api/v1/newsfeeds/${userId}`, {
@@ -33,8 +38,10 @@ export const fetchUpdatedNewsfeed = (userId, timeStamp) => {
             .then(resp => resp.text())
             .then(data => {
                 const result = JSON.parse(data);
-                console.log(result);
-                // dispatch(storeUserNewsfeed(result));
+                
+                if (result.length > 0) {
+                    dispatch(updateUserNewsfeed(result));
+                }
             })
             .catch(error => console.log(error));
     };

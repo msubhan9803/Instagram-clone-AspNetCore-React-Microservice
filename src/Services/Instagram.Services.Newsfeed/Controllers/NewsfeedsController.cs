@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Instagram.Services.Newsfeed.Hubs;
+using Instagram.Services.Newsfeed.Hubs.Client;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Instagram.Services.Newsfeed.Controllers
 {
@@ -18,10 +21,21 @@ namespace Instagram.Services.Newsfeed.Controllers
     public class NewsfeedsController : Controller
     {
         private readonly INewsfeedService _newsfeedService;
+        private readonly IHubContext<NewsfeedHub, INewsfeedClient> _newsfeedHub;
 
-        public NewsfeedsController(INewsfeedService newsfeedService)
+        public NewsfeedsController(INewsfeedService newsfeedService, 
+            IHubContext<NewsfeedHub, INewsfeedClient> newsfeedHub)
         {
             _newsfeedService = newsfeedService;
+            _newsfeedHub = newsfeedHub;
+        }
+
+        // GET: api/v1/initiate
+        [HttpGet("initiate")]
+        public ActionResult Initiate(Guid userId)
+        {
+            _newsfeedHub.Clients.All.FetchNewsfeed();
+            return NoContent();
         }
 
         // GET: api/v1/newsfeed/{userId}

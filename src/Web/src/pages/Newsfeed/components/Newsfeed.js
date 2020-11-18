@@ -8,7 +8,8 @@ import { newsfeedHubUrl } from '../constants';
 
 const Newsfeed = (props) => {
     const [connection, setConnection] = useState(null);
-    
+    const [connectionStarted, setConnectionStarted] = useState(false);
+
     useEffect(() => {
         var userId = props.currentUserData.userId;
         props.fetchInitialNewsfeed(userId);
@@ -26,22 +27,25 @@ const Newsfeed = (props) => {
     }, []);
 
     useEffect(() => {
-        if (connection) {
+        if (connection && props.timeStamp) {
             var userId = props.currentUserData.userId;
-            var timeStamp = props.newsfeed.fetchedAt;
+            var timeStamp = props.timeStamp;
 
-            connection.start()
-                .then(result => {
-                    console.log('Connection started!');
-
-                    connection.on('FetchNewsfeed', () => {
-                        console.log('FetchNewsfeed message received!');
-                        fetchUpdatedNewsfeed(userId, timeStamp);
-                    });
-                })
-                .catch(e => console.log('Connection failed: ', e));
+            if (!connectionStarted) {
+                connection.start()
+                    .then(result => {
+                        console.log('Connection started!');
+                        setConnectionStarted(true);
+                        
+                        connection.on('FetchNewsfeed', () => {
+                            console.log('FetchNewsfeed message received!');
+                            props.fetchUpdatedNewsfeed(userId, timeStamp);
+                        });
+                    })
+                    .catch(e => console.log('Connection failed: ', e));
+            }
         }
-    }, [connection]);
+    }, [connection, props.timeStamp]);
 
     return (
         <>
@@ -65,13 +69,15 @@ const Newsfeed = (props) => {
 const mapStateToProps = (state) => {
     return {
         currentUserData: state.Login.currentUserData,
-        newsfeed: state.Newsfeed.newsfeed
+        newsfeed: state.Newsfeed.newsfeed,
+        timeStamp: state.Newsfeed.fetchedAt
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchInitialNewsfeed: userId => dispatch(fetchInitial(userId))
+        fetchInitialNewsfeed: userId => dispatch(fetchInitial(userId)),
+        fetchUpdatedNewsfeed: (userId, timeStamp) => dispatch(fetchUpdatedNewsfeed(userId, timeStamp))
     };
 };
 
