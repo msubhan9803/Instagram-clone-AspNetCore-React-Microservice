@@ -21,14 +21,16 @@ export const fetchUserBio = (userId) => {
 };
 
 export const postUserBioRequest = (userBio) => {
-    console.log(userBio)
+    for (var pair of userBio.entries()) {
+        console.log(pair[0] + ', ' + pair[1]);
+    }
+
     return fetch('/user-api/v1/userBios/', {
         method: 'POST',
         headers: {
-            'Authorization': BearerToken(),
-            'Content-Type': 'application/json'
+            'Authorization': BearerToken()
         },
-        body: JSON.stringify(userBio)
+        body: userBio
     })
     .then(data => {
         var json = JSON.parse(data);

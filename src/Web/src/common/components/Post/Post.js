@@ -33,7 +33,7 @@ const Post = (props) => {
                                 </div>
 
                                 <div className="col-8">
-                                    <div><b>user1</b></div>
+                                    <div><b>{props.currentFileData.userName}</b></div>
                                 </div>
                             </div>
 

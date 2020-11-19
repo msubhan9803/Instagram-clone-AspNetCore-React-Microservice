@@ -9,6 +9,7 @@ import {
 import { fetchUserBio, postUserBioRequest, updateUserBio } from './services/editUserBio';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
+import Avatar from 'react-avatar-edit';
 
 const { Content, Sider } = Layout;
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -18,7 +19,10 @@ const Edit = (props) => {
         id: null,
         text: "",
         gender: "",
-        websiteUrl: ""
+        websiteUrl: "",
+        profileImageName: "",
+        profileImage: null,
+        src: ""
     });
     const [showMessage, setMessage] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -29,15 +33,17 @@ const Edit = (props) => {
             .then(result => {
                 if (result !== null) {
                     setFormData({
+                        ...formData,
                         id: result.id,
                         text: result.text,
                         gender: result.gender,
-                        websiteUrl: result.websiteUrl
+                        websiteUrl: result.websiteUrl,
+                        profileImageName: result.profileImageName,
                     });
                 } else {
                     setPostUserBio(true);
                 }
-                
+
                 setLoading(false);
             });
     }, []);
@@ -48,22 +54,81 @@ const Edit = (props) => {
             ...formData,
             [event.target.name]: event.target.value
         });
+
+        // event.target.name === 'file' ?
+        //     setFormData({
+        //         ...formData,
+        //         profileImage: event.target.files[0]
+        //     }) :
+        //     setFormData({
+        //         ...formData,
+        //         [event.target.name]: event.target.value
+        //     })
     };
+
+    const b64toBlob = (b64Data, contentType, sliceSize) => {
+        contentType = contentType || '';
+        sliceSize = sliceSize || 512;
+
+        var byteCharacters = atob(b64Data);
+        var byteArrays = [];
+
+        for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+            var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+            var byteNumbers = new Array(slice.length);
+            for (var i = 0; i < slice.length; i++) {
+                byteNumbers[i] = slice.charCodeAt(i);
+            }
+
+            var byteArray = new Uint8Array(byteNumbers);
+
+            byteArrays.push(byteArray);
+        }
+
+        var blob = new Blob(byteArrays, { type: contentType });
+        return blob;
+    }
 
     const handleSubmit = event => {
         event.preventDefault();
 
         if (postUserBio === true) {
-            Promise.resolve(postUserBioRequest(formData))
-            .then(result => {
-                setMessage(true);
-            });
+            var imageUrl = formData.profileImage;
+            var block = imageUrl.split(";");
+            // Get the content type of the image
+            var contentType = block[0].split(":")[1];// In this case "image/gif"
+            // get the real base64 content of the file
+            var realData = block[1].split(",")[1];// In this case "R0lGODlhPQBEAPeoAJosM...."
+
+            // Convert it to a blob to upload
+            var blob = b64toBlob(realData, contentType);
+
+            const data = new FormData();
+            // data.append('ProfileImage', formData.profileImage);
+            data.append('Text', formData.text);
+            data.append('Gender', formData.gender);
+            data.append('WebsiteUrl', formData.websiteUrl);
+            data.append("ProfileImage", blob);
+
+            Promise.resolve(postUserBioRequest(data))
+                .then(result => {
+                    setMessage(true);
+                });
         } else {
             Promise.resolve(updateUserBio(formData))
-            .then(result => {
-                setMessage(true);
-            });
+                .then(result => {
+                    setMessage(true);
+                });
         }
+    };
+
+    const onClose = () => {
+        setFormData({ ...formData, profileImage: null })
+    };
+
+    const onCrop = (profileImage) => {
+        setFormData({ ...formData, profileImage })
     };
 
     return (
@@ -109,6 +174,30 @@ const Edit = (props) => {
                                 <div className="row">
                                     <div className="col-sm-12 col-md-8 m-auto p-4">
                                         <form onSubmit={handleSubmit}>
+                                            <div className="form-group row">
+                                                {
+                                                    formData.profileImageName ?
+                                                        <div className="align-items-center">
+                                                            <label htmlFor="profileImage" className="col-sm-2 col-form- font-weight-bold">Profile Image</label>
+                                                            <img className="col-6 m-auto" src={`/user-api/v1/userbios/file/${formData.profileImageName}`} alt="Preview" />
+                                                        </div>
+                                                        :
+                                                        <>
+                                                            <label htmlFor="profileImage" className="col-sm-2 col-form- font-weight-bold">Profile Image</label>
+                                                            <div className="col-sm-8">
+                                                                <Avatar
+                                                                    width={300}
+                                                                    height={180}
+                                                                    onCrop={onCrop}
+                                                                    onClose={onClose}
+                                                                    src={formData.src}
+                                                                />
+                                                            </div>
+                                                        </>
+                                                }
+
+                                            </div>
+
                                             <div className="form-group row">
                                                 <label htmlFor="text" className="col-sm-2 col-form- font-weight-bold">Text</label>
                                                 <div className="col-sm-10">

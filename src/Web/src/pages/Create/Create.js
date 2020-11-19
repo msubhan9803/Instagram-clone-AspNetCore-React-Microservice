@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import Navbar from '../../common/components/Navbar';
 import CreatePost from './services/createPost';
 import TokenChecker from '../../common/helpers/TokenChecker';
@@ -9,6 +10,7 @@ const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const Create = (props) => {
     const [post, setPost] = useState({
+        userName: props.currentUserData.userName,
         caption: "",
         file: {}
     });
@@ -45,6 +47,7 @@ const Create = (props) => {
         event.preventDefault();
 
         const data = new FormData();
+        data.append('UserName', post.userName);
         data.append('Caption', post.caption);
         data.append('File', post.file);
 
@@ -107,7 +110,7 @@ const Create = (props) => {
                                         <div className="col-sm-9">
                                             <div className="custom-file">
                                                 <input type="file" name="file" className="custom-file-input" id="customFile" onChange={handleChange} />
-                                                <label className="custom-file-label" htmlFor="customFile">{ !post.file.name ? "Choose file" : post.file.name.slice(0, 5) + '...' }</label>
+                                                <label className="custom-file-label" htmlFor="customFile">{!post.file.name ? "Choose file" : post.file.name.slice(0, 5) + '...'}</label>
                                             </div>
                                         </div>
                                     </div>
@@ -125,4 +128,10 @@ const Create = (props) => {
     );
 };
 
-export default Create;
+const mapStateToProps = state => {
+    return {
+        currentUserData: state.Login.currentUserData
+    }
+};
+
+export default connect(mapStateToProps, null)(Create);

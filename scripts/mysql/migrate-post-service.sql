@@ -19,6 +19,7 @@ BEGIN
     CREATE TABLE `UserPosts` (
         `Id` char(36) NOT NULL,
         `UserId` char(36) NOT NULL,
+        `UserName` longtext CHARACTER SET utf8mb4 NULL,
         `Caption` longtext CHARACTER SET utf8mb4 NULL,
         `FileId` char(36) NOT NULL,
         `CreatedAt` datetime(6) NOT NULL,

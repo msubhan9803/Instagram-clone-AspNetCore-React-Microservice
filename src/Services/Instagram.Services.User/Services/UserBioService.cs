@@ -7,6 +7,7 @@ using Instagram.Common.Exceptions;
 using Instagram.Services.User.Domain.Models;
 using Instagram.Services.User.Domain.Repositories;
 using Instagram.Services.User.Services;
+using Instagram.Services.User.Extensions;
 using Newtonsoft.Json;
 
 namespace Instagram.Services.Bio.Services
@@ -14,11 +15,14 @@ namespace Instagram.Services.Bio.Services
     public class UserBioService : IUserBioService
     {
         private readonly IUserBioRepository _userBioRepository;
+        private readonly IImageBlobService _imageBlobService;
         private readonly IMapper _mapper;
 
-        public UserBioService(IUserBioRepository userBioRepository, IMapper mapper = null)
+        public UserBioService(IUserBioRepository userBioRepository, IImageBlobService imageBlobService, 
+            IMapper mapper = null)
         {
             _userBioRepository = userBioRepository;
+            _imageBlobService = imageBlobService;
             _mapper = mapper;
         }
 
@@ -39,7 +43,14 @@ namespace Instagram.Services.Bio.Services
         {
             var userBioModel = _mapper.Map<UserBio>(bio);
             userBioModel.UserId = userId;
+
+            var fileNewNameGuid = Guid.NewGuid().ToString();
+            var fileNewName = fileNewNameGuid + ".png";
+
+            userBioModel.ProfileImageName = fileNewName;
+
             await _userBioRepository.CreateUserBioAsync(userBioModel);
+            await _imageBlobService.UploadProfileImageBlobAsync(bio.ProfileImage, fileNewName);
             
             return (userBioModel.Id, _mapper.Map<UserBioReadDto>(userBioModel));
         }

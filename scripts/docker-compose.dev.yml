@@ -16,9 +16,6 @@ services:
     ports:
       - '5672:5672'
       - '15672:15672'
-    volumes:
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
 
   mysql_db_service:
     container_name: mysql_db
@@ -31,8 +28,6 @@ services:
     expose:
       - '3306'
     volumes:
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
       - /home/mranonymous/Projects/Instagram-Volumes/mysql:/var/lib/mysql
       - ./mysql/:/docker-entrypoint-initdb.d
 
@@ -41,8 +36,6 @@ services:
     image: mongo
     restart: always
     volumes:
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
       - /home/mranonymous/Projects/Instagram-Volumes/mongo:/data/db
     ports:
       - '27017:27017'
@@ -53,8 +46,6 @@ services:
     hostname: azurite
     restart: always
     volumes:
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
       - "/home/mranonymous/Projects/Instagram-Volumes/azurite:/data"
       - "/home/mranonymous/Projects/Instagram-Volumes/Azurite/debug.log:/data/debug.log"
     expose:
@@ -71,8 +62,6 @@ services:
     container_name: "user"
     restart: always
     volumes:
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
       - ../src/Services/Instagram.Services.User/:/src/Instagram.Services.User
       - ../src/Services/Instagram.Common/:/src/Instagram.Common/
       - $HOME/.microsoft/usersecrets/:/root/.microsoft/usersecrets/
@@ -96,8 +85,6 @@ services:
     container_name: "post"
     restart: always
     volumes:
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
       - ../src/Services/Instagram.Services.Post/:/src/Instagram.Services.Post
       - ../src/Services/Instagram.Common/:/src/Instagram.Common/
       - $HOME/.microsoft/usersecrets/:/root/.microsoft/usersecrets/
@@ -123,8 +110,6 @@ services:
     container_name: newsfeed
     restart: always
     volumes:
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
       - ../src/Services/Instagram.Services.Newsfeed/:/src/Instagram.Services.Newsfeed
       - ../src/Services/Instagram.Common/:/src/Instagram.Common/
     environment: 
@@ -153,21 +138,16 @@ services:
       - post_service
       - newsfeed_service
     volumes:
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
       - '../src/ApiGateway/dev/default.conf:/etc/nginx/conf.d/default.conf'
     ports:
       - "8080:80"
       - "4430:443"
 
-  # PLease Change it to Production
   web_service:
     container_name: web
     build: ../src/Web/
     restart: always
     volumes:
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
       - '../src/Web/:/app'
       - '/app/node_modules'
     expose:

@@ -96,7 +96,7 @@ const UserProfile = (props) => {
           <div className="container p-4">
             <div className="row user-details align-items-center">
               <div className="profile-img col-4">
-                <img className="mx-auto rounded-circle d-block" src={require('../../../assets/images/iron-man.jpg')} alt="profile-img" />
+                <img className="mx-auto rounded-circle d-block" src={`/user-api/v1/userbios/file/${props.userBio.profileImageName}`} alt="profile-img" />
               </div>
               <div className="container profile-desc col-8 p-2">
                 <div className="row align-items-center">

@@ -30,14 +30,6 @@ namespace Instagram.Services.Newsfeed.Controllers
             _newsfeedHub = newsfeedHub;
         }
 
-        // GET: api/v1/initiate
-        [HttpGet("initiate")]
-        public ActionResult Initiate(Guid userId)
-        {
-            _newsfeedHub.Clients.All.FetchNewsfeed();
-            return NoContent();
-        }
-
         // GET: api/v1/newsfeed/{userId}
         [HttpGet("{userId}")]
         public async Task<ActionResult<IEnumerable<UserPostReadDto>>> GetUserNewsfeedAsync(Guid userId)

@@ -91,7 +91,7 @@ namespace Instagram.Services.Post.Controllers.V1
             {
                 var userPost = await _userPostService.GetPostByUserIdAsync(userId);
                 if (userPost != null)
-                {   
+                {
                     return Ok(userPost);
                 }
 

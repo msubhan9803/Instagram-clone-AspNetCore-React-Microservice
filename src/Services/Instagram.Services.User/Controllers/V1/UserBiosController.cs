@@ -22,10 +22,13 @@ namespace Instagram.Services.User.Controllers.V1
     public class UserBiosController : Controller
     {
         private readonly IUserBioService _userBioService;
+        private readonly IImageBlobService _imageBlobService;
 
-        public UserBiosController(IUserBioService userBioService)
+        public UserBiosController(IUserBioService userBioService,
+            IImageBlobService imageBlobService)
         {
             _userBioService = userBioService;
+            _imageBlobService = imageBlobService;
         }
 
         // GET: api/v1/userBios/{userId}
@@ -52,12 +55,22 @@ namespace Instagram.Services.User.Controllers.V1
 
         //POST api/v1/userBios
         [HttpPost]
-        public async Task<ActionResult<UserBioReadDto>> CreateUserBioAsync([FromBody]UserBioCreateDto bio)
+        public async Task<ActionResult<UserBioReadDto>> CreateUserBioAsync([FromForm]UserBioCreateDto bio)
         {
+            Console.WriteLine(bio);
             var userId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
             var response = await _userBioService.CreateUserBioAsync(userId, bio);
 
             return CreatedAtRoute(nameof(GetUserBioByUserIdAsync), new {userId = response.Item1}, response.Item2);      
+        }
+
+        [AllowAnonymous]
+        // GET: api/v1/userbios/file/{fileName}
+        [HttpGet("file/{fileName}", Name = "GetUserProfileImageasync")]
+        public async Task<IActionResult> GetUserProfileImageasync(string fileName)
+        {
+            var data = await _imageBlobService.GetFileAsync(fileName);
+            return File(data.Content, data.ContentType);
         }
 
         //PUT api/v1/userBios/{id}

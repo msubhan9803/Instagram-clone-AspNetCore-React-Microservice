@@ -114,6 +114,7 @@ BEGIN
     CREATE TABLE `UserBios` (
         `Id` char(36) NOT NULL,
         `UserId` char(36) NOT NULL,
+        `ProfileImageName` longtext CHARACTER SET utf8mb4 NULL,
         `Text` longtext CHARACTER SET utf8mb4 NULL,
         `Gender` longtext CHARACTER SET utf8mb4 NULL,
         `WebsiteUrl` longtext CHARACTER SET utf8mb4 NULL,

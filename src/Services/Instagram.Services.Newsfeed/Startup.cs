@@ -73,7 +73,8 @@ namespace Instagram.Services.Newsfeed
             recurringJobManager.AddOrUpdate(
                 "Update.Newsfeed",
                 () => serviceProvider.GetService<INewsfeedUpdateJob>().UpdateNewsfeedAsync(),
-                "*/10 * * * * *"
+                // "*/10 * * * * *"
+                "* * * * * *"
             );
 
             app.UseEndpoints(endpoints =>

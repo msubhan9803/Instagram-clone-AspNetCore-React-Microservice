@@ -7,7 +7,6 @@ export default (state = InitialState, action) => {
         ...state, 
         newsfeed: action.payload,
         fetchedAt: Date.now()
-        // fetchedAt: 1605678716586
       }
 
     case 'UPDATE_USER_NEWSFEED':

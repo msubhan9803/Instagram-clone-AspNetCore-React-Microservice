@@ -91,7 +91,7 @@ namespace Instagram.Services.Post.Services
             }
 
             var postFileModel = new PostFile(fileNewName, type, thumbnailNewName);
-            var userPostModel = new UserPost(userId, post.Caption, postFileModel.Id);
+            var userPostModel = new UserPost(userId, post.UserName, post.Caption, postFileModel.Id);
             await _userPostRepository.CreatePostAsync(userPostModel, postFileModel);
 
             return await _userPostRepository.GetPostByIdAsync(userPostModel.Id);

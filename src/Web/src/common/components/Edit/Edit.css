@@ -11,3 +11,17 @@
     background-color: #ffffff;
     height: 70vh;
 }
+
+.cont {
+  padding: 5px;
+  max-height: 150px;
+  max-width: 50%;
+  display: flex; /*added*/
+  flex-direction: column; /*added*/
+}
+
+.profile-choose {
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex: 1;
+}

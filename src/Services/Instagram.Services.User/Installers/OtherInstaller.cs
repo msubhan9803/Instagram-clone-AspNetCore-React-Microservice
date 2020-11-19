@@ -20,6 +20,7 @@ namespace Instagram.Services.User.Installers
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IImageBlobService, ImageBlobService>();
             services.AddScoped<IUserBioRepository, UserBioRepository>();
             services.AddScoped<IUserBioService, UserBioService>();
             services.AddSingleton<IEncrypter, Encrypter>();

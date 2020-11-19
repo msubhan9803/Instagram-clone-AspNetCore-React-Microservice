@@ -32,6 +32,7 @@ namespace Instagram.Services.Post.Repositories
                         (
                             post.Id,
                             post.UserId,
+                            post.UserName,
                             post.Caption,
                             post.FileId,
                             postFile.Type,
@@ -58,6 +59,7 @@ namespace Instagram.Services.Post.Repositories
                             (
                                 post.Id,
                                 post.UserId,
+                                post.UserName,
                                 post.Caption,
                                 post.FileId,
                                 postFile.Type,
@@ -80,6 +82,7 @@ namespace Instagram.Services.Post.Repositories
                         (
                             post.Id,
                             post.UserId,
+                            post.UserName,
                             post.Caption,
                             post.FileId,
                             postFile.Type,
@@ -106,6 +109,7 @@ namespace Instagram.Services.Post.Repositories
                         (
                             post.Id,
                             post.UserId,
+                            post.UserName,
                             post.Caption,
                             post.FileId,
                             postFile.Type,

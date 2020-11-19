@@ -13,6 +13,7 @@ namespace Instagram.Services.Post.Domain.Data.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     UserId = table.Column<Guid>(nullable: false),
+                    UserName = table.Column<string>(nullable: true),
                     Caption = table.Column<string>(nullable: true),
                     FileId = table.Column<Guid>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false)

@@ -7,6 +7,7 @@ namespace Instagram.Services.User.Domain.Models
     {
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
+        public string ProfileImageName { get; set; }
         public string Text { get; set; }
         public string Gender { get; set; }
         public string WebsiteUrl { get; set; }
@@ -17,11 +18,12 @@ namespace Instagram.Services.User.Domain.Models
             
         }
 
-        public UserBio(Guid userId, string text, string gender, 
+        public UserBio(Guid userId, string profileImageName, string text, string gender, 
             string websiteUrl)
         {
             Id = new Guid();
             UserId = userId;
+            ProfileImageName = profileImageName;
             Text = text;
             Gender = gender;
             WebsiteUrl = websiteUrl;

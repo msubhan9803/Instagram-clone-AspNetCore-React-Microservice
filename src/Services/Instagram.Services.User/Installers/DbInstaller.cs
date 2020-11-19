@@ -1,4 +1,5 @@
 using System;
+using Azure.Storage.Blobs;
 using Instagram.Services.User.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -11,6 +12,8 @@ namespace Instagram.Services.User.Installers
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<AppDbContext>();
+            services.AddSingleton(x =>
+                new BlobServiceClient(configuration.GetValue<string>("AzureBlobStorageConnectionString")));
         }
     }
 }

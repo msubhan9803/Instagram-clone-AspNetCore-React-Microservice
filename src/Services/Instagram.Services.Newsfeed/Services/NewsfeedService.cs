@@ -47,6 +47,7 @@ namespace Instagram.Services.Newsfeed.Services
                 var userPost = new UserPostReadDto(
                     new Guid(post.GetValue("_id").ToString()),
                     new Guid(post.GetValue("UserId").ToString()),
+                    post.GetValue("UserName").ToString(),
                     post.GetValue("Caption").ToString(),
                     new Guid(post.GetValue("FileId").ToString()),
                     post.GetValue("FileType").ToString(),
@@ -84,6 +85,7 @@ namespace Instagram.Services.Newsfeed.Services
                 var userPost = new UserPostReadDto(
                     new Guid(post.GetValue("_id").ToString()),
                     new Guid(post.GetValue("UserId").ToString()),
+                    post.GetValue("UserName").ToString(),
                     post.GetValue("Caption").ToString(),
                     new Guid(post.GetValue("FileId").ToString()),
                     post.GetValue("FileType").ToString(),
@@ -160,6 +162,9 @@ namespace Instagram.Services.Newsfeed.Services
                 BsonArray fListBsonArray = (BsonArray)user.GetValue("followingList");
 
                 // Initiate GetUserNewsPosts command for UserId as well
+                Console.WriteLine($"Getting New Posts of User with UserId: {userId}");
+                    await _busCLient.PublishAsync(new GetUserNewPosts(
+                        new Guid(userId.ToString()), new Guid(userId.ToString()), nsfLastModified));
 
                 var fList = fListBsonArray.ToList();
 
