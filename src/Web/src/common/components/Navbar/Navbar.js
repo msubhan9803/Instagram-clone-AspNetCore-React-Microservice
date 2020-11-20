@@ -37,7 +37,7 @@ const Navbar = (props) => {
                     value={searchState.search} onChange={handleChange} />
             </form>
             <div className="row">
-                <a className="mr-3" style={{color: "#000"}} href="/newsfeed"><i class="fa fa-2x fa-home" aria-hidden="true"></i></a>
+                <a className="mr-3" style={{color: "#000"}} href="/newsfeed"><i className="fa fa-2x fa-home" aria-hidden="true"></i></a>
                 <a className="mr-3" style={{color: "#000"}} href="/create"><i className="fa fa-2x fa-plus-circle"></i></a>
                 
                 <div className="userprofile mr-3">

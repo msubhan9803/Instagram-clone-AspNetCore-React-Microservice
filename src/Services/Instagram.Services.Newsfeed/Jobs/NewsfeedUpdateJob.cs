@@ -22,8 +22,8 @@ namespace Instagram.Services.Newsfeed.Jobs
 
         public async Task UpdateNewsfeedAsync()
         {
+            Console.WriteLine($"Newsfeed update is in Progress");
             await _newsfeedService.UpdateNewsfeedAsync();
-            Console.WriteLine($"Updated Newsfeed!");
 
             await _newsfeedHub.Clients.All.FetchNewsfeed();
             Console.WriteLine($"Sent FetchNewsfeed Message");

@@ -68,6 +68,7 @@ namespace Instagram.Services.Newsfeed.Services
             long tricks_1970 = dt_1970.Ticks;
             long time_tricks = tricks_1970 + timeStamp * 10000;
             DateTime dt = new DateTime(time_tricks);
+            var utcDate = dt + TimeSpan.FromHours(5);
 
             var userFilter = Builders<BsonDocument>.Filter.Eq("userId", userId.ToString());
             var user = await _userRepository.GetUserAsync(userFilter);
@@ -77,7 +78,7 @@ namespace Instagram.Services.Newsfeed.Services
             var newsfeedResult = await _newsfeedRepository.GetUserNewsfeedAsync(newsfeedFilter);
 
             var newsfeedByList = newsfeedResult.Select(p => p.AsBsonDocument).
-                Where(p => Convert.ToDateTime(p.GetValue("CreatedAt")) > dt).ToList();
+                Where(p => Convert.ToDateTime(p.GetValue("CreatedAt")) > utcDate).ToList();
 
             var userPostList = new List<UserPostReadDto>();
             foreach (var post in newsfeedByList)
@@ -156,24 +157,28 @@ namespace Instagram.Services.Newsfeed.Services
         public async Task UpdateNewsfeedAsync()
         {
             var usersList = await _userRepository.GetAllUsersAsync();
-            foreach (var user in usersList)
+            
+            if (usersList.Count > 0) 
             {
-                var userId = user.GetValue("userId");
-                var nsfLastModified = (DateTime)user.GetValue("newsfeedLastModified");
-                BsonArray fListBsonArray = (BsonArray)user.GetValue("followingList");
-
-                // Initiate GetUserNewsPosts command for UserId as well
-                Console.WriteLine($"Getting New Posts of User with UserId: {userId}");
-                    await _busCLient.PublishAsync(new GetUserNewPosts(
-                        new Guid(userId.ToString()), new Guid(userId.ToString()), nsfLastModified));
-
-                var fList = fListBsonArray.ToList();
-
-                foreach (var u in fList)
+                foreach (var user in usersList)
                 {
-                    Console.WriteLine($"Getting New Posts of User with UserId: {u}");
-                    await _busCLient.PublishAsync(new GetUserNewPosts(
-                        new Guid(userId.ToString()), new Guid(u.ToString()), nsfLastModified));
+                    var userId = user.GetValue("userId");
+                    var nsfLastModified = (DateTime)user.GetValue("newsfeedLastModified");
+                    BsonArray fListBsonArray = (BsonArray)user.GetValue("followingList");
+
+                    var fList = fListBsonArray.ToList();
+
+                    // Initiate GetUserNewsPosts command for UserId as well
+                    Console.WriteLine($"Getting New Posts of User with UserId: {userId}");
+                        await _busCLient.PublishAsync(new GetUserNewPosts(
+                            new Guid(userId.ToString()), new Guid(userId.ToString()), nsfLastModified));
+
+                    foreach (var u in fList)
+                    {
+                        Console.WriteLine($"Getting New Posts of User with UserId: {u}");
+                        await _busCLient.PublishAsync(new GetUserNewPosts(
+                            new Guid(userId.ToString()), new Guid(u.ToString()), nsfLastModified));
+                    }
                 }
             }
         }

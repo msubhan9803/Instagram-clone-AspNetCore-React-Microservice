@@ -41,13 +41,13 @@ const Newsfeed = (props) => {
         return () => {
             setConnectionStarted(false);
             props.clearNewsfeed();
+            newConnection.stop();
         }
     }, []);
 
     useEffect(() => {
         if (connection && props.timeStamp) {
             var userId = props.currentUserData.userId;
-            var timeStamp = props.timeStamp;
 
             if (!connectionStarted) {
                 connection.start()
@@ -57,7 +57,7 @@ const Newsfeed = (props) => {
 
                         connection.on('FetchNewsfeed', () => {
                             console.log('FetchNewsfeed message received!');
-                            props.fetchUpdatedNewsfeed(userId, timeStamp);
+                            props.fetchUpdatedNewsfeed(userId, props.timeStamp);
                         });
                     })
                     .catch(e => console.log('Connection failed: ', e));
