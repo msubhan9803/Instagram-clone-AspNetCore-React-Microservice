@@ -28,7 +28,7 @@ const Navbar = (props) => {
 
     return (
         <nav className="navbar navbar-light sticky-top">
-            <a className="navbar-brand" href={`/userprofile/${props.currentUserData.userName}`}>
+            <a className="navbar-brand" href={`/newsfeed`}>
                 <img src={require('../../../assets/images/instagram-navbar-logo.png')} width="30" height="30" alt="" />
             </a>
             <form onSubmit={handleSubmit}>
@@ -37,6 +37,7 @@ const Navbar = (props) => {
                     value={searchState.search} onChange={handleChange} />
             </form>
             <div className="row">
+                <a className="mr-3" style={{color: "#000"}} href="/newsfeed"><i class="fa fa-2x fa-home" aria-hidden="true"></i></a>
                 <a className="mr-3" style={{color: "#000"}} href="/create"><i className="fa fa-2x fa-plus-circle"></i></a>
                 
                 <div className="userprofile mr-3">

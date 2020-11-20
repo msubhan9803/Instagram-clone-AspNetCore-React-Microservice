@@ -1,0 +1,34 @@
+.settings-wrapper {
+    padding: 30px 10% 10px 10%;
+    height: 90vh;
+}
+
+.settings-layout {
+    border: 1px solid rgba(var(--b6a,219,219,219),1);
+}
+
+.settings-content {
+    background-color: #ffffff;
+    height: 70vh;
+}
+
+.cont {
+  padding: 5px;
+  max-height: 150px;
+  max-width: 50%;
+  display: flex; /*added*/
+  flex-direction: column; /*added*/
+}
+
+.profile-choose {
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex: 1;
+}
+
+.fixed-top {
+  top: 105px !important;
+  right: auto !important;
+  left: unset !important;
+  z-index: 1000 !important;
+}

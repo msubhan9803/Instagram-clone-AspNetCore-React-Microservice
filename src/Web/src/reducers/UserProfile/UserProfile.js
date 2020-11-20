@@ -10,11 +10,7 @@ export default (state = InitialState, action) => {
       }
 
     case 'CLEAR_USER_PROFILE_DATA':
-      return {
-        ...state,
-        userBio: {},
-        userPosts: {}
-      }
+      return InitialState
 
     default:
       return state;

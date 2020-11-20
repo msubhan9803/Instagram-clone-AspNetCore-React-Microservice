@@ -82,11 +82,12 @@ export const userLoginPostFetch = userLoginData => {
     .then(resp => resp.text())
     .then(data => {
       var result = JSON.parse(data);
+
+      dispatch(storeCurrentUserData(result.user));
       localStorage.setItem("token", result.token.token);
       localStorage.setItem("expires", result.token.expires);
-      dispatch(storeCurrentUserData(result.user));
-      window.location.href = `/userprofile/${result.user.userName}`;
       dispatch(resetLoginErrors());
+      history.push(`/userprofile/${result.user.userName}`);
     })
     .catch(error => {
       Promise.resolve(error).then((value) =>{

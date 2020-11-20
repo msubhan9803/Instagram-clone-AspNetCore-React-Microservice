@@ -6,7 +6,7 @@ export default (state = InitialState, action) => {
       return {...state, currentUserData: action.payload}
 
     case 'LOGOUT_USER':
-      return {...state, currentUserData: {}}
+      return InitialState
 
     case 'LOGIN_ERRORS':
       return {...state, loginErrors: action.payload}

@@ -177,10 +177,10 @@ const Edit = (props) => {
                                             <div className="form-group row">
                                                 {
                                                     formData.profileImageName ?
-                                                        <div className="align-items-center">
+                                                        <>
                                                             <label htmlFor="profileImage" className="col-sm-2 col-form- font-weight-bold">Profile Image</label>
-                                                            <img className="col-6 m-auto" src={`/user-api/v1/userbios/file/${formData.profileImageName}`} alt="Preview" />
-                                                        </div>
+                                                            <img className="col-6" src={`/user-api/v1/userbios/file/${formData.profileImageName}`} alt="Preview" />
+                                                        </>
                                                         :
                                                         <>
                                                             <label htmlFor="profileImage" className="col-sm-2 col-form- font-weight-bold">Profile Image</label>

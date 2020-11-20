@@ -1,4 +1,4 @@
-import BearerToken from '../../../common/helpers/BearerToken';
+import BearerToken from '../helpers/BearerToken';
 
 export const fetchUserRelation = (userId, followedUserId) => {
     return fetch(`/user-api/v1/users/follow/${userId}/${followedUserId}`, {
@@ -34,6 +34,7 @@ export const followUserRequest = (userId, followedUserId) => {
 };
 
 export const unFollowUserRequest = (userId, followedUserId) => {
+    console.log("here")
     return fetch(`/user-api/v1/users/unfollow/${userId}/${followedUserId}`, {
         method: "DELETE",
         headers: {

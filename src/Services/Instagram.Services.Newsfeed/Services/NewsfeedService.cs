@@ -112,6 +112,7 @@ namespace Instagram.Services.Newsfeed.Services
                 var userNewPost = new UserNewPost(
                     post.Id.ToString(),
                     post.UserId.ToString(),
+                    post.UserName.ToString(),
                     post.Caption,
                     post.FileId.ToString(),
                     post.FileType,

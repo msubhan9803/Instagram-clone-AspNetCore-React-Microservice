@@ -4,9 +4,9 @@ export default (state = InitialState, action) => {
   switch (action.type) {
     case 'STORE_USER_NEWSFEED':
       return {
-        ...state, 
+        ...state,
         newsfeed: action.payload,
-        fetchedAt: Date.now()
+        fetchedAt: new Date(action.payload[0].createdAt).getTime() / 1000
       }
 
     case 'UPDATE_USER_NEWSFEED':
@@ -15,10 +15,13 @@ export default (state = InitialState, action) => {
       var newsfeed = newPosts.concat(oldNewsfeed);
 
       return {
-        ...state, 
+        ...state,
         newsfeed: newsfeed,
-        fetchedAt: Date.now()
+        fetchedAt: new Date(newsfeed[0].createdAt).getTime() / 1000
       }
+
+    case 'CLEAR_USER_NEWSFEED':
+      return InitialState
 
     default:
       return state;

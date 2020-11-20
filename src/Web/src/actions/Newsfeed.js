@@ -10,6 +10,10 @@ const updateUserNewsfeed = newPost => ({
     payload: newPost
 });
 
+const clearUserNewsfeed = ({
+    type: 'CLEAR_USER_NEWSFEED'
+});
+
 export const fetchInitial = (userId) => {
     return dispatch => {
         return fetch(`/newsfeed-api/v1/newsfeeds/${userId}`, {
@@ -21,7 +25,10 @@ export const fetchInitial = (userId) => {
             .then(resp => resp.text())
             .then(data => {
                 const result = JSON.parse(data);
-                dispatch(storeUserNewsfeed(result));
+
+                if (result.length > 0) {
+                    dispatch(storeUserNewsfeed(result));
+                }
             })
             .catch(error => console.log(error));
     };
@@ -44,5 +51,11 @@ export const fetchUpdatedNewsfeed = (userId, timeStamp) => {
                 }
             })
             .catch(error => console.log(error));
+    };
+};
+
+export const clearUserNewsfeedAction = () => {
+    return dispatch => {
+        dispatch(clearUserNewsfeed);
     };
 };

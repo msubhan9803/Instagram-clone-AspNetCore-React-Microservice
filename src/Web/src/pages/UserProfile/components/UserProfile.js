@@ -9,7 +9,7 @@ import { logoutUser } from '../../../actions/Authentication';
 import * as Constants from '../constants';
 import TokenChecker from '../../../common/helpers/TokenChecker';
 import FetchUserId from '../services/fetchUserId';
-import { fetchUserRelation, followUserRequest, unFollowUserRequest } from '../services/followUnfollowUser';
+import { fetchUserRelation, followUserRequest, unFollowUserRequest } from '../../../common/services/followUnfollowUser';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 
@@ -136,34 +136,38 @@ const UserProfile = (props) => {
               </div>
               <div className="row justify-content-left">
                 <div className="post-gallery row">
-                  {props.userPosts.map((post, index) => {
-                    return <div className="parent-wrapper text-center" key={index}>
-                      <Link
-                        className="img-fluid"
-                        key={index}
-                        to={{
-                          pathname: `/post/${props.userPosts[index].id}/${index}`,
-                          // This is the trick! This link sets
-                          // the `background` in location state.
-                          state: {
-                            background: location,
-                            postList: "userposts"
-                          }
-                        }}
-                      >
-                        <div className="child-wrapper text-white">
-                          {
-                            post.fileType === "video" ?
-                              <><i className="fa fa-1x fa-play"></i> 150</> :
-                              <><i className="fa fa-1x fa-heart"></i> 150</>
-                          }
-                          &nbsp;&nbsp;&nbsp;
-                          <i className="fa fa-1x fa-comment"></i> 240
-                    </div>
-                        <img key={index} className="p-3" src={Constants.postFileThumbnailUrl + post.fileId} alt="" />
-                      </Link>
-                    </div>
-                  })}
+                  {
+                    props.userPosts.length > 0 ?
+                    props.userPosts.map((post, index) => {
+                      return <div className="parent-wrapper text-center" key={index}>
+                        <Link
+                          className="img-fluid"
+                          key={index}
+                          to={{
+                            pathname: `/post/${props.userPosts[index].id}/${index}`,
+                            // This is the trick! This link sets
+                            // the `background` in location state.
+                            state: {
+                              background: location,
+                              postList: "userposts"
+                            }
+                          }}
+                        >
+                          <div className="child-wrapper text-white">
+                            {
+                              post.fileType === "video" ?
+                                <><i className="fa fa-1x fa-play"></i> 150</> :
+                                <><i className="fa fa-1x fa-heart"></i> 150</>
+                            }
+                            &nbsp;&nbsp;&nbsp;
+                            <i className="fa fa-1x fa-comment"></i> 240
+                      </div>
+                          <img key={index} className="p-3" src={Constants.postFileThumbnailUrl + post.fileId} alt="" />
+                        </Link>
+                      </div>
+                    })
+                    : null
+                  }
                 </div>
               </div>
             </div>
