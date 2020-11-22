@@ -46,24 +46,33 @@ const Newsfeed = (props) => {
     }, []);
 
     useEffect(() => {
-        if (connection && props.timeStamp) {
-            var userId = props.currentUserData.userId;
-
+        if (connection) {
             if (!connectionStarted) {
                 connection.start()
                     .then(result => {
                         console.log('Connection started!');
                         setConnectionStarted(true);
-
-                        connection.on('FetchNewsfeed', () => {
-                            console.log('FetchNewsfeed message received!');
-                            props.fetchUpdatedNewsfeed(userId, props.timeStamp);
-                        });
                     })
                     .catch(e => console.log('Connection failed: ', e));
             }
         }
-    }, [connection, props.timeStamp]);
+    }, [connection]);
+
+    useEffect(() => {
+        var fetchedAt = props.newsfeed.fetchedAt;
+        var userId = props.currentUserData.userId;
+
+        if (connectionStarted) {
+            connection.on('FetchNewsfeed', () => {
+                console.log('FetchNewsfeed message received!');
+                console.log(fetchedAt);
+
+                if (fetchedAt) {
+                    props.fetchUpdatedNewsfeed(userId, props.newsfeed.newsfeed, fetchedAt);
+                }
+            });
+        }
+    }, [connectionStarted, props.newsfeed]);
 
     return (
         <>
@@ -83,7 +92,7 @@ const Newsfeed = (props) => {
                             <div className="row">
                                 <div className="col-md-8">
                                     {
-                                        props.newsfeed.map((post, index) => (
+                                        props.newsfeed.newsfeed.map((post, index) => (
                                             <PostNewsfeed key={index} currentPostId={post.id} currentFileData={post} />
                                         ))
                                     }
@@ -103,15 +112,14 @@ const Newsfeed = (props) => {
 const mapStateToProps = (state) => {
     return {
         currentUserData: state.Login.currentUserData,
-        newsfeed: state.Newsfeed.newsfeed,
-        timeStamp: state.Newsfeed.fetchedAt
+        newsfeed: state.Newsfeed
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
         fetchInitialNewsfeed: userId => dispatch(fetchInitial(userId)),
-        fetchUpdatedNewsfeed: (userId, timeStamp) => dispatch(fetchUpdatedNewsfeed(userId, timeStamp)),
+        fetchUpdatedNewsfeed: (userId, currentNewsfeed, fetchedAt) => dispatch(fetchUpdatedNewsfeed(userId, currentNewsfeed, fetchedAt)),
         clearNewsfeed: () => dispatch(clearUserNewsfeedAction())
     };
 };

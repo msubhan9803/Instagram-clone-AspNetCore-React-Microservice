@@ -1,8 +1,8 @@
 import BearerToken from '../common/helpers/BearerToken';
 
-const storeUserNewsfeed = newsfeed => ({
+const storeUserNewsfeed = payload => ({
     type: 'STORE_USER_NEWSFEED',
-    payload: newsfeed
+    payload: payload
 });
 
 const updateUserNewsfeed = newPost => ({
@@ -25,18 +25,23 @@ export const fetchInitial = (userId) => {
             .then(resp => resp.text())
             .then(data => {
                 const result = JSON.parse(data);
+                console.log("Initialized Newsfeed");
+                var fetchedAt = result.length > 0 ? new Date(result[0].createdAt).getTime() : Date.now();
+                
+                var payload = {
+                    newsfeed: result,
+                    fetchedAt: fetchedAt
+                };
 
-                if (result.length > 0) {
-                    dispatch(storeUserNewsfeed(result));
-                }
+                dispatch(storeUserNewsfeed(payload));
             })
             .catch(error => console.log(error));
     };
 };
 
-export const fetchUpdatedNewsfeed = (userId, timeStamp) => {
+export const fetchUpdatedNewsfeed = (userId, currentNewsfeed, fetchedAt) => {
     return dispatch => {
-        return fetch(`/newsfeed-api/v1/newsfeeds/${userId}/${timeStamp}`, {
+        return fetch(`/newsfeed-api/v1/newsfeeds/${userId}/${fetchedAt}`, {
             method: 'GET',
             headers: {
                 'Authorization': BearerToken()
@@ -45,9 +50,18 @@ export const fetchUpdatedNewsfeed = (userId, timeStamp) => {
             .then(resp => resp.text())
             .then(data => {
                 const result = JSON.parse(data);
-                
+                console.log("Updating Newsfeed");
+
                 if (result.length > 0) {
-                    dispatch(updateUserNewsfeed(result));
+                    var newPosts = result;
+                    var newNewsfeed = newPosts.concat(currentNewsfeed);
+
+                    var payload = {
+                        newsfeed: newNewsfeed,
+                        fetchedAt: new Date(newNewsfeed[0].createdAt).getTime()
+                    };
+
+                    dispatch(updateUserNewsfeed(payload));
                 }
             })
             .catch(error => console.log(error));
