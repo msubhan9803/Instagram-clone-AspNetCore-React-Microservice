@@ -96,7 +96,7 @@ const UserProfile = (props) => {
           <div className="container p-4">
             <div className="row user-details align-items-center">
               <div className="profile-img col-4">
-                <img className="mx-auto rounded-circle d-block" src={`/user-api/v1/userbios/file/${props.userBio.profileImageName}`} alt="profile-img" />
+                <img className="mx-auto rounded-circle d-block" src={`/user-api/v1/userbios/file/${props.userBio.userId}`} alt="profile-img" />
               </div>
               <div className="container profile-desc col-8 p-2">
                 <div className="row align-items-center">
@@ -109,7 +109,6 @@ const UserProfile = (props) => {
                   {username === props.currentUserData.userName ?
                     <>
                       <Link className="btn ml-4" to='/accounts/edit'>Edit Profile</Link>
-                      <i className="fa fa-2x fa-bars ml-4"></i>
                     </> :
                     null
                   }

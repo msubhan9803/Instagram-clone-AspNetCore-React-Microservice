@@ -42,8 +42,8 @@ const UserHub = props => {
 
     return (
         <div className="card text-center fixed-top float-right mr-0">
-            <div className="card-header text-light">
-                <p style={{ fontSize: "1rem" }}>Suggestions For You</p>
+            <div className="card-header text-black">
+                <p style={{ fontSize: "1rem" }}><b>Suggestions For You</b></p>
             </div>
             <div className="card-body">
                 {

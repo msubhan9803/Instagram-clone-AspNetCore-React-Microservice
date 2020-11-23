@@ -29,7 +29,7 @@ const Post = (props) => {
                             <div className="row align-items-center border-bottom">
                                 <div className="col-2">
                                     <img className="mx-auto d-block rounded-circle border m-2" width="35px" height="35px"
-                                        src={require('../../../assets/images/iron-man.jpg')} alt="profile-img" />
+                                        src={`/user-api/v1/userbios/file/${props.currentFileData.userId}`} alt="profile-img" />
                                 </div>
 
                                 <div className="col-8">
@@ -42,22 +42,34 @@ const Post = (props) => {
                                     <div className="row mt-3 border-bottom">
                                         <div className="col-2">
                                             <img className="mx-auto d-block rounded-circle border m-2" width="35px" height="35px"
-                                                src="https://instagram.flyp1-1.fna.fbcdn.net/v/t51.2885-19/s320x320/17266075_1962256160661159_275316685097926656_a.jpg?_nc_ht=instagram.flyp1-1.fna.fbcdn.net&_nc_ohc=I5K0c7zdHEYAX8Zany2&oh=99cd3a6ef60a648a4f3ce49f92f0ec6f&oe=5F839354" alt="profile-img" />
+                                                src={`/user-api/v1/userbios/file/${props.currentFileData.userId}`} alt="profile-img" />
                                         </div>
 
                                         <div className="col-8">
-                                            <p>
-                                                <b>msubhan33</b> <>{props.currentFileData.caption}</>
-                                                    Follow @businessfather for more business tips 👍⁠
+                                                <p>
+                                                    <b>{props.currentFileData.userName}</b> <>{props.currentFileData.caption}</>
+                                                    👍⁠
                                                     ⁠-
                                                     -⁠
                                                     -⁠⁠
                                                     <span className="hashtag">
-                                                    #entrepreneur #business #girlboss #smallbusiness
-                                                    #womeninbusiness #success #leadership #womeninbiz
-                                                    #businesswomen #entrepreneurship #smallbiz #entrepreneurs
-                                                    #successtip #businesswoman
+                                                        #FeelingHappy #FollowMe #SUPERHERO
                                                     </span>
+                                                </p>
+                                                <p className="font-weight-lighter"><small>{props.currentFileData.createdAt} &nbsp;&nbsp; 1 like</small></p>
+                                        </div>
+                                    </div>
+
+                                    <div className="row mt-3 border-bottom">
+                                        <div className="col-2">
+                                            <img className="mx-auto d-block rounded-circle border m-2" width="35px" height="35px"
+                                                src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.thenews.com.pk%2Flatest%2F718025-esra-bilgic-speaks-out-on-gender-equality&psig=AOvVaw2ZnMsk3uJpITOTLDAEUJy6&ust=1602502284512000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCOiH-8O4rOwCFQAAAAAdAAAAABAD" alt="profile-img" />
+                                        </div>
+
+                                        <div className="col-8">
+                                            <p>
+                                                <b>Superman33</b>
+                                                    &nbsp; Cool bro...👏
                                             </p>
                                             <p className="font-weight-lighter"><small>100h &nbsp;&nbsp; 1 like</small></p>
                                         </div>
@@ -71,18 +83,8 @@ const Post = (props) => {
 
                                         <div className="col-8">
                                             <p>
-                                                <b>esrabilgic</b>
-                                                    Branding is all about your public image.
-                                                    Your company's IG page can either look
-                                                    professional and welcoming or amateurish and boring.
-                                                    your company and share it to others. 💻👏
-
-                                                    <span className="hashtag">
-                                                    #entrepreneur #business #girlboss #smallbusiness
-                                                    #womeninbusiness #success #leadership #womeninbiz
-                                                    #businesswomen #entrepreneurship #smallbiz #entrepreneurs
-                                                    #successtip #businesswoman
-                                                    </span>
+                                                <b>Batman23</b>
+                                                    &nbsp; Nice bro...👏
                                             </p>
                                             <p className="font-weight-lighter"><small>100h &nbsp;&nbsp; 1 like</small></p>
                                         </div>
@@ -112,7 +114,7 @@ const Post = (props) => {
                                     <input type="text" className="form-control add-comment-field" placeholder="Add a comment..." />
                                 </div>
                                 <div className="col-2">
-                                    <button type="button" className="btn btn-primary btn-sm">POST</button>
+                                    <button type="button" className="btn btn-primary btn-sm" disabled>POST</button>
                                 </div>
                             </div>
                         </div>

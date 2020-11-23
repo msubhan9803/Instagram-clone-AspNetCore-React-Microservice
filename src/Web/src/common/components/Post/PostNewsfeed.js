@@ -10,11 +10,11 @@ const PostNewsfeed = (props) => {
                 <div className="row align-items-center border-bottom">
                     <div className="col-1">
                         <img className="mx-auto d-block rounded-circle border m-2" width="35px" height="35px"
-                            src={require('../../../assets/images/iron-man.jpg')} alt="profile-img" />
+                            src={`/user-api/v1/userbios/file/${props.currentFileData.userId}`} alt="profile-img" />
                     </div>
 
                     <div className="col-9">
-                        <div><b>user1</b></div>
+                        <div><b>{props.currentFileData.userName}</b></div>
                     </div>
                 </div>
 
@@ -43,39 +43,56 @@ const PostNewsfeed = (props) => {
                                         <div className="row mt-3 border-bottom">
                                             <div className="col-12">
                                                 <p>
-                                                    <b>msubhan33</b> <>{props.currentFileData.caption}</>
-                                                    Follow @businessfather for more business tips 👍⁠
+                                                    <b>{props.currentFileData.userName}</b> <>{props.currentFileData.caption}</>
+                                                    👍⁠
                                                     ⁠-
                                                     -⁠
                                                     -⁠⁠
                                                     <span className="hashtag">
-                                                        #entrepreneur #business #girlboss #smallbusiness
-                                                        #womeninbusiness #success #leadership #womeninbiz
-                                                        #businesswomen #entrepreneurship #smallbiz #entrepreneurs
-                                                        #successtip #businesswoman
+                                                        #FeelingHappy #FollowMe #SUPERHERO
                                                     </span>
                                                 </p>
-                                                <p className="font-weight-lighter"><small>100h &nbsp;&nbsp; 1 like</small></p>
+                                                <p className="font-weight-lighter"><small>1min &nbsp;&nbsp; 1 like</small></p>
                                             </div>
                                         </div>
 
                                         <div className="row mt-3 border-bottom">
                                             <div className="col-12">
                                                 <p>
-                                                    <b>esrabilgic</b>
-                                                    Branding is all about your public image.
-                                                    Your company's IG page can either look
-                                                    professional and welcoming or amateurish and boring.
-                                                    your company and share it to others. 💻👏
+                                                    <b>Spiderman1</b>
+                                                        &nbsp; Nice mate...❤️
+                                                    </p>
+                                                <p className="font-weight-lighter"><small>1h &nbsp;&nbsp; 1 like</small></p>
+                                            </div>
+                                        </div>
 
-                                                    <span className="hashtag">
-                                                        #entrepreneur #business #girlboss #smallbusiness
-                                                        #womeninbusiness #success #leadership #womeninbiz
-                                                        #businesswomen #entrepreneurship #smallbiz #entrepreneurs
-                                                        #successtip #businesswoman
-                                                    </span>
+                                        <div className="row mt-3 border-bottom">
+                                            <div className="col-12">
+                                                <p>
+                                                    <b>Superman33</b>
+                                                        &nbsp; Cool bro...👏
                                                 </p>
-                                                <p className="font-weight-lighter"><small>100h &nbsp;&nbsp; 1 like</small></p>
+                                                <p className="font-weight-lighter"><small>2h &nbsp;&nbsp; 1 like</small></p>
+                                            </div>
+                                        </div>
+
+                                        <div className="row mt-3 border-bottom">
+                                            <div className="col-12">
+                                                <p>
+                                                    <b>Spiderman1</b>
+                                                        &nbsp; Nice mate...❤️
+                                                    </p>
+                                                <p className="font-weight-lighter"><small>3h &nbsp;&nbsp; 1 like</small></p>
+                                            </div>
+                                        </div>
+
+                                        <div className="row mt-3 border-bottom">
+                                            <div className="col-12">
+                                                <p>
+                                                    <b>Superman33</b>
+                                                        &nbsp; Cool bro...👏
+                                                    </p>
+                                                <p className="font-weight-lighter"><small>3h &nbsp;&nbsp; 1 like</small></p>
                                             </div>
                                         </div>
                                     </div>
@@ -103,7 +120,7 @@ const PostNewsfeed = (props) => {
                                         <input type="text" className="form-control add-comment-field" placeholder="Add a comment..." />
                                     </div>
                                     <div className="col-2">
-                                        <button type="button" className="btn btn-primary btn-sm">POST</button>
+                                        <button type="button" className="btn btn-primary btn-sm" disabled>POST</button>
                                     </div>
                                 </div>
                             </div>

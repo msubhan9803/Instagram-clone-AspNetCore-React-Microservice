@@ -65,11 +65,12 @@ namespace Instagram.Services.User.Controllers.V1
         }
 
         [AllowAnonymous]
-        // GET: api/v1/userbios/file/{fileName}
-        [HttpGet("file/{fileName}", Name = "GetUserProfileImageasync")]
-        public async Task<IActionResult> GetUserProfileImageasync(string fileName)
+        // GET: api/v1/userbios/file/{userId}
+        [HttpGet("file/{userId}", Name = "GetUserProfileImageasync")]
+        public async Task<IActionResult> GetUserProfileImageasync(Guid userId)
         {
-            var data = await _imageBlobService.GetFileAsync(fileName);
+            var userBio = await _userBioService.GetBioByUserIdAsync(userId);
+            var data = await _imageBlobService.GetFileAsync(userBio.ProfileImageName);
             return File(data.Content, data.ContentType);
         }
 

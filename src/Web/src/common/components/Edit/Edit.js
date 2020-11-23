@@ -54,16 +54,6 @@ const Edit = (props) => {
             ...formData,
             [event.target.name]: event.target.value
         });
-
-        // event.target.name === 'file' ?
-        //     setFormData({
-        //         ...formData,
-        //         profileImage: event.target.files[0]
-        //     }) :
-        //     setFormData({
-        //         ...formData,
-        //         [event.target.name]: event.target.value
-        //     })
     };
 
     const b64toBlob = (b64Data, contentType, sliceSize) => {
@@ -179,7 +169,7 @@ const Edit = (props) => {
                                                     formData.profileImageName ?
                                                         <>
                                                             <label htmlFor="profileImage" className="col-sm-2 col-form- font-weight-bold">Profile Image</label>
-                                                            <img className="col-6" src={`/user-api/v1/userbios/file/${formData.profileImageName}`} alt="Preview" />
+                                                            <img className="col-6" src={`/user-api/v1/userbios/file/${props.currentUserData.userId}`} alt="Preview" />
                                                         </>
                                                         :
                                                         <>

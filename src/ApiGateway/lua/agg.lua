@@ -8,6 +8,26 @@ local res1,res2 = ngx.location.capture_multi{
 }
 --  content type header
 ngx.header.content_type = "application/json; charset=utf-8"
+
+local function isempty(s)
+    return s == nil or s == ''
+end
+
+local bio;
+local posts;
+
+if isempty(res1.body) then
+    bio = "{}"
+else
+    bio = res1.body
+end
+
+if isempty(res2.body) then
+    posts = "[]"
+else
+    posts = res2.body
+end
+
 ngx.print(
-    "{" ..'"userBio"' .. ":" .. res1.body .. "," .. '"userPost"' .. ":" .. res2.body .. "}"
+    "{" ..'"userBio"' .. ":" .. bio .. "," .. '"userPost"' .. ":" .. posts .. "}"
 )

@@ -43,7 +43,8 @@ const Navbar = (props) => {
                 <div className="userprofile mr-3">
                     <div className="dropdown">
                         <a type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i className="fa fa-2x fa-user-circle text-dark" aria-hidden="true"></i>
+                            <img className="mx-auto d-block rounded-circle border" width="30px" height="30px"
+                            src={`/user-api/v1/userbios/file/${props.currentUserData.userId}`} alt="profile-img" />
                         </a>
                         <div className="dropdown-menu dropdown-menu-center text-left" aria-labelledby="dropdownMenuButton">
                             <a className="dropdown-item" href={`/userprofile/${props.currentUserData.userName}`}>

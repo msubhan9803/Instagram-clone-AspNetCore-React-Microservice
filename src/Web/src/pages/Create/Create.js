@@ -101,6 +101,7 @@ const Create = (props) => {
                                                 placeholder="Caption"
                                                 value={post.caption}
                                                 onChange={handleChange}
+                                                required
                                             />
                                         </div>
                                     </div>
@@ -109,7 +110,7 @@ const Create = (props) => {
                                         <label htmlFor="text" className="col-sm-3 col-form- font-weight-bold">Image/Video</label>
                                         <div className="col-sm-9">
                                             <div className="custom-file">
-                                                <input type="file" name="file" className="custom-file-input" id="customFile" onChange={handleChange} />
+                                                <input type="file" name="file" className="custom-file-input" id="customFile" onChange={handleChange} required/>
                                                 <label className="custom-file-label" htmlFor="customFile">{!post.file.name ? "Choose file" : post.file.name.slice(0, 5) + '...'}</label>
                                             </div>
                                         </div>
