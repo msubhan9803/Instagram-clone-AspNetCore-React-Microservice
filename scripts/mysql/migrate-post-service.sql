@@ -114,3 +114,71 @@ END //
 DELIMITER ;
 CALL MigrationsScript();
 DROP PROCEDURE MigrationsScript;
+
+
+DROP PROCEDURE IF EXISTS MigrationsScript;
+DELIMITER //
+CREATE PROCEDURE MigrationsScript()
+BEGIN
+    IF NOT EXISTS(SELECT 1 FROM `__EFMigrationsHistory` WHERE `MigrationId` = '20201122121304_AddedPostLikes') THEN
+
+    CREATE TABLE `PostLikes` (
+        `Id` char(36) NOT NULL,
+        `PostId` char(36) NOT NULL,
+        `UserId` char(36) NOT NULL,
+        `CreatedAt` datetime(6) NOT NULL,
+        CONSTRAINT `PK_PostLikes` PRIMARY KEY (`Id`)
+    );
+
+    END IF;
+END //
+DELIMITER ;
+CALL MigrationsScript();
+DROP PROCEDURE MigrationsScript;
+
+
+DROP PROCEDURE IF EXISTS MigrationsScript;
+DELIMITER //
+CREATE PROCEDURE MigrationsScript()
+BEGIN
+    IF NOT EXISTS(SELECT 1 FROM `__EFMigrationsHistory` WHERE `MigrationId` = '20201122121304_AddedPostLikes') THEN
+
+    INSERT INTO `__EFMigrationsHistory` (`MigrationId`, `ProductVersion`)
+    VALUES ('20201122121304_AddedPostLikes', '3.1.5');
+
+    END IF;
+END //
+DELIMITER ;
+CALL MigrationsScript();
+DROP PROCEDURE MigrationsScript;
+
+
+DROP PROCEDURE IF EXISTS MigrationsScript;
+DELIMITER //
+CREATE PROCEDURE MigrationsScript()
+BEGIN
+    IF NOT EXISTS(SELECT 1 FROM `__EFMigrationsHistory` WHERE `MigrationId` = '20201122121632_AddedNumOfLikesComments') THEN
+
+    ALTER TABLE `UserPosts` ADD `NumOfLikes` int NOT NULL DEFAULT 0;
+
+    END IF;
+END //
+DELIMITER ;
+CALL MigrationsScript();
+DROP PROCEDURE MigrationsScript;
+
+
+DROP PROCEDURE IF EXISTS MigrationsScript;
+DELIMITER //
+CREATE PROCEDURE MigrationsScript()
+BEGIN
+    IF NOT EXISTS(SELECT 1 FROM `__EFMigrationsHistory` WHERE `MigrationId` = '20201122121632_AddedNumOfLikesComments') THEN
+
+    INSERT INTO `__EFMigrationsHistory` (`MigrationId`, `ProductVersion`)
+    VALUES ('20201122121632_AddedNumOfLikesComments', '3.1.5');
+
+    END IF;
+END //
+DELIMITER ;
+CALL MigrationsScript();
+DROP PROCEDURE MigrationsScript;
