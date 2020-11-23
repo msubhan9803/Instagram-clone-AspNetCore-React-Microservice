@@ -47,7 +47,7 @@ services:
     restart: always
     volumes:
       - "/home/mranonymous/Projects/Instagram-Volumes/azurite:/data"
-      - "/home/mranonymous/Projects/Instagram-Volumes/Azurite/debug.log:/data/debug.log"
+      - "/home/mranonymous/Projects/Instagram-Volumes/azurite/debug.log:/data/debug.log"
     expose:
       - '10000'
       - '10001'
