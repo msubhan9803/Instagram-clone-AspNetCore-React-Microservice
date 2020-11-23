@@ -37,6 +37,26 @@ namespace Instagram.Services.Post.Domain.Data.Migrations
                     b.ToTable("PostFiles");
                 });
 
+            modelBuilder.Entity("Instagram.Services.Post.Domain.Models.PostLike", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid>("PostId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PostLikes");
+                });
+
             modelBuilder.Entity("Instagram.Services.Post.Domain.Models.UserPost", b =>
                 {
                     b.Property<Guid>("Id")
@@ -51,6 +71,9 @@ namespace Instagram.Services.Post.Domain.Data.Migrations
 
                     b.Property<Guid>("FileId")
                         .HasColumnType("char(36)");
+
+                    b.Property<int>("NumOfLikes")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("char(36)");

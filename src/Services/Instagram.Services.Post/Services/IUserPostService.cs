@@ -15,5 +15,6 @@ namespace Instagram.Services.Post.Services
         Task<UserPostReadDto> CreatePostAsync(Guid userId, UserPostCreateDto post);
         Task<UserPost> UpdatePostAsync(Guid id, UserPostUpdateDto post);
         Task<UserPost> DeletePostAsync(Guid id);   
+        Task<PostLikeReadDto> CreatePostLikeAsync(Guid postId, Guid userId);
     }
 }

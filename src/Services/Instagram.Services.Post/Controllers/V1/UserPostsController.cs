@@ -141,5 +141,15 @@ namespace Instagram.Services.Post.Controllers.V1
 
             return NotFound();
         }
+
+        //POST api/v1/userPosts/like
+        [HttpPost("like")]
+        public async Task<ActionResult<PostLikeCreateDto>> CreatePostLikeAsync([FromBody] PostLikeCreateDto payload)
+        {
+            var userId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));   
+            var postLikeReadDto = await _userPostService.CreatePostLikeAsync(payload.PostId, userId); 
+
+            return NoContent();
+        }
     }
 }

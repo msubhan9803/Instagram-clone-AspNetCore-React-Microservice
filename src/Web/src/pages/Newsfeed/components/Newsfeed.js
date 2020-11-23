@@ -64,8 +64,8 @@ const Newsfeed = (props) => {
 
         if (connectionStarted) {
             connection.on('FetchNewsfeed', () => {
+                console.log("here");
                 console.log('FetchNewsfeed message received!');
-                console.log(fetchedAt);
 
                 if (fetchedAt) {
                     props.fetchUpdatedNewsfeed(userId, props.newsfeed.newsfeed, fetchedAt);

@@ -15,6 +15,7 @@ namespace Instagram.Services.Post.Domain.Repositories
         Task<IEnumerable<UserPostReadDto>> GetUserLatestPostsAsync(Guid userId, DateTime lastModified);
         Task CreatePostAsync(UserPost post, PostFile postFileModel);
         Task UpdatePostAsync(UserPost post);
-        void DeletePost(Guid id);   
+        void DeletePost(Guid id);
+        Task CreatePostLikeAsync(PostLike postLike);
     }
 }

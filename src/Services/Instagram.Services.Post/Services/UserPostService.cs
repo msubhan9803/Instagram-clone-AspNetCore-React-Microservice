@@ -125,5 +125,13 @@ namespace Instagram.Services.Post.Services
 
             return userPostModel;
         }
+
+        public async Task<PostLikeReadDto> CreatePostLikeAsync(Guid postId, Guid userId)
+        {
+            var postLike = new PostLike(postId, userId);
+            await _userPostRepository.CreatePostLikeAsync(postLike);
+
+            return _mapper.Map<PostLikeReadDto>(postLike);
+        }
     }
 }

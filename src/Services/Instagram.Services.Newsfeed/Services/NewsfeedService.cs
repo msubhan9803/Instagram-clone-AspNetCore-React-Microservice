@@ -51,6 +51,7 @@ namespace Instagram.Services.Newsfeed.Services
                     post.GetValue("Caption").ToString(),
                     new Guid(post.GetValue("FileId").ToString()),
                     post.GetValue("FileType").ToString(),
+                    post.GetValue("NumOfLikes"),
                     Convert.ToDateTime(post.GetValue("CreatedAt").ToString())
                 );
 

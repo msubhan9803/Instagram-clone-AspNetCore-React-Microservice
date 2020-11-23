@@ -36,6 +36,7 @@ namespace Instagram.Services.Post.Repositories
                             post.Caption,
                             post.FileId,
                             postFile.Type,
+                            post.NumOfLikes,
                             post.CreatedAt
                         ))
                         ).ToListAsync();
@@ -63,6 +64,7 @@ namespace Instagram.Services.Post.Repositories
                                 post.Caption,
                                 post.FileId,
                                 postFile.Type,
+                                post.NumOfLikes,
                                 post.CreatedAt
                             ))
                         ).FirstOrDefaultAsync();
@@ -86,6 +88,7 @@ namespace Instagram.Services.Post.Repositories
                             post.Caption,
                             post.FileId,
                             postFile.Type,
+                            post.NumOfLikes,
                             post.CreatedAt
                         ))
                         ).ToListAsync();
@@ -113,6 +116,7 @@ namespace Instagram.Services.Post.Repositories
                             post.Caption,
                             post.FileId,
                             postFile.Type,
+                            post.NumOfLikes,
                             post.CreatedAt
                         ))
                         ).ToListAsync();
@@ -138,6 +142,15 @@ namespace Instagram.Services.Post.Repositories
             var userPost = _context.Posts.Find(id);
             _context.Posts.Remove(userPost);
             _context.SaveChanges();
+        }
+
+        public async Task CreatePostLikeAsync(PostLike postLike)
+        {
+            await _context.PostLikes.AddAsync(postLike); 
+            var userPost = await _context.Posts.FirstOrDefaultAsync(x => x.Id == postLike.PostId);
+            ++userPost.NumOfLikes;
+
+            await _context.SaveChangesAsync();
         }
     }
 }
