@@ -1,5 +1,4 @@
 # Instagram-clone-AspNetCore-React-Microservice
-In-Development
 
 ## Introduction
 This is clone of Instagram built with Microservice Architecture with React and Asp.net Core. I have this to discover the world of Distributed Systems, Containerized world. I have tried to experience the enterprise-level software development techniques like Docker container setup, development with decoupled services talking using a Message Bus, separate environment for Production and Development, Git workflow and more. 
@@ -55,3 +54,7 @@ This is clone of Instagram built with Microservice Architecture with React and A
 
 ## How to get Project Up & running -- In Production Environment
 [In Development]
+
+### My Social Media:
+https://www.instagram.com/subisubhan \
+https://www.facebook.com/mohammad.subhan.581
