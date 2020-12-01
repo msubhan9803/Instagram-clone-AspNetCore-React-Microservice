@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import { connect, Link } from 'react-redux';
 import './UserHub.css';
 import FetchUsersList from './services/fetchUsersList';
 import { fetchUserRelation, followUserRequest, unFollowUserRequest } from '../../services/followUnfollowUser';
@@ -51,7 +51,7 @@ const UserHub = props => {
                         usersList.map((user, index) => (
                             <div className="row align-items-center text-left mt-2" key={index}>
                                 <div className="col-6">
-                                    <h6>{user.userName}</h6>
+                                <h6><a href={"/userprofile/" + user.userName}>{user.userName}</a></h6>
                                 </div>
                                 <div className="col-6">
                                     {

@@ -63,7 +63,7 @@ const Post = (props) => {
                                     <div className="row mt-3 border-bottom">
                                         <div className="col-2">
                                             <img className="mx-auto d-block rounded-circle border m-2" width="35px" height="35px"
-                                                src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.thenews.com.pk%2Flatest%2F718025-esra-bilgic-speaks-out-on-gender-equality&psig=AOvVaw2ZnMsk3uJpITOTLDAEUJy6&ust=1602502284512000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCOiH-8O4rOwCFQAAAAAdAAAAABAD" alt="profile-img" />
+                                                src={require('../../../assets/images/user-male.png')} />
                                         </div>
 
                                         <div className="col-8">
@@ -78,7 +78,7 @@ const Post = (props) => {
                                     <div className="row mt-3 border-bottom">
                                         <div className="col-2">
                                             <img className="mx-auto d-block rounded-circle border m-2" width="35px" height="35px"
-                                                src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.thenews.com.pk%2Flatest%2F718025-esra-bilgic-speaks-out-on-gender-equality&psig=AOvVaw2ZnMsk3uJpITOTLDAEUJy6&ust=1602502284512000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCOiH-8O4rOwCFQAAAAAdAAAAABAD" alt="profile-img" />
+                                                src={require('../../../assets/images/user-female.png')} />
                                         </div>
 
                                         <div className="col-8">
