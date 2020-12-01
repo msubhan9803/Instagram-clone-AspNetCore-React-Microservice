@@ -40,6 +40,37 @@ This is clone of Instagram built with Microservice Architecture with React and A
 | MongoDb          | nginx_service       |
 | Hangfire         | web_service         |
 
+## Application Overview
+### User can Sign Up & Login
+<p class="center">
+    <img src="https://github.com/msubhan9803/Instagram-clone-AspNetCore-React-Microservice/blob/master/extras/Signup-login.gif?raw=true">
+</p>
+
+### User can edit Bio
+<p class="center">
+    <img src="https://github.com/msubhan9803/Instagram-clone-AspNetCore-React-Microservice/blob/master/extras/Edit-bio.gif?raw=true">
+</p>
+
+### User can add a Post
+<p class="center">
+    <img src="https://github.com/msubhan9803/Instagram-clone-AspNetCore-React-Microservice/blob/master/extras/Add-Post.gif?raw=true">
+</p>
+
+### UserProfile Walkthrough
+<p class="center">
+    <img src="https://github.com/msubhan9803/Instagram-clone-AspNetCore-React-Microservice/blob/master/extras/Userfeed-overview.gif?raw=true">
+</p>
+
+### User Newsfeed Walkthrough
+<p class="center">
+    <img src="https://github.com/msubhan9803/Instagram-clone-AspNetCore-React-Microservice/blob/master/extras/Newsfeed-overview.gif?raw=true">
+</p>
+
+### Realtime Newsfeed Update
+<p class="center">
+    <img src="https://github.com/msubhan9803/Instagram-clone-AspNetCore-React-Microservice/blob/master/extras/Realtime-Newsfeed-new.gif?raw=true">
+</p>
+
 ## How to get Project Up & running -- In Development Environment
 1. Clone this Repo
 2. Run following commands:\
@@ -51,7 +82,7 @@ This is clone of Instagram built with Microservice Architecture with React and A
 3. You can now visit https://localhost:4430/ in your browser!
 
 > Seed Data: \
-> Emails: ironman@gmail.com | spiderman@gmail.com | superman@gmail.com \
+> Emails: ironman@gmail.com | spiderman@gmail.com | superman@gmail.com | hulk@gmail.com \
 > Password: User@123
 
 
