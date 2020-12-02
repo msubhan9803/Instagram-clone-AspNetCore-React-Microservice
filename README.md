@@ -81,10 +81,9 @@ This is clone of Instagram built with Microservice Architecture with React and A
     `docker-compose -f docker-compose.dev.yml up`
 3. You can now visit https://localhost:4430/ in your browser!
 
-> Seed Data: \
-> Emails: ironman@gmail.com | spiderman@gmail.com | superman@gmail.com | hulk@gmail.com \
-> Password: User@123
-
+[comment]: # (> Seed Data:)
+[comment]: # (> Emails: ironman@gmail.com | spiderman@gmail.com | superman@gmail.com | hulk@gmail.com)
+[comment]: # (> Password: User@123)
 
 ## How to get Project Up & running -- In Production Environment
 [In Development]
