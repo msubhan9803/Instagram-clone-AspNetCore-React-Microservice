@@ -37,8 +37,7 @@ This is clone of Instagram built with Microservice Architecture with React and A
 | Docker           | Redux               |
 | Docker-Compose   | Ant Design          |
 | MySql            | Git Version Control |
-| MongoDb          | nginx_service       |
-| Hangfire         | web_service         |
+| MongoDb          | Hangfire            |
 
 ## Application Overview
 ### User can Sign Up & Login
