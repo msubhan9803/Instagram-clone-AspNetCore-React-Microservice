@@ -9,6 +9,10 @@ This is clone of Instagram built with Microservice Architecture with React and A
     <img src="https://user-images.githubusercontent.com/63048473/100604271-1e993e80-3328-11eb-8d5e-b3416b2f4aed.png">
 </p>
 
+### Highlights
+CQRS pattern, Hangfire Job processing, RabbitMq Message Bus, Jwt Authentication, Docker Containerization, Nginx Proxy, Repository Pattern 
+
+
 ## Services
 | Docker Image Name   | Details                      |
 | ------------------- | ---------------------------- |
