@@ -6,7 +6,7 @@ This is clone of Instagram built with Microservice Architecture with React and A
 
 ## System Architecture
 <p class="center">
-    <img src="https://user-images.githubusercontent.com/63048473/100604271-1e993e80-3328-11eb-8d5e-b3416b2f4aed.png">
+    <img src="https://user-images.githubusercontent.com/63048473/101434729-f19eea00-392c-11eb-837e-f98583132e27.png">
 </p>
 
 ### Highlights
