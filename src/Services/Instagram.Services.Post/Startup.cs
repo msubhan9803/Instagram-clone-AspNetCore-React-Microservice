@@ -33,19 +33,20 @@ namespace Instagram.Services.Post
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
             
-            if (env.IsDevelopment()) 
-            {
-                app.UseDeveloperExceptionPage();
+            // if (env.IsDevelopment()) 
+            // {
+            //     app.UseDeveloperExceptionPage();
                 
-                var builder = new MySqlConnectionStringBuilder();
-                builder.ConnectionString = Configuration.GetConnectionString("DefaultConnection");
-                builder.UserID = Configuration["Uid"];
-                builder.Password = Configuration["Pwd"];
+            //     var builder = new MySqlConnectionStringBuilder();
+            //     builder.ConnectionString = Configuration.GetConnectionString("DefaultConnection");
+            //     builder.UserID = Configuration["Uid"];
+            //     builder.Password = Configuration["Pwd"];
 
-                DbContextSetting.ConnectionString = builder.ConnectionString;
-            } else {
-                DbContextSetting.ConnectionString = Configuration.GetConnectionString("DefaultConnection");
-            }
+            //     DbContextSetting.ConnectionString = builder.ConnectionString;
+            // } else {
+            //     DbContextSetting.ConnectionString = Configuration.GetConnectionString("DefaultConnection");
+            // }
+            DbContextSetting.ConnectionString = Configuration.GetConnectionString("DefaultConnection");
 
             var swaggerOptions = new SwaggerOptions();
             Configuration.GetSection(nameof(SwaggerOptions)).Bind(swaggerOptions);
