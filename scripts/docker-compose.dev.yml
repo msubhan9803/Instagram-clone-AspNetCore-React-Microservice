@@ -151,7 +151,7 @@ services:
       - '../src/Web/:/app'
       - '/app/node_modules'
     expose:
-      - '3000'
+      - '3000:3000'
     environment: 
       # DONT USE IN PRODUCTION: Using cuz of Invalid Host Header
       DANGEROUSLY_DISABLE_HOST_CHECK: "true"
