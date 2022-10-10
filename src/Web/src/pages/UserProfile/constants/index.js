@@ -1,1 +1,1 @@
-export const postFileThumbnailUrl = "/post-api/v1/userposts/filethumb/";
+export const postFileThumbnailUrl = `${process.env.REACT_APP_BACKEND_URL}/post-api/v1/userposts/filethumb/`;

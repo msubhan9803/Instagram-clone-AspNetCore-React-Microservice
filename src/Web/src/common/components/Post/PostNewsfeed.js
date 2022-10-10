@@ -10,7 +10,7 @@ const PostNewsfeed = (props) => {
                 <div className="row align-items-center border-bottom">
                     <div className="col-1">
                         <img className="mx-auto d-block rounded-circle border m-2" width="35px" height="35px"
-                            src={`/user-api/v1/userbios/file/${props.currentFileData.userId}`} alt="profile-img" />
+                            src={`${process.env.REACT_APP_BACKEND_URL}/user-api/v1/userbios/file/${props.currentFileData.userId}`} alt="profile-img" />
                     </div>
 
                     <div className="col-9">

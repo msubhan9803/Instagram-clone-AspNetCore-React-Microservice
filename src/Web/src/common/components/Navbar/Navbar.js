@@ -44,7 +44,7 @@ const Navbar = (props) => {
                     <div className="dropdown">
                         <a type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img className="mx-auto d-block rounded-circle border" width="30px" height="30px"
-                            src={`/user-api/v1/userbios/file/${props.currentUserData.userId}`} alt="profile-img" />
+                            src={`${process.env.REACT_APP_BACKEND_URL}/user-api/v1/userbios/file/${props.currentUserData.userId}`} alt="profile-img" />
                         </a>
                         <div className="dropdown-menu dropdown-menu-center text-left" aria-labelledby="dropdownMenuButton">
                             <a className="dropdown-item" href={`/userprofile/${props.currentUserData.userName}`}>

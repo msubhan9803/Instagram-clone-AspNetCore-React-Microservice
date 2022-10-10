@@ -1,7 +1,7 @@
 import BearerToken from '../helpers/BearerToken';
 
 export const fetchUserRelation = (userId, followedUserId) => {
-    return fetch(`/user-api/v1/users/follow/${userId}/${followedUserId}`, {
+    return fetch(`${process.env.REACT_APP_BACKEND_URL}/user-api/v1/users/follow/${userId}/${followedUserId}`, {
         method: "GET",
         headers: {
             "Authorization": BearerToken()
@@ -16,7 +16,7 @@ export const fetchUserRelation = (userId, followedUserId) => {
 };
 
 export const followUserRequest = (userId, followedUserId) => {
-    return fetch('/user-api/v1/users/follow/', {
+    return fetch(`${process.env.REACT_APP_BACKEND_URL}/user-api/v1/users/follow/`, {
         method: "POST",
         headers: {
             "Authorization": BearerToken(),
@@ -35,7 +35,7 @@ export const followUserRequest = (userId, followedUserId) => {
 
 export const unFollowUserRequest = (userId, followedUserId) => {
     console.log("here")
-    return fetch(`/user-api/v1/users/unfollow/${userId}/${followedUserId}`, {
+    return fetch(`${process.env.REACT_APP_BACKEND_URL}/user-api/v1/users/unfollow/${userId}/${followedUserId}`, {
         method: "DELETE",
         headers: {
             "Authorization": BearerToken()

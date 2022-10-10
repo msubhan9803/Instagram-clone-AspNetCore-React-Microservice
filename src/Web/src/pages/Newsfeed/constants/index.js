@@ -1,1 +1,1 @@
-export const newsfeedHubUrl  = '/newsfeed-api/v1/hubs/newsfeed/';
+export const newsfeedHubUrl  = `${process.env.REACT_APP_BACKEND_URL}/newsfeed-api/v1/hubs/newsfeed/`;

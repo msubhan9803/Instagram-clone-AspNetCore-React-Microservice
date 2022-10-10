@@ -1,7 +1,7 @@
 import BearerToken from '../../../helpers/BearerToken';
 
 export const fetchUserBio = (userId) => {
-    return fetch(`/user-api/v1/userBios/${userId}`, {
+    return fetch(`${process.env.REACT_APP_BACKEND_URL}/user-api/v1/userBios/${userId}`, {
         method: "GET",
         headers: {
             'Authorization': BearerToken()
@@ -25,7 +25,7 @@ export const postUserBioRequest = (userBio) => {
         console.log(pair[0] + ', ' + pair[1]);
     }
 
-    return fetch('/user-api/v1/userBios/', {
+    return fetch(`${process.env.REACT_APP_BACKEND_URL}/user-api/v1/userBios/`, {
         method: 'POST',
         headers: {
             'Authorization': BearerToken()
@@ -40,7 +40,7 @@ export const postUserBioRequest = (userBio) => {
 };
 
 export const updateUserBio = (userBio) => {
-    return fetch(`/user-api/v1/userBios/${userBio.id}`, {
+    return fetch(`${process.env.REACT_APP_BACKEND_URL}/user-api/v1/userBios/${userBio.id}`, {
         method: 'PUT',
         headers: {
             'Authorization': BearerToken(),

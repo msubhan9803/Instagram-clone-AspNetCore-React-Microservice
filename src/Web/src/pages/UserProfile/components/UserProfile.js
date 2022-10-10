@@ -96,7 +96,7 @@ const UserProfile = (props) => {
           <div className="container p-4">
             <div className="row user-details align-items-center">
               <div className="profile-img col-4">
-                <img className="mx-auto rounded-circle d-block" src={`/user-api/v1/userbios/file/${props.userBio.userId}`} alt="profile-img" />
+                <img className="mx-auto rounded-circle d-block" src={`${process.env.REACT_APP_BACKEND_URL}/user-api/v1/userbios/file/${props.userBio.userId}`} alt="profile-img" />
               </div>
               <div className="container profile-desc col-8 p-2">
                 <div className="row align-items-center">
@@ -143,7 +143,7 @@ const UserProfile = (props) => {
                           className="img-fluid"
                           key={index}
                           to={{
-                            pathname: `/post/${props.userPosts[index].id}/${index}`,
+                            pathname: `${process.env.REACT_APP_BACKEND_URL}/post/${props.userPosts[index].id}/${index}`,
                             // This is the trick! This link sets
                             // the `background` in location state.
                             state: {

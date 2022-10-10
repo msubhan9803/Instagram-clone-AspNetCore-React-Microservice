@@ -40,6 +40,8 @@ namespace Instagram.Services.Newsfeed
             {
                 options.EnableDetailedErrors = true;
             });
+
+            services.AddHangfireServer();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,6 +71,16 @@ namespace Instagram.Services.Newsfeed
             app.UseApiVersioning();
 
             app.UseHangfireDashboard();
+            app.UseHangfireServer();
+            // app.UseHangfireDashboard("/hangfire", new DashboardOptions()  
+            // {  
+            //     AppPath = null,  
+            //     DashboardTitle = "Hangfire Dashboard",  
+            //     Authorization = new {
+            //         User = Configuration.GetSection("HangfireCredentials:UserName").Value,  
+            //         Pass = Configuration.GetSection("HangfireCredentials:Password").Value  
+            //     }
+            // });
             
             recurringJobManager.AddOrUpdate(
                 "Update.Newsfeed",
