@@ -26,7 +26,7 @@ const Newsfeed = (props) => {
         }
 
         const newConnection = new HubConnectionBuilder()
-            .withUrl('/hubs/newsfeed', {
+            .withUrl(`${process.env.REACT_APP_BACKEND_URL}/hubs/newsfeed`, {
                 skipNegotiation: true,
                 transport: HttpTransportType.WebSockets
             })

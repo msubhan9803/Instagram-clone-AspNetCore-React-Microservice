@@ -1,7 +1,7 @@
 import BearerToken from '../../../common/helpers/BearerToken';
 
 const CreatePost = formData => {
-    return fetch(`/post-api/v1/userposts`, {
+    return fetch(`${process.env.REACT_APP_BACKEND_URL}/post-api/v1/userposts`, {
         method: "POST",
         headers: {
             'Authorization': BearerToken()

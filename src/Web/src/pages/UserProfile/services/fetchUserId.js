@@ -1,7 +1,7 @@
 import BearerToken from '../../../common/helpers/BearerToken';
 
 const fetchUserId = (userName) => {
-    return fetch(`/user-api/v1/users/${userName}`, {
+    return fetch(`${process.env.REACT_APP_BACKEND_URL}/user-api/v1/users/${userName}`, {
         method: "GET",
         headers: {
             'Authorization': BearerToken()

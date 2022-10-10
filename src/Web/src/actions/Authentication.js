@@ -29,7 +29,7 @@ const resetSignUpErrors = () => ({
 
 export const userSignUpPostFetch = userSignUpData => {
   return dispatch => {
-    return fetch("/user-api/v1/accounts/", {
+    return fetch(`${process.env.REACT_APP_BACKEND_URL}/user-api/v1/accounts/`, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ export const userSignUpPostFetch = userSignUpData => {
 
 export const userLoginPostFetch = userLoginData => {
   return dispatch => {
-    return fetch("/user-api/v1/accounts/login", {
+    return fetch(`${process.env.REACT_APP_BACKEND_URL}/user-api/v1/accounts/login`, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',

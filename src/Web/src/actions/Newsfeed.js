@@ -16,7 +16,7 @@ const clearUserNewsfeed = ({
 
 export const fetchInitial = (userId) => {
     return dispatch => {
-        return fetch(`/newsfeed-api/v1/newsfeeds/${userId}`, {
+        return fetch(`${process.env.REACT_APP_BACKEND_URL}/newsfeed-api/v1/newsfeeds/${userId}`, {
             method: 'GET',
             headers: {
                 'Authorization': BearerToken()
@@ -41,7 +41,7 @@ export const fetchInitial = (userId) => {
 
 export const fetchUpdatedNewsfeed = (userId, currentNewsfeed, fetchedAt) => {
     return dispatch => {
-        return fetch(`/newsfeed-api/v1/newsfeeds/${userId}/${fetchedAt}`, {
+        return fetch(`${process.env.REACT_APP_BACKEND_URL}/newsfeed-api/v1/newsfeeds/${userId}/${fetchedAt}`, {
             method: 'GET',
             headers: {
                 'Authorization': BearerToken()
