@@ -20,7 +20,7 @@ const Login = (props) => {
     const tokenValidator = TokenChecker();
 
     if (tokenValidator === true) {
-      props.history.push(`/userprofile/${props.currentUserData.userName}`);
+      props.history.push(`/projects/instagram/userprofile/${props.currentUserData.userName}`);
     }
   });
 
@@ -129,7 +129,7 @@ const Login = (props) => {
         </div>
       </div>
       <div className="signup-link">
-        <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
+        <p>Don't have an account? <Link to="/projects/instagram/signup">Sign up</Link></p>
       </div>
     </div>
   );

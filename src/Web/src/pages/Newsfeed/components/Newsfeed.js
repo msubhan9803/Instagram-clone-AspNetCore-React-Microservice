@@ -22,7 +22,7 @@ const Newsfeed = (props) => {
         props.fetchInitialNewsfeed(userId);
 
         if (tokenValidator === false) {
-            props.history.push('/');
+            props.history.push('/projects/instagram/');
         }
 
         const newConnection = new HubConnectionBuilder()

@@ -54,7 +54,7 @@ const UserProfile = (props) => {
             });
         });
     } else {
-      props.history.push('/');
+      props.history.push('/projects/instagram/');
     }
 
     return () => props.clearUserProfileDataAction();
@@ -108,7 +108,7 @@ const UserProfile = (props) => {
                   }
                   {username === props.currentUserData.userName ?
                     <>
-                      <Link className="btn ml-4" to='/accounts/edit'>Edit Profile</Link>
+                      <Link className="btn ml-4" to='/projects/instagram/accounts/edit'>Edit Profile</Link>
                     </> :
                     null
                   }
@@ -143,7 +143,7 @@ const UserProfile = (props) => {
                           className="img-fluid"
                           key={index}
                           to={{
-                            pathname: `${process.env.REACT_APP_BACKEND_URL}/post/${props.userPosts[index].id}/${index}`,
+                            pathname: `/projects/instagram/post/${props.userPosts[index].id}/${index}`,
                             // This is the trick! This link sets
                             // the `background` in location state.
                             state: {

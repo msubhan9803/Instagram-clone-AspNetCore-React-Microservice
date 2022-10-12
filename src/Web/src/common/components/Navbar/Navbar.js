@@ -28,7 +28,7 @@ const Navbar = (props) => {
 
     return (
         <nav className="navbar navbar-light sticky-top">
-            <a className="navbar-brand" href={`/newsfeed`}>
+            <a className="navbar-brand" href={`/projects/instagram/newsfeed`}>
                 <img src={require('../../../assets/images/instagram-navbar-logo.png')} width="30" height="30" alt="" />
             </a>
             <form onSubmit={handleSubmit}>
@@ -37,8 +37,8 @@ const Navbar = (props) => {
                     value={searchState.search} onChange={handleChange} />
             </form>
             <div className="row">
-                <a className="mr-3" style={{color: "#000"}} href="/newsfeed"><i className="fa fa-2x fa-home" aria-hidden="true"></i></a>
-                <a className="mr-3" style={{color: "#000"}} href="/create"><i className="fa fa-2x fa-plus-circle"></i></a>
+                <a className="mr-3" style={{color: "#000"}} href="/projects/instagram/newsfeed"><i className="fa fa-2x fa-home" aria-hidden="true"></i></a>
+                <a className="mr-3" style={{color: "#000"}} href="/projects/instagram/create"><i className="fa fa-2x fa-plus-circle"></i></a>
                 
                 <div className="userprofile mr-3">
                     <div className="dropdown">
@@ -47,10 +47,10 @@ const Navbar = (props) => {
                             src={`${process.env.REACT_APP_BACKEND_URL}/user-api/v1/userbios/file/${props.currentUserData.userId}`} alt="profile-img" />
                         </a>
                         <div className="dropdown-menu dropdown-menu-center text-left" aria-labelledby="dropdownMenuButton">
-                            <a className="dropdown-item" href={`/userprofile/${props.currentUserData.userName}`}>
+                            <a className="dropdown-item" href={`/projects/instagram/userprofile/${props.currentUserData.userName}`}>
                                 <i className="fa fa-user-circle text-dark mr-2" aria-hidden="true"></i> Profile
                         </a>
-                            <a className="dropdown-item" href="/accounts/edit"><i className="fa fa-bars mr-2"></i> Settings</a>
+                            <a className="dropdown-item" href="/projects/instagram/accounts/edit"><i className="fa fa-bars mr-2"></i> Settings</a>
                             <hr />
                             <a className="dropdown-item" onClick={logout}>Log Out</a>
                         </div>

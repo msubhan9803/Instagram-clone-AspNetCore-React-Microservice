@@ -44,7 +44,7 @@ export const userSignUpPostFetch = userSignUpData => {
 
       dispatch(resetSignUpErrors());
       alert("You have successfully Registered! Please Login to continue");
-      history.push("/");
+      history.push("/projects/instagram/");
     })
     .catch(error => {
       Promise.resolve(error).then((value) =>{
@@ -87,7 +87,7 @@ export const userLoginPostFetch = userLoginData => {
       localStorage.setItem("token", result.token.token);
       localStorage.setItem("expires", result.token.expires);
       dispatch(resetLoginErrors());
-      history.push(`/userprofile/${result.user.userName}`);
+      history.push(`/projects/instagram/userprofile/${result.user.userName}`);
     })
     .catch(error => {
       Promise.resolve(error).then((value) =>{
@@ -109,7 +109,7 @@ export const logoutUser = () => {
       dispatch(logoutCurrentUser);
       localStorage.removeItem("token");
       localStorage.removeItem("expires");
-      history.push("/");
+      history.push("/projects/instagram/");
     }
   };
 };

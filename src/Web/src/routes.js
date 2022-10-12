@@ -27,20 +27,20 @@ function Routes() {
   let background = location.state && location.state.background;
 
   return (
-    <Router location={background || location} history={History}>
+    <Router location={background || location} history={History} basename={"/projects/instagram"}>
       <Switch>
-        <Route exact path="/" component={Login}/>
-        <Route path="/signup" component={Signup}/>
-        <Route path="/newsfeed" component={Newsfeed} />
-        <Route path={["/userprofile/:username", "/post/:id/:index"]} children={<UserProfile history={History}/>} />
+        <Route exact path="/projects/instagram/" component={Login}/>
+        <Route path="/projects/instagram/signup" component={Signup}/>
+        <Route path="/projects/instagram/newsfeed" component={Newsfeed} />
+        <Route path={["/projects/instagram/userprofile/:username", "/projects/instagram/post/:id/:index"]} children={<UserProfile history={History}/>} />
         {/* Add route to get post by id without Modal */}
-        <Route path="/accounts/edit" component={Edit}/>
-        <Route path="/create" component={Create}/>
+        <Route path="/projects/instagram/accounts/edit" component={Edit}/>
+        <Route path="/projects/instagram/create" component={Create}/>
         <Route path="*" component={NotFound}/>
       </Switch>
 
       {/* Show the modal when a background page is set */}
-      {<Route path="/post/:id/:index" children={<PostModal />} />}
+      {<Route path="/projects/instagram/post/:id/:index" children={<PostModal />} />}
     </Router>
   );
 }

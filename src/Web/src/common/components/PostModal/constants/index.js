@@ -1,1 +1,1 @@
-export const postDataUrl = "/post-api/v1/userposts/";
+export const postDataUrl = `${process.env.REACT_APP_BACKEND_URL}/post-api/v1/userposts/`;

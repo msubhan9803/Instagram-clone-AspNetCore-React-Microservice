@@ -21,7 +21,7 @@ const Create = (props) => {
         const tokenValidator = TokenChecker();
 
         if (tokenValidator === false) {
-            props.history.push('/');
+            props.history.push('/projects/instagram/');
         }
 
         setTimeout(() => {

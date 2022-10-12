@@ -26,6 +26,7 @@ const PostModal = (props) => {
         const postListLength = props.location.state.postList === "userposts"
             ? props.userPosts.length
             : null;
+            debugger;
 
         setLocalState({
             ...state,
@@ -129,7 +130,7 @@ const PostModal = (props) => {
                                             onClick={prevPost}
                                             className="button-prev"
                                             to={{
-                                                pathname: `/post/${props.userPosts[state.currentIndex - 1].id}/${state.currentIndex - 1}`,
+                                                pathname: `/projects/instagram/post/${props.userPosts[state.currentIndex - 1].id}/${state.currentIndex - 1}`,
                                                 // This is the trick! This link sets
                                                 // the `background` in location state.
                                                 state: {
@@ -162,7 +163,7 @@ const PostModal = (props) => {
                                             onClick={nextPost}
                                             className="button-next"
                                             to={{
-                                                pathname: `/post/${props.userPosts[state.currentIndex + 1].id}/${state.currentIndex + 1}`,
+                                                pathname: `/projects/instagram/post/${props.userPosts[state.currentIndex + 1].id}/${state.currentIndex + 1}`,
                                                 // This is the trick! This link sets
                                                 // the `background` in location state.
                                                 state: {
