@@ -21,8 +21,8 @@ services:
     container_name: mysql_db
     image: mysql:8.0.21
     restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: "Pa$$WorD"
+    # environment:
+    #   MYSQL_ROOT_PASSWORD: "Pa$$WorD"
     ports:
       - '3306:3306'
     expose:
