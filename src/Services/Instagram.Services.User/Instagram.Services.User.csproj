@@ -9,7 +9,7 @@
     <ProjectReference Include="..\Instagram.Common\Instagram.Common.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="RawRabbit" Version="2.0.0-rc5" />
     <PackageReference Include="RawRabbit.DependencyInjection.ServiceCollection" Version="2.0.0-rc5" />
     <PackageReference Include="RawRabbit.Operations.Publish" Version="2.0.0-rc5" />
