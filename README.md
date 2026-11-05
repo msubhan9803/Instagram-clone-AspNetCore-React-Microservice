@@ -20,11 +20,11 @@ CQRS pattern, Hangfire Job processing, RabbitMq Message Bus, Jwt Authentication,
 | mysql_db_service    | Mysql DB Service             |
 | mongo_db_service    | Mongo DB Service             |
 | azurite_service     | Azurite Blob Storage Service |
-| user_service        | User Service                 |
-| post_service        | Post Service                 |
-| newsfeed_service    | Newsfeed Service             |
+| user_service        | User Service - .Net Core     |
+| post_service        | Post Service - .Net Core     |
+| newsfeed_service    | Newsfeed Service - .Net Core |
 | nginx_service       | Nginx Apigateway Service     |
-| web_service         | Web Service                  |
+| web_service         | React SPA Web Application    |
 
 ## Database Schema
 <p class="center">
